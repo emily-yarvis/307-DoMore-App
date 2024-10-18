@@ -1,0 +1,16 @@
+{
+  "name": "307-domore-app",
+  "version": "1.0.0",
+  "description": "Make sure to install the following plugins to your IDE to ensure code style is the same:",
+  "main": "index.js",
+  "scripts": {
+    "format": "npx prettier . --write",
+    "lint": "npx eslint .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "workspaces": [
+    "packages/*"
+  ]
+}
