@@ -14,10 +14,17 @@ app.get("/", (req, res) => {
 });
 
 app.get("/users", (req, res) => {
-    userServices.getUsers()
+  userServices.getUsers()
     .then((userList) => res.send(userList))
     .catch(() => res.status(404).send("Resource not found."));
-  });
+});
+
+app.post("/users", (req, res) => {
+  const userToAdd = req.body;
+    userServices.addUser(userToAdd)
+      .then(res.status(201).send(userToAdd))
+      .catch((error) => { console.log(error); });
+})
 
 app.listen(port, () => {
   console.log(
