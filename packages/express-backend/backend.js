@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import userServices from "./user-services.js"
+import taskServices from "./task-services.js"
 
 const app = express();
 const port = 8000;
@@ -13,16 +13,16 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.get("/users", (req, res) => {
-  userServices.getUsers()
-    .then((userList) => res.send(userList))
+app.get("/tasks", (req, res) => {
+  taskServices.getTasks()
+    .then((taskList) => res.send(taskList))
     .catch(() => res.status(404).send("Resource not found."));
 });
 
-app.post("/users", (req, res) => {
-  const userToAdd = req.body;
-    userServices.addUser(userToAdd)
-      .then(res.status(201).send(userToAdd))
+app.post("/tasks", (req, res) => {
+  const taskToAdd = req.body;
+    taskServices.addTask(taskToAdd)
+      .then(res.status(201).send(taskToAdd))
       .catch((error) => { console.log(error); });
 })
 
