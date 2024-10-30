@@ -7,12 +7,11 @@ function Form(props) {
     dueDate: ""
   });
 
-  function handleChange(event) {//come back to this and write it better later
+  function handleChange(event) {
     const { name, value } = event.target;
-    setPerson(prevPerson => ({
-      ...prevPerson,
-      [name]: value
-    }));
+    if (name === "dueDate")
+      setPerson({ taskName: person["taskName"], dueDate: value });
+    else setPerson({ taskName: value, dueDate: person["dueDate"] });
   }
   function submitForm() {
     props.handleSubmit(person);
