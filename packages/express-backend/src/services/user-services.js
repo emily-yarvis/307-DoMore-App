@@ -1,4 +1,4 @@
-import User from "./models/user.js";
+import User from "../models/user.js";
 
 function getUsers(name, job) {
   return User.find();
