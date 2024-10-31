@@ -21,11 +21,17 @@ const TaskSchema = new mongoose.Schema(
       type: Array,
       required: false,
       trim: true
+    },
+    description: {
+      type: String,
+      required: true,
+      trim: true
     }
   },
-  { collection: "task_list" }
 );
 
-const User = mongoose.model("Task", TaskSchema);
 
-export default User;
+
+const Task = mongoose.model("Task", TaskSchema);
+
+export default Task;
