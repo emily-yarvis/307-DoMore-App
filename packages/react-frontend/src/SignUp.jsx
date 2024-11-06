@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const LogIn = () => {
+const SignUp = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
 
@@ -10,15 +10,15 @@ const LogIn = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Log-In data:", formData);
+    console.log("Sign-Up data:", formData);
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-white p-4">
       <div className="w-full max-w-sm p-8 bg-gray-100 rounded-lg shadow-lg">
-        <h2 className="text-2xl font-semibold text-center mb-2">Log In</h2>
+        <h2 className="text-2xl font-semibold text-center mb-2">Sign Up</h2>
         <p className="text-center text-sm mb-6">
-          don’t have an account? <a href="/signup" className="underline text-blue-500">sign up</a>
+          have an account already? <a href="/login" className="underline text-blue-500">log in</a>
         </p>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -47,14 +47,11 @@ const LogIn = () => {
               {showPassword ? "hide" : "show"}
             </span>
           </div>
-          <div className="text-right mb-4">
-            <a href="#" className="text-xs text-blue-500 underline">forgot password?</a>
-          </div>
           <button
             type="submit"
             className="w-full py-2 bg-blue-500 text-white font-semibold rounded-md mb-4"
           >
-            log in
+            sign up
           </button>
           <div className="flex items-center mb-4">
             <hr className="flex-grow border-gray-300" />
@@ -62,7 +59,7 @@ const LogIn = () => {
             <hr className="flex-grow border-gray-300" />
           </div>
           <button className="w-full py-2 border border-blue-500 text-blue-500 font-semibold rounded-md">
-            login with google/canvas
+            sign up with google/canvas
           </button>
         </form>
       </div>
@@ -70,4 +67,4 @@ const LogIn = () => {
   );
 };
 
-export default LogIn;
+export default SignUp;
