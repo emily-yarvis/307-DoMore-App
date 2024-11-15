@@ -13,6 +13,8 @@ const UserSchema = new mongoose.Schema(
         trim: true,
       },
     },
+
+    { collection: "users_list" }
 );
 
 const User = mongoose.model("User", UserSchema);
