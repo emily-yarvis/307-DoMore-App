@@ -27,7 +27,7 @@ function deleteTask(id) {
 }
 
 function findTasksByTag(tag) {
-  return Task.find({ tag: tag })
+  return Task.find({ tags: { $in: [tag] } })
 }
 
 export default {
