@@ -4,7 +4,7 @@ import React, { useState } from "react";
 function Form(props) {
   const [person, setPerson] = useState({
     taskName: "",
-    dueDate: ""
+    dueDate: "",
   });
 
   function handleChange(event) {
@@ -26,21 +26,21 @@ function Form(props) {
         name="taskName"
         id="taskName"
         value={person.taskName}
+        className="w-full w-60"
         onChange={handleChange}
       />
       <label htmlFor="dueDate">Due Date</label>
       <input
-        type="text"
+        type="date"
         name="dueDate"
         id="dueDate"
         value={person.dueDate}
+        className="w-full w-60"
         onChange={handleChange}
       />
       <input type="button" value="Submit" onClick={submitForm} />
-
     </form>
   );
 }
-
 
 export default Form;
