@@ -21,19 +21,19 @@ mongoose
 
 //Home API routes
 app.get("/", (req, res) => {
-  const tag = req.body.tag;
+  taskServices.getTasks()
+    .then((taskList) => res.status(200).send(taskList))
+    .catch(() => res.status(404).send("Resource not found."));
+});
 
-  if (tag != undefined) {
-    taskServices.findTasksByTag(tag)
-      .then((taskList) => res.status(200).send(taskList))
-      .catch(() => res.status(404).send("Resource not found."));
-  }
+app.get("/:tag", (req, res) => {
+  const tag = req.params["tag"];
 
-  else {
-    taskServices.getTasks()
-      .then((taskList) => res.status(200).send(taskList))
-      .catch(() => res.status(404).send("Resource not found."));
-  }
+  console.log("in here")
+  taskServices.findTasksByTag(tag)
+    .then((taskList) => res.status(200).send(taskList))
+    .catch(() => res.status(404).send("Resource not found."));
+
 });
 
 app.post("/", (req, res) => {
