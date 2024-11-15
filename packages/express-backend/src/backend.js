@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import taskServices from "./services/task-services.js"
 import userServices from "./services/user-services.js";
+import taskListServices from "./services/taskList-services.js";
 
 const app = express();
 const port = 8000;
@@ -19,12 +20,21 @@ mongoose
   .catch((error) => console.log(error));
 
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  taskListServices.getTaskLists()
+    .then((taskLists) => res.status(200).send(taskLists))
+    .catch(() => res.status(404).send("Resource not found."));
+});
+
+app.post("/", (req, res) => {
+  const taskListToAdd = req.body
+  taskListServices.addTaskList(taskListToAdd)
+    .then(res.status(201).send(taskListToAdd))
+    .catch((error) => { console.log(error); });
 });
 
 app.get("/tasks", (req, res) => {
   taskServices.getTasks()
-    .then((taskList) => res.send(taskList))
+    .then((taskList) => res.status(200).send(taskList))
     .catch(() => res.status(404).send("Resource not found."));
 });
 
@@ -36,8 +46,8 @@ app.post("/tasks", (req, res) => {
 })
 
 app.get("/users", (req, res) => {
-  userServices.getUsers()
-    .then((userList) => res.send(userList))
+  userServices.addUser(req.body)
+    .then(res.status(200).send("Successfully added user"))
     .catch(() => res.status(404).send("Resource not found."));
 });
 
