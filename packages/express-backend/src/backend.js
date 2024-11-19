@@ -26,7 +26,7 @@ app.get("/", (req, res) => {
     .catch(() => res.status(404).send("Resource not found."));
 });
 
-app.post("/", (req, res) => {
+app.post("/tasks", (req, res) => {
   const taskToAdd = req.body;
     taskServices.addTask(taskToAdd)
       .then(res.status(201).send(taskToAdd))
