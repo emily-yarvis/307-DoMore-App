@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema(
     {
-      name: {
+      username: {
         type: String,
         required: true,
         trim: true,
@@ -13,6 +13,8 @@ const UserSchema = new mongoose.Schema(
         trim: true,
       },
     },
+
+    { collection: "users_list" }
 );
 
 const User = mongoose.model("User", UserSchema);

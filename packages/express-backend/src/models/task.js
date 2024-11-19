@@ -28,6 +28,8 @@ const TaskSchema = new mongoose.Schema(
       trim: true
     }
   },
+
+  { collection: "tasks_list" }
 );
 
 
