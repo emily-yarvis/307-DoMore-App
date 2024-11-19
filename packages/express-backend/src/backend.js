@@ -24,6 +24,19 @@ app.get("/", (req, res) => {
   taskServices.getTasks()
     .then((taskList) => res.status(200).send(taskList))
     .catch(() => res.status(404).send("Resource not found."));
+<<<<<<< HEAD
+=======
+});
+
+app.get("/:tag", (req, res) => {
+  const tag = req.params["tag"];
+
+  console.log("in here")
+  taskServices.findTasksByTag(tag)
+    .then((taskList) => res.status(200).send(taskList))
+    .catch(() => res.status(404).send("Resource not found."));
+
+>>>>>>> refs/remotes/origin/backend
 });
 
 // app.get("/:tag", (req, res) => {
