@@ -27,7 +27,7 @@ function deleteTask(id) {
 }
 
 function findTasksByTag(tag) {
-  return Task.find({ tags: { $in: [tag] } })
+  return Task.find({ tags: { $in: [tag] } });
 }
 
 export default {
@@ -37,5 +37,5 @@ export default {
   findTaskByName,
   findTaskByJob,
   deleteTask,
-  findTasksByTag
+  findTasksByTag,
 };

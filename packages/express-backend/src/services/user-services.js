@@ -15,7 +15,7 @@ function addUser(user) {
 }
 
 function findUserByUsernameAndPassword(username, password) {
-  return User.find({username: username, password: password });
+  return User.find({ username: username, password: password });
 }
 
 function deleteUser(id) {
@@ -27,5 +27,5 @@ export default {
   getUsers,
   findUserById,
   findUserByUsernameAndPassword,
-  deleteUser
+  deleteUser,
 };

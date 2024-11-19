@@ -13,15 +13,19 @@ app.use(cors());
 
 mongoose.set("debug", true);
 mongoose
-  .connect("mongodb+srv://rishabhjhamnani:LFEf6PWNMKxLcgdO@domore.dpfjd.mongodb.net/?retryWrites=true&w=majority&appName=DoMore", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(
+    "mongodb+srv://rishabhjhamnani:LFEf6PWNMKxLcgdO@domore.dpfjd.mongodb.net/?retryWrites=true&w=majority&appName=DoMore",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    },
+  )
   .catch((error) => console.log(error));
 
 //Home API routes
 app.get("/", (req, res) => {
-  taskServices.getTasks()
+  taskServices
+    .getTasks()
     .then((taskList) => res.status(200).send(taskList))
     .catch(() => res.status(404).send("Resource not found."));
 });
@@ -38,14 +42,18 @@ app.get("/", (req, res) => {
 
 app.post("/", (req, res) => {
   const taskToAdd = req.body;
-    taskServices.addTask(taskToAdd)
-      .then(res.status(201).send(taskToAdd))
-      .catch((error) => { console.log(error); });
-})
+  taskServices
+    .addTask(taskToAdd)
+    .then(res.status(201).send(taskToAdd))
+    .catch((error) => {
+      console.log(error);
+    });
+});
 
 app.delete("/", (req, res) => {
   const taskToDelete = req.body._id;
-  taskServices.deleteTask(taskToDelete)
+  taskServices
+    .deleteTask(taskToDelete)
     .then((result) => res.status(204).send(result))
     .catch(() => res.status(404).send("Resource not found."));
 });
@@ -56,38 +64,38 @@ app.get("/users", (req, res) => {
   const password = req.body.password;
 
   if (username == undefined && password == undefined) {
-    userServices.getUsers()
+    userServices
+      .getUsers()
       .then((users) => res.status(200).send(users))
       .catch(() => res.status(404).send("Resource not found."));
-  }
-
-  else if (username != undefined && password != undefined) {
-    userServices.findUserByUsernameAndPassword(username, password)
+  } else if (username != undefined && password != undefined) {
+    userServices
+      .findUserByUsernameAndPassword(username, password)
       .then((user) => res.status(200).send(user))
       .catch(() => res.status(404).send("Resource not found."));
-  }
-
-  else {
+  } else {
     res.status(404).send("Resource not found.");
   }
 });
 
 app.post("/users", (req, res) => {
   const userToAdd = req.body;
-  userServices.addUser(userToAdd)
+  userServices
+    .addUser(userToAdd)
     .then(res.status(201).send(userToAdd))
-    .catch((error) => { console.log(error); });
-})
+    .catch((error) => {
+      console.log(error);
+    });
+});
 
 app.delete("/users", (req, res) => {
   const userToDelete = req.body._id;
-  userServices.deleteUser(userToDelete)
+  userServices
+    .deleteUser(userToDelete)
     .then((result) => res.status(204).send(result))
     .catch(() => res.status(404).send("Resource not found."));
 });
 
 app.listen(port, () => {
-  console.log(
-    `Example app listening at http://localhost:${port}`
-  );
+  console.log(`Example app listening at http://localhost:${port}`);
 });
