@@ -1,18 +1,18 @@
 // src/Form.jsx
 import { useState } from "react";
+import PropTypes from "prop-types";
 
 function Form(props) {
   const [person, setPerson] = useState({
     taskName: "",
-    dueDate: ""
+    dueDate: "",
   });
 
   function handleChange(event) {
     const { name, value } = event.target;
-    if (name === "dueDate")
-      setPerson({ taskName: person["taskName"], dueDate: value });
-    else setPerson({ taskName: value, dueDate: person["dueDate"] });
+    setPerson({ ...person, [name]: value });
   }
+
   function submitForm() {
     props.handleSubmit(person);
     setPerson({ taskName: "", dueDate: "" });
@@ -37,10 +37,12 @@ function Form(props) {
         onChange={handleChange}
       />
       <input type="button" value="Submit" onClick={submitForm} />
-
     </form>
   );
 }
 
+Form.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+};
 
 export default Form;
