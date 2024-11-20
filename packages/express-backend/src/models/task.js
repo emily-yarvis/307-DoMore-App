@@ -15,22 +15,22 @@ const TaskSchema = new mongoose.Schema(
     priority: {
       type: Number,
       required: true,
-      trim: true
+      trim: true,
     },
     tags: {
       type: Array,
       required: false,
-      trim: true
+      trim: true,
     },
     description: {
       type: String,
       required: true,
-      trim: true
-    }
+      trim: true,
+    },
   },
+
+  { collection: "tasks_list" },
 );
-
-
 
 const Task = mongoose.model("Task", TaskSchema);
 

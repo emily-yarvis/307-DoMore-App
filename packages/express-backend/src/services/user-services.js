@@ -1,6 +1,6 @@
 import User from "../models/user.js";
 
-function getUsers(name, job) {
+function getUsers() {
   return User.find();
 }
 
@@ -14,18 +14,18 @@ function addUser(user) {
   return promise;
 }
 
-function findUserByName(name) {
-  return User.find({ name: name });
+function findUserByUsernameAndPassword(username, password) {
+  return User.find({ username: username, password: password });
 }
 
-function findUserByJob(job) {
-  return User.find({ job: job });
+function deleteUser(id) {
+  return User.findByIdAndDelete(id);
 }
 
 export default {
   addUser,
   getUsers,
   findUserById,
-  findUserByName,
-  findUserByJob,
+  findUserByUsernameAndPassword,
+  deleteUser,
 };

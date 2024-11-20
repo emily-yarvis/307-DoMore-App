@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "Make sure to install the following plugins to your IDE to ensure code style is the same:",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "format": "npx prettier . --write",
     "lint": "npx eslint .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\""
   },
   "author": "",
   "license": "ISC",

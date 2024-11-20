@@ -22,10 +22,20 @@ function findTaskByJob(job) {
   return Task.find({ job: job });
 }
 
+function deleteTask(id) {
+  return Task.findByIdAndDelete(id);
+}
+
+function findTasksByTag(tag) {
+  return Task.find({ tags: { $in: [tag] } });
+}
+
 export default {
   addTask,
   getTasks,
   findTaskById,
   findTaskByName,
   findTaskByJob,
+  deleteTask,
+  findTasksByTag,
 };

@@ -5,7 +5,27 @@ import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 
 export default [
+  // Ignore dist directory
   { ignores: ["dist"] },
+
+  // Node.js environment for specific configuration files
+  {
+    files: ["**/tailwind.config.js"],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: {
+        ...globals.node, // Include Node.js globals like `module` and `require`
+      },
+      parserOptions: {
+        sourceType: "script", // Use script mode for Node.js files
+      },
+    },
+    rules: {
+      ...js.configs.recommended.rules,
+    },
+  },
+
+  // Configuration for JS/JSX files (browser environment)
   {
     files: ["**/*.{js,jsx}"],
     languageOptions: {
