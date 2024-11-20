@@ -8,7 +8,6 @@ import NewTask from "./NewTask";
 import NewList from "./NewList";
 
 function App() {
-  const [characters, setCharacters] = useState([]);
 
 
   return (
