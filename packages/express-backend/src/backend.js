@@ -96,6 +96,6 @@ app.delete("/users", (req, res) => {
     .catch(() => res.status(404).send("Resource not found."));
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+app.listen(process.env.PORT || port, () => {
+  console.log("REST API is listening.");
 });
