@@ -1,5 +1,7 @@
-import React, { useState } from "react";
-import NewList from "./NewList"; // Import the NewList component
+// import React, { useState } from "react"; 
+import { useState } from "react";
+import PropTypes from "prop-types";
+import NewList from "./NewList";
 
 function TableHeader() {
   return (
@@ -29,6 +31,15 @@ function TableBody(props) {
   return <tbody>{rows}</tbody>;
 }
 
+TableBody.propTypes = {
+  listData: PropTypes.arrayOf(
+    PropTypes.shape({
+      listName: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  removeCharacter: PropTypes.func.isRequired,
+};
+
 function ListView(props) {
   const [showModal, setShowModal] = useState(false);
   const [listData, setListData] = useState(props.listData || []);
@@ -38,7 +49,7 @@ function ListView(props) {
 
   function addNewList(list) {
     setListData([...listData, list]);
-    closeModal(); // Close the modal after adding the list
+    closeModal();
   }
 
   return (
@@ -47,16 +58,12 @@ function ListView(props) {
         <TableHeader />
         <TableBody listData={listData} removeCharacter={props.removeCharacter} />
       </table>
-
-      {/* Button to open the modal */}
       <button
         className="py-2 px-4 bg-blue-500 text-white font-semibold rounded-md mt-4"
         onClick={openModal}
       >
         Add a List
       </button>
-
-      {/* Conditionally render NewList as a modal */}
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
           <NewList handleSubmit={addNewList} />
@@ -72,4 +79,13 @@ function ListView(props) {
   );
 }
 
-export default ListView
+ListView.propTypes = {
+  listData: PropTypes.arrayOf(
+    PropTypes.shape({
+      listName: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  removeCharacter: PropTypes.func.isRequired,
+};
+
+export default ListView;

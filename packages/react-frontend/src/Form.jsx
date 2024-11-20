@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+// import React, { useState } from "react"; 
+import { useState } from "react";
 import PropTypes from "prop-types";
 
 function Form(props) {
@@ -9,7 +10,7 @@ function Form(props) {
 
   function handleChange(event) {
     const { name, value } = event.target;
-    setPerson({ ...person, [name]: value }); 
+    setPerson({ ...person, [name]: value });
   }
 
   function submitForm() {
@@ -43,7 +44,7 @@ function Form(props) {
 }
 
 Form.propTypes = {
-  handleSubmit: PropTypes.func.isRequired, 
+  handleSubmit: PropTypes.func.isRequired,
 };
 
 export default Form;
