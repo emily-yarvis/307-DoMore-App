@@ -1,5 +1,5 @@
-// src/SelectedTask.jsx
-import React from "react";
+// import React from "react";
+import PropTypes from "prop-types";
 
 const SelectedTask = ({ taskName, dueDate, description }) => {
   return (
@@ -13,6 +13,12 @@ const SelectedTask = ({ taskName, dueDate, description }) => {
       </p>
     </div>
   );
+};
+
+SelectedTask.propTypes = {
+  taskName: PropTypes.string.isRequired,
+  dueDate: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
 };
 
 export default SelectedTask;
