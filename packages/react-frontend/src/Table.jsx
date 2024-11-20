@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import NewTask from "./NewTask"; // Ensure NewTask component is correctly imported
-import SelectedTask from "./SelectedTask"; // Import the SelectedTask component
+import PropTypes from "prop-types";
+import NewTask from "./NewTask";
+import SelectedTask from "./SelectedTask";
 
 function TableHeader() {
   return (
@@ -23,7 +24,7 @@ function TableBody(props) {
         <button
           className="py-2 px-4 bg-blue-500 text-white font-semibold rounded-md mb-4"
           onClick={(e) => {
-            e.stopPropagation(); // Prevent triggering task selection when clicking delete
+            e.stopPropagation();
             props.removeCharacter(index);
           }}
         >
@@ -35,35 +36,43 @@ function TableBody(props) {
   return <tbody>{rows}</tbody>;
 }
 
+TableBody.propTypes = {
+  listData: PropTypes.arrayOf(
+    PropTypes.shape({
+      taskName: PropTypes.string.isRequired,
+      dueDate: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  removeCharacter: PropTypes.func.isRequired,
+  handleSelectTask: PropTypes.func.isRequired,
+};
+
 function Table(props) {
   const [showModal, setShowModal] = useState(false);
   const [taskData, setTaskData] = useState(props.listData || []);
-  const [selectedTask, setSelectedTask] = useState(null); // State to track the selected task
+  const [selectedTask, setSelectedTask] = useState(null);
 
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
 
-  // Add new task to the list
   function addNewTask(task) {
     setTaskData([...taskData, task]);
     closeModal();
   }
 
-  // Handle task selection to display in the SelectedTask component
   const handleSelectTask = (task) => {
     setSelectedTask(task);
   };
 
   return (
-    <div className="flex space-x-4"> {/* Flexbox for horizontal layout */}
-      {/* Table body component */}
+    <div className="flex space-x-4">
       <div className="w-2/3">
         <table>
           <TableHeader />
           <TableBody
             listData={taskData}
             removeCharacter={props.removeCharacter}
-            handleSelectTask={handleSelectTask} // Pass the select function to TableBody
+            handleSelectTask={handleSelectTask}
           />
         </table>
 
@@ -74,7 +83,6 @@ function Table(props) {
           Add a Task
         </button>
 
-        {/* Conditionally render the modal for adding new task */}
         {showModal && (
           <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
             <NewTask handleSubmit={addNewTask} />
@@ -88,9 +96,8 @@ function Table(props) {
         )}
       </div>
 
-      {/* SelectedTask component on the right, only renders when a task is selected */}
       {selectedTask && (
-        <div className="w-1/2"> {/* 1/3 width for the selected task */}
+        <div className="w-1/2">
           <SelectedTask
             taskName={selectedTask.taskName}
             dueDate={selectedTask.dueDate}
@@ -101,5 +108,15 @@ function Table(props) {
     </div>
   );
 }
+
+Table.propTypes = {
+  listData: PropTypes.arrayOf(
+    PropTypes.shape({
+      taskName: PropTypes.string.isRequired,
+      dueDate: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  removeCharacter: PropTypes.func.isRequired,
+};
 
 export default Table;
