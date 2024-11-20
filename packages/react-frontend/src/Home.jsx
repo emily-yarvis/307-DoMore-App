@@ -1,11 +1,9 @@
-import React, { useState } from "react";
 import Table from "./Table";
 import ListView from "./ListView";
-import SelectedTask from "./SelectedTask";
 
 function Home() {
   const [characters, setCharacters] = useState([]); // Manage task list state
-  const [selectedTask, setSelectedTask] = useState(null); // Manage selected task
+  const [ setSelectedTask] = useState(null); // Manage selected task
 
   function removeOneCharacter(index) {
     const updated = characters.filter((character, i) => {
@@ -14,9 +12,7 @@ function Home() {
     setCharacters(updated);
   }
 
-  function updateList(person) {
-    setCharacters([...characters, person]);
-  }
+
 
   // Handle task selection
   const handleSelectTask = (task) => {

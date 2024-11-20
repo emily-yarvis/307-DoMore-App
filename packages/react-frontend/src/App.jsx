@@ -1,8 +1,6 @@
 // src/MyApp.jsx
 import { useState } from "react";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-import Table from "./Table";
-import Form from "./Form";
 import SignUp from "./SignUp";
 import LogIn from "./LogIn";
 import Home from "./Home";
@@ -12,16 +10,6 @@ import NewList from "./NewList";
 function App() {
   const [characters, setCharacters] = useState([]);
 
-  function removeOneCharacter(index) {
-    const updated = characters.filter((character, i) => {
-      return i !== index;
-    });
-    setCharacters(updated);
-  }
-
-  function updateList(person) {
-    setCharacters([...characters, person]);
-  }
 
   return (
     <Router>
