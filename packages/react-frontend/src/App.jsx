@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 // import Table from "./Table"; 
 // import Form from "./Form"; 
@@ -8,22 +7,10 @@ import Home from "./Home";
 import NewTask from "./NewTask";
 import NewList from "./NewList";
 
+// Commented out as they are unused
+// const [characters, setCharacters] = useState([]);
+
 function App() {
-  const [characters, setCharacters] = useState([]);
-
-  
-  // function removeOneCharacter(index) {
-  //   const updated = characters.filter((character, i) => {
-  //     return i !== index;
-  //   });
-  //   setCharacters(updated);
-  // }
-
-
-  // function updateList(person) {
-  //   setCharacters([...characters, person]);
-  // }
-
   return (
     <Router>
       <div className="container">
