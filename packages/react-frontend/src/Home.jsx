@@ -8,12 +8,20 @@ function Home() {
   const [characters, setCharacters] = useState([]); 
   // const [selectedTask, setSelectedTask] = useState(null); 
 
-  function removeOneCharacter(index) {
-    const updated = characters.filter((character, i) => {
-      return i !== index;
-    });
-    setCharacters(updated);
-  }
+  function removeOneCharacter(id) {
+	fetch(`http://localhost:8000/users/${id}`, {
+	  method: "DELETE",
+	})
+	.then(res => {
+	  if (res.status === 204) {
+	    const updated = characters.filter(character => character._id !== id);
+	    setCharacters(updated);
+	  } else {
+	    throw new Error('Delete operation failed');
+	  }
+	})
+	.catch(error => console.log(error));
+    }
 
   // function updateList(person) {
   //   setCharacters([...characters, person]);
