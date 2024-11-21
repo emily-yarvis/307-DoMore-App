@@ -9,11 +9,13 @@ const NewTask = (props) => {
   });
 
   function handleChange(event) {
-    const { name, value } = event.target;
-    setTask((prevTask) => ({
-      ...prevTask,
-      [name]: value,
-    }));
+	const { name, value } = event.target;
+	if (name == "taskName")
+		setTask({ taskName: value, dueDate: task["dueDate"], description: task['description']});
+	else if (name == "dueDate")
+		setTask({taskName: task['taskName'], dueDate: value, description: task['description']});
+	else
+		setTask({taskName: task['taskName'], dueDate: task['dueDate'], description: value});
   }
 
   function submitForm() {
