@@ -10,16 +10,28 @@ import LogIn from "./LogIn";
 function App() {
     const [characters, setCharacters] = useState([]);
 
-    function removeOneCharacter(index) {
-        const updated = characters.filter((character, i) => {
-          return i !== index;
-        });
-        setCharacters(updated);
-      }
-
-      function updateList(person) {
-        setCharacters([...characters, person]);
-      }
+    function removeOneCharacter(id) {
+	fetch(`http://localhost:8000/users/${id}`, {
+	  method: "DELETE",
+	})
+	.then(res => {
+	  if (res.status === 204) {
+	    const updated = characters.filter(character => character._id !== id);
+	    setCharacters(updated);
+	  } else {
+	    throw new Error('Delete operation failed');
+	  }
+	})
+	.catch(error => console.log(error));
+    }
+    
+    function updateList(person) { 
+	postUser(person)
+	  .then((newPer) => setCharacters([...characters, newPer]))
+	  .catch((error) => {
+	    console.log(error);
+	  })
+    }
 
       return (
         <Router> {/* implemented router*/}

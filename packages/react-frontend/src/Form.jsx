@@ -13,6 +13,7 @@ function Form(props) {
       setPerson({ taskName: person["taskName"], dueDate: value });
     else setPerson({ taskName: value, dueDate: person["dueDate"] });
   }
+  
   function submitForm() {
     props.handleSubmit(person);
     setPerson({ taskName: "", dueDate: "" });
