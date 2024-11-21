@@ -9,7 +9,7 @@ function Home() {
   // const [selectedTask, setSelectedTask] = useState(null); 
 
   function removeOneCharacter(id) {
-	fetch(`http://localhost:8000/users/${id}`, {
+	fetch(`http://localhost:8000/tasks`, {
 	  method: "DELETE",
 	})
 	.then(res => {
