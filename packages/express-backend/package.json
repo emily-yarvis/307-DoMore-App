@@ -7,7 +7,7 @@
     "lint": "npx eslint . && npx prettier --check .",
     "test": "echo \"Error: no test specified\"",
     "dev": "nodemon backend_with_db.js",
-	  "start": "node backend_with_db.js"
+    "start": "node backend_with_db.js"
   },
   "author": "",
   "license": "ISC",
