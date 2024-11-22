@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import taskServices from "./services/task-services.js";
 import userServices from "./services/user-services.js";
+import { registerUser, loginUser, authenticateUser } from "./auth.js";
 
 //Database and API setup
 const app = express();
@@ -78,7 +79,7 @@ app.get("/users", (req, res) => {
   }
 });
 
-app.post("/users", (req, res) => {
+app.post("/users", authenticateUser, (req, res) => {
   const userToAdd = req.body;
   userServices
     .addUser(userToAdd)
@@ -87,6 +88,9 @@ app.post("/users", (req, res) => {
       console.log(error);
     });
 });
+
+app.post("/signup", registerUser);
+app.post("/login", loginUser);
 
 app.delete("/users", (req, res) => {
   const userToDelete = req.body._id;
