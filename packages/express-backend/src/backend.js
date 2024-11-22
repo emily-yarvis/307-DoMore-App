@@ -82,7 +82,7 @@ app.post("/users", (req, res) => {
 app.delete("/users", (req, res) => {
   const userToDelete = req.body._id;
   userServices.deleteUser(userToDelete)
-    .then((result) => res.status(204).send())
+    .then(res.status(204).send())
     .catch(() => res.status(404).send("Resource not found."));
 });
 
