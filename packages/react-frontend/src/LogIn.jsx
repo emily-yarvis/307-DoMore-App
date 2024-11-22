@@ -13,9 +13,11 @@ const LogIn = (props) => {
     switch (name) {
       case "username":
         setCreds({ ...creds, username: value });
+        console.log(creds)
         break;
       case "password":
         setCreds({ ...creds, pwd: value });
+        console.log(creds)
         break;
     }
   }
@@ -26,7 +28,6 @@ const LogIn = (props) => {
 
   function submitForm() {
     props.handleSubmit(creds);
-    setCreds({ username: "", pwd: "" });
   }
 
   return (
@@ -42,7 +43,7 @@ const LogIn = (props) => {
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <input
-              type="tetxt"
+              type="text"
               name="username"
               id="username"
               value={creds.username}

@@ -18,6 +18,7 @@ function App() {
   const INVALID_TOKEN = "INVALID_TOKEN";
   const [token, setToken] = useState(INVALID_TOKEN);
   const [message, setMessage] = useState("");
+  const [characters, setCharacters] = useState([]);
 
   function fetchUsers() {
     const promise = fetch("http://localhost:8000/users");
@@ -141,7 +142,7 @@ function App() {
         </nav>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/signup" element={<LogIn handleSubmit={signupUser}/>} />
+          <Route path="/signup" element={<SignUp handleSubmit={signupUser}/>} />
           <Route path="/login" element={<LogIn handleSubmit={loginUser} />} />
           <Route path="/newTask" element={<NewTask />} />
           <Route path="/newList" element={<NewList />} />
