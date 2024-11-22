@@ -9,10 +9,16 @@ import Home from "./Home";
 import NewTask from "./NewTask";
 import NewList from "./NewList";
 
+
 // Commented out as they are unused
 // const [characters, setCharacters] = useState([]);
 
 function App() {
+  const API_PREFIX = "http://localhost:8000"
+  const INVALID_TOKEN = "INVALID_TOKEN";
+  const [token, setToken] = useState(INVALID_TOKEN);
+  const [message, setMessage] = useState("");
+
   function fetchUsers() {
     const promise = fetch("http://localhost:8000/users");
     return promise;
@@ -60,6 +66,55 @@ function App() {
     return promise;
   }
 
+  function signupUser(creds) {
+    const promise = fetch(`${API_PREFIX}/signup`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(creds)
+    })
+      .then((response) => {
+        if (response.status === 201) {
+          response
+            .json()
+            .then((payload) => setToken(payload.token));
+          setMessage(
+            `Signup successful for user: ${creds.username}; auth token saved`
+          );
+        } else {
+          setMessage(
+            `Signup Error ${response.status}: ${response.data}`
+          );
+        }
+      })
+      .catch((error) => {
+        setMessage(`Signup Error: ${error}`);
+      });
+  
+    return promise;
+  }
+
+  function addAuthHeader(otherHeaders = {}) {
+    if (token === INVALID_TOKEN) {
+      return otherHeaders;
+    } else {
+      return {
+        ...otherHeaders,
+        Authorization: `Bearer ${token}`
+      };
+    }
+  }
+
+  function fetchUsers() {
+    const promise = fetch(`${API_PREFIX}/users`, {
+      headers: addAuthHeader()
+    });
+  
+    return promise;
+  }
+
+
   return (
     <Router>
       <div className="container">
@@ -86,7 +141,7 @@ function App() {
         </nav>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/signup" element={<SignUp />} />
+          <Route path="/signup" element={<LogIn handleSubmit={signupUser}/>} />
           <Route path="/login" element={<LogIn handleSubmit={loginUser} />} />
           <Route path="/newTask" element={<NewTask />} />
           <Route path="/newList" element={<NewList />} />

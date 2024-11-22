@@ -20,6 +20,7 @@ function TableBody(props) {
   if (props.characterData === null) {
     return <caption>Data Unavailable</caption>;
   } else {
+    console.log("WOOF"+props.characterData)
     const rows = props.listData.map((row, index) => (
       <tr key={index} onClick={() => props.handleSelectTask(row)}>
         <td>{row.taskName}</td>
