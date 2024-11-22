@@ -17,3 +17,6 @@ Make sure to install the following plugins to your IDE to ensure code style is t
 In order for these plugins to format your code on save follow these steps: https://blog.yogeshchavan.dev/automatically-format-code-on-file-save-in-visual-studio-code-using-prettier
 
 Make sure to run npm install --save-dev --save-exact-prettier in the root of your cloned repo.
+
+Sequence Diagram: 
+![IMG_0507](https://github.com/user-attachments/assets/f9383d1b-fea3-46f0-a40c-85918a1e235f)
