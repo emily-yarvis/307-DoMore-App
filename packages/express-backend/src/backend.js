@@ -46,7 +46,7 @@ app.post("/tasks", (req, res) => {
 app.delete("/tasks", (req, res) => {
   const taskToDelete = req.body._id;
   taskServices.deleteTask(taskToDelete)
-    .then((result) => res.status(204).send())
+    .then(res.status(204).send())
     .catch(() => res.status(404).send("Resource not found."));
 });
 
