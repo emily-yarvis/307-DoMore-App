@@ -81,14 +81,7 @@ const LogIn = (props) => {
           >
             log in
           </button>
-          <div className="flex items-center mb-4">
-            <hr className="flex-grow border-gray-300" />
-            <span className="px-2 text-xs">or</span>
-            <hr className="flex-grow border-gray-300" />
-          </div>
-          <button className="w-full py-2 border border-blue-500 text-blue-500 font-semibold rounded-md">
-            login with google/canvas
-          </button>
+          
         </form>
       </div>
     </div>
