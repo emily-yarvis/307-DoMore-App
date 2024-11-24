@@ -24,24 +24,22 @@ mongoose
   .catch((error) => console.log(error));
 
 //Home API routes
-app.get("/", (req, res) => {
-  taskServices
-    .getTasks()
+app.get("/tasks", (req, res) => {
+  taskServices.getTasks()
     .then((taskList) => res.status(200).send(taskList))
     .catch(() => res.status(404).send("Resource not found."));
 });
 
-// app.get("/:tag", (req, res) => {
-//   const tag = req.params["tag"];
+app.get("/tasks/:tag", (req, res) => {
+  const tag = req.params["tag"];
 
-//   console.log("in here")
-//   taskServices.findTasksByTag(tag)
-//     .then((taskList) => res.status(200).send(taskList))
-//     .catch(() => res.status(404).send("Resource not found."));
+  console.log("in here")
+  taskServices.findTasksByTag(tag)
+    .then((taskList) => res.status(200).send(taskList))
+    .catch(() => res.status(404).send("Resource not found."));
+});
 
-// });
-
-app.post("/", (req, res) => {
+app.post("/tasks", (req, res) => {
   const taskToAdd = req.body;
   taskServices
     .addTask(taskToAdd)
@@ -51,8 +49,9 @@ app.post("/", (req, res) => {
     });
 });
 
-app.delete("/", (req, res) => {
+app.delete("/tasks", (req, res) => {
   const taskToDelete = req.body._id;
+
   taskServices
     .deleteTask(taskToDelete)
     .then((result) => res.status(204).send(result))
@@ -94,6 +93,7 @@ app.post("/login", loginUser);
 
 app.delete("/users", (req, res) => {
   const userToDelete = req.body._id;
+
   userServices
     .deleteUser(userToDelete)
     .then((result) => res.status(204).send(result))
