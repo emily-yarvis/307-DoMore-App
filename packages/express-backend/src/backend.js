@@ -1,8 +1,9 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-import taskServices from "./services/task-services.js"
+import taskServices from "./services/task-services.js";
 import userServices from "./services/user-services.js";
+import { registerUser, loginUser, authenticateUser } from "./auth.js";
 
 //Database and API setup
 const app = express();
@@ -13,10 +14,13 @@ app.use(cors());
 
 mongoose.set("debug", true);
 mongoose
-  .connect("mongodb+srv://rishabhjhamnani:LFEf6PWNMKxLcgdO@domore.dpfjd.mongodb.net/?retryWrites=true&w=majority&appName=DoMore", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(
+    "mongodb+srv://rishabhjhamnani:LFEf6PWNMKxLcgdO@domore.dpfjd.mongodb.net/?retryWrites=true&w=majority&appName=DoMore",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    },
+  )
   .catch((error) => console.log(error));
 
 //Home API routes
@@ -33,20 +37,24 @@ app.get("/tasks/:tag", (req, res) => {
   taskServices.findTasksByTag(tag)
     .then((taskList) => res.status(200).send(taskList))
     .catch(() => res.status(404).send("Resource not found."));
-
 });
 
 app.post("/tasks", (req, res) => {
   const taskToAdd = req.body;
-    taskServices.addTask(taskToAdd)
-      .then(res.status(201).send(taskToAdd))
-      .catch((error) => { console.log(error); });
-})
+  taskServices
+    .addTask(taskToAdd)
+    .then(res.status(201).send(taskToAdd))
+    .catch((error) => {
+      console.log(error);
+    });
+});
 
 app.delete("/tasks", (req, res) => {
   const taskToDelete = req.body._id;
-  taskServices.deleteTask(taskToDelete)
-    .then(res.status(204).send())
+
+  taskServices
+    .deleteTask(taskToDelete)
+    .then((result) => res.status(204).send(result))
     .catch(() => res.status(404).send("Resource not found."));
 });
 
@@ -56,38 +64,42 @@ app.get("/users", (req, res) => {
   const password = req.body.password;
 
   if (username == undefined && password == undefined) {
-    userServices.getUsers()
+    userServices
+      .getUsers()
       .then((users) => res.status(200).send(users))
       .catch(() => res.status(404).send("Resource not found."));
-  }
-
-  else if (username != undefined && password != undefined) {
-    userServices.findUserByUsernameAndPassword(username, password)
+  } else if (username != undefined && password != undefined) {
+    userServices
+      .findUserByUsernameAndPassword(username, password)
       .then((user) => res.status(200).send(user))
       .catch(() => res.status(404).send("Resource not found."));
-  }
-
-  else {
+  } else {
     res.status(404).send("Resource not found.");
   }
 });
 
-app.post("/users", (req, res) => {
+app.post("/users", authenticateUser, (req, res) => {
   const userToAdd = req.body;
-  userServices.addUser(userToAdd)
+  userServices
+    .addUser(userToAdd)
     .then(res.status(201).send(userToAdd))
-    .catch((error) => { console.log(error); });
-})
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
+app.post("/signup", registerUser);
+app.post("/login", loginUser);
 
 app.delete("/users", (req, res) => {
   const userToDelete = req.body._id;
-  userServices.deleteUser(userToDelete)
-    .then(res.status(204).send())
+
+  userServices
+    .deleteUser(userToDelete)
+    .then((result) => res.status(204).send(result))
     .catch(() => res.status(404).send("Resource not found."));
 });
 
-app.listen(port, () => {
-  console.log(
-    `Example app listening at http://localhost:${port}`
-  );
+app.listen(process.env.PORT || port, () => {
+  console.log("REST API is listening.");
 });
