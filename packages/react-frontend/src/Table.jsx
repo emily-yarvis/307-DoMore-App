@@ -20,7 +20,6 @@ function TableBody(props) {
   if (props.characterData === null) {
     return <caption>Data Unavailable</caption>;
   } else {
-    console.log("WOOF"+props.characterData)
     const rows = props.listData.map((row, index) => (
       <tr key={index} onClick={() => props.handleSelectTask(row)}>
         <td>{row.taskName}</td>
@@ -70,9 +69,10 @@ function Table(props) {
     setSelectedTask(task);
   };
 
+
   return (
     <div className="flex space-x-4">
-      <div className="w-2/3">
+      <div className="w-2/3 bg-gray-200 rounded-md mb-4 py-2 px-2">
         <table>
           <TableHeader />
           <TableBody
@@ -115,14 +115,5 @@ function Table(props) {
   );
 }
 
-Table.propTypes = {
-  listData: PropTypes.arrayOf(
-    PropTypes.shape({
-      taskName: PropTypes.string.isRequired,
-      dueDate: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-  removeCharacter: PropTypes.func.isRequired,
-};
 
 export default Table;

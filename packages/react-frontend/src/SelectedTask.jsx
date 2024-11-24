@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 const SelectedTask = ({ taskName, dueDate, description }) => {
   return (
-    <div className="p-4 bg-white shadow-lg rounded-md max-w-sm">
+    <div className="p-4 bg-gray-200 shadow-lg rounded-md max-w-sm">
       <h2 className="text-2xl font-semibold mb-2">{taskName}</h2>
       <p className="text-gray-700 mb-2">
         <strong>Due Date:</strong> {dueDate}
