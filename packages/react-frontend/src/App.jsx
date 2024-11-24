@@ -14,14 +14,14 @@ import NewList from "./NewList";
 // const [characters, setCharacters] = useState([]);
 
 function App() {
-  const API_PREFIX = "http://localhost:8000"
+  const API_PREFIX = "domoreapp-e5ecc0h3d6dzh3hz.westus-01.azurewebsites.net"
   const INVALID_TOKEN = "INVALID_TOKEN";
   const [token, setToken] = useState(INVALID_TOKEN);
   const [message, setMessage] = useState("");
   const [characters, setCharacters] = useState([]);
 
   function fetchUsers() {
-    const promise = fetch("http://localhost:8000/users");
+    const promise = fetch("domoreapp-e5ecc0h3d6dzh3hz.westus-01.azurewebsites.net/users");
     return promise;
   }
 
