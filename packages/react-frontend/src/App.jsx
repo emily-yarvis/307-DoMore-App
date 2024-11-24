@@ -21,7 +21,7 @@ function App() {
   const [characters, setCharacters] = useState([]);
 
   function fetchUsers() {
-    const promise = fetch("domoreapp-e5ecc0h3d6dzh3hz.westus-01.azurewebsites.net/users");
+    const promise = fetch("https://domoreapp-e5ecc0h3d6dzh3hz.westus-01.azurewebsites.net/users");
     return promise;
   }
 
