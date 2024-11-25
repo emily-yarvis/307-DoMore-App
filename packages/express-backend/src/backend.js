@@ -25,7 +25,8 @@ mongoose
 
 //Home API routes
 app.get("/tasks", (req, res) => {
-  taskServices.getTasks()
+  taskServices
+    .getTasks()
     .then((taskList) => res.status(200).send(taskList))
     .catch(() => res.status(404).send("Resource not found."));
 });
@@ -33,8 +34,9 @@ app.get("/tasks", (req, res) => {
 app.get("/tasks/:tag", (req, res) => {
   const tag = req.params["tag"];
 
-  console.log("in here")
-  taskServices.findTasksByTag(tag)
+  console.log("in here");
+  taskServices
+    .findTasksByTag(tag)
     .then((taskList) => res.status(200).send(taskList))
     .catch(() => res.status(404).send("Resource not found."));
 });
