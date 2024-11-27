@@ -24,25 +24,50 @@ mongoose
   .catch((error) => console.log(error));
 
 //Home API routes
-app.get("/", (req, res) => {
+app.get("/tasks", (req, res) => {
   taskServices
     .getTasks()
     .then((taskList) => res.status(200).send(taskList))
     .catch(() => res.status(404).send("Resource not found."));
 });
 
-app.get("/:tag", (req, res) => {
-  const tag = req.params["tag"];
+app.get("/tasks/:userId", (req, res) => {
+  const userId = req.params["userId"];
 
-  console.log("in here");
-  taskServices
-    .findTasksByTag(tag)
+  userServices
+    .getTasksByUserId(userId)
     .then((taskList) => res.status(200).send(taskList))
     .catch(() => res.status(404).send("Resource not found."));
 });
 
-app.post("/", (req, res) => {
+app.post("/tasks/:userId", (req, res) => {
+  const userId = req.params["userId"];
   const taskToAdd = req.body;
+
+  taskServices
+    .addTask(taskToAdd)
+    .then((task) => {
+      return userServices.assignTaskToUser(userId, task._id)
+        .then(() => {
+          // Send response after task is assigned to user
+          res.status(201).send("Added task to user");
+        })
+        .catch((error) => {
+          // Log error and send error response for task assignment failure
+          console.log(error);
+          res.status(500).send("Error assigning task to user");
+        });
+    })
+    .catch((error) => {
+      // Log error and send error response for task creation failure
+      console.log(error);
+      res.status(500).send("Error adding task");
+    });
+});
+
+app.post("/tasks", (req, res) => {
+  const taskToAdd = req.body;
+
   taskServices
     .addTask(taskToAdd)
     .then(res.status(201).send(taskToAdd))
