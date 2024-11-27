@@ -24,14 +24,14 @@ mongoose
   .catch((error) => console.log(error));
 
 //Home API routes
-app.get("/tasks", (req, res) => {
+app.get("/", (req, res) => {
   taskServices
     .getTasks()
     .then((taskList) => res.status(200).send(taskList))
     .catch(() => res.status(404).send("Resource not found."));
 });
 
-app.get("/tasks/:tag", (req, res) => {
+app.get("/:tag", (req, res) => {
   const tag = req.params["tag"];
 
   console.log("in here");
@@ -41,7 +41,7 @@ app.get("/tasks/:tag", (req, res) => {
     .catch(() => res.status(404).send("Resource not found."));
 });
 
-app.post("/tasks", (req, res) => {
+app.post("/", (req, res) => {
   const taskToAdd = req.body;
   taskServices
     .addTask(taskToAdd)
@@ -53,7 +53,6 @@ app.post("/tasks", (req, res) => {
 
 app.delete("/tasks", (req, res) => {
   const taskToDelete = req.body._id;
-
   taskServices
     .deleteTask(taskToDelete)
     .then((result) => res.status(204).send(result))
@@ -95,7 +94,6 @@ app.post("/login", loginUser);
 
 app.delete("/users", (req, res) => {
   const userToDelete = req.body._id;
-
   userServices
     .deleteUser(userToDelete)
     .then((result) => res.status(204).send(result))
