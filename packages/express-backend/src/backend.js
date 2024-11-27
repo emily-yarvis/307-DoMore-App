@@ -47,7 +47,8 @@ app.post("/tasks/:userId", (req, res) => {
   taskServices
     .addTask(taskToAdd)
     .then((task) => {
-      return userServices.assignTaskToUser(userId, task._id)
+      return userServices
+        .assignTaskToUser(userId, task._id)
         .then(() => {
           // Send response after task is assigned to user
           res.status(201).send("Added task to user");
