@@ -8,6 +8,7 @@ import LogIn from "./LogIn";
 import Home from "./Home";
 import NewTask from "./NewTask";
 import NewList from "./NewList";
+import CategoryView from "./CategoryView";
 
 // Commented out as they are unused
 // const [characters, setCharacters] = useState([]);
@@ -17,8 +18,18 @@ function App() {
   const INVALID_TOKEN = "INVALID_TOKEN";
   const [token, setToken] = useState(INVALID_TOKEN);
   //const [message, setMessage] = useState("");
-  //const [characters, setCharacters] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [lists, setLists] = useState([]);
 
+  function removeOneCharacter(index) {
+    console.log(lists[index]);
+      const updated = lists.filter((list, i) => {
+        return i !== index;
+      });
+      deleteUser(lists[index])
+      .then(setLists(updated));
+      
+    }
   //function fetchUsers() {
   //  const promise = fetch(
   //    "https://domoreapp-e5ecc0h3d6dzh3hz.westus-01.azurewebsites.net/users",
@@ -157,6 +168,8 @@ function App() {
             <Route path="/login" element={<LogIn handleSubmit={loginUser} />} />
             <Route path="/newTask" element={<NewTask />} />
             <Route path="/newList" element={<NewList />} />
+            <Route path="/categoryView" element={<CategoryView categoryData={categories} listData={lists} removeCharacter ={removeOneCharacter}/>} />
+
           </Routes>
         </div>
       </div>

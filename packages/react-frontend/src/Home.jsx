@@ -2,31 +2,41 @@
 import { useState } from "react";
 import TaskView from "./TaskView";
 import ListView from "./ListView";
+import CategoryView from "./CategoryView";
 // import SelectedTask from "./SelectedTask"; 
 
 function Home() {
-  const [characters, setCharacters] = useState([]);
-  const [tasks, setTasks] = useState([]); 
+  const [lists, setLists] = useState([]);
+  const [tasks, setTasks] = useState([]);
+  const [categories, setCategories] = useState([]); 
   // const [selectedTask, setSelectedTask] = useState(null); 
 
   function removeOneCharacter(index) {
-    console.log(characters[index]);
-      const updated = characters.filter((character, i) => {
+    console.log(lists[index]);
+      const updated = lists.filter((list, i) => {
         return i !== index;
       });
-      deleteUser(characters[index])
-      .then(setCharacters(updated));
+      deleteUser(lists[index])
+      .then(setLists(updated));
       
     }
 
-  // function updateList(person) {
-  //   setCharacters([...characters, person]);
+  // function updateList(list) {
+  //   setLists([...lists, list]);
+  // }
+
+  // function updateTasks(task) {
+  //   setTasks([...tasks, task]);
+  // }
+
+  // function updateCategories(task) {
+  //   setCategories([...categories, category]);
   // }
 
   return (
     <div className="flex space-x-4 p-4">
       <div className="w-1/3 bg-gray-200 rounded-md mb-4 py-2 px-2">
-        <ListView listData={characters} removeCharacter ={removeOneCharacter} />
+        <CategoryView categoryData={categories} listData={lists} removeCharacter ={removeOneCharacter}/> 
       </div>
       <div className="w-px bg-gray-300" />
       <div className="w-2/3">
