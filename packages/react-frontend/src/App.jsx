@@ -16,15 +16,15 @@ function App() {
   const API_PREFIX = "domoreapp-e5ecc0h3d6dzh3hz.westus-01.azurewebsites.net";
   const INVALID_TOKEN = "INVALID_TOKEN";
   const [token, setToken] = useState(INVALID_TOKEN);
-  const [message, setMessage] = useState("");
-  const [characters, setCharacters] = useState([]);
+  //const [message, setMessage] = useState("");
+  //const [characters, setCharacters] = useState([]);
 
-  function fetchUsers() {
-    const promise = fetch(
-      "https://domoreapp-e5ecc0h3d6dzh3hz.westus-01.azurewebsites.net/users",
-    );
-    return promise;
-  }
+  //function fetchUsers() {
+  //  const promise = fetch(
+  //    "https://domoreapp-e5ecc0h3d6dzh3hz.westus-01.azurewebsites.net/users",
+  //  );
+  //  return promise;
+  //}
 
   useEffect(() => {
     fetchUsers()
@@ -119,7 +119,7 @@ function App() {
               <img
                 src="https://via.placeholder.com/150"
                 alt="Profile"
-                class="w-4 h-4 rounded-full border-2  border-gray-300 shadow-md"
+                className="w-4 h-4 rounded-full border-2  border-gray-300 shadow-md"
               />
             </div>
             <div>Profile</div>

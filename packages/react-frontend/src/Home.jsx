@@ -1,11 +1,12 @@
 // import React, { useState } from "react";
 import { useState } from "react";
-import Table from "./Table";
+import TaskView from "./TaskView";
 import ListView from "./ListView";
 // import SelectedTask from "./SelectedTask"; 
 
 function Home() {
-  const [characters, setCharacters] = useState([]); 
+  const [characters, setCharacters] = useState([]);
+  const [tasks, setTasks] = useState([]); 
   // const [selectedTask, setSelectedTask] = useState(null); 
 
   function removeOneCharacter(index) {
@@ -29,8 +30,8 @@ function Home() {
       </div>
       <div className="w-px bg-gray-300" />
       <div className="w-2/3">
-        <Table
-          characterData={characters}
+        <TaskView
+          taskData={tasks}
           removeCharacter={removeOneCharacter}
         />
       </div>

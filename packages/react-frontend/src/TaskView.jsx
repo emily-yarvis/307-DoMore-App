@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import NewTask from "./NewTask";
 import SelectedTask from "./SelectedTask";
 
-function TableHeader() {
+function TaskViewHeader() {
   return (
     <thead>
       <tr>
@@ -16,7 +16,7 @@ function TableHeader() {
   );
 }
 
-function TableBody(props) {
+function TaskViewBody(props) {
   if (props.characterData === null) {
     return <caption>Data Unavailable</caption>;
   } else {
@@ -27,11 +27,7 @@ function TableBody(props) {
         <td>
           <button
             className="py-2 px-4 bg-blue-500 text-white font-semibold rounded-md mb-4"
-            onClick={(e) => {
-              e.stopPropagation();
-              props.removeCharacter(index);
-            }}
-          >
+            onClick={() => props.removeCharacter(index)}>
             Delete
           </button>
         </td>
@@ -41,7 +37,7 @@ function TableBody(props) {
   }
 }
 
-TableBody.propTypes = {
+TaskViewBody.propTypes = {
   listData: PropTypes.arrayOf(
     PropTypes.shape({
       taskName: PropTypes.string.isRequired,
@@ -52,9 +48,9 @@ TableBody.propTypes = {
   handleSelectTask: PropTypes.func.isRequired,
 };
 
-function Table(props) {
+function TaskView(props) {
   const [showModal, setShowModal] = useState(false);
-  const [taskData, setTaskData] = useState(props.listData || []);
+  const [taskData, setTaskData] = useState(props.taskData || []);
   const [selectedTask, setSelectedTask] = useState(null);
 
   const openModal = () => setShowModal(true);
@@ -74,8 +70,8 @@ function Table(props) {
     <div className="flex space-x-4">
       <div className="w-2/3 bg-gray-200 rounded-md mb-4 py-2 px-2">
         <table>
-          <TableHeader />
-          <TableBody
+          <TaskViewHeader />
+          <TaskViewBody
             listData={taskData}
             removeCharacter={props.removeCharacter}
             handleSelectTask={handleSelectTask}
@@ -116,4 +112,4 @@ function Table(props) {
 }
 
 
-export default Table;
+export default TaskView;
