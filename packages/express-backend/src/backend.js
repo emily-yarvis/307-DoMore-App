@@ -24,12 +24,13 @@ mongoose
   .catch((error) => console.log(error));
 
 //Home API routes
-app.get("/tasks", (req, res) => {
+app.get("/tasks", authenticateUser, (req, res) => {
   taskServices
     .getTasks()
     .then((taskList) => res.status(200).send(taskList))
     .catch(() => res.status(404).send("Resource not found."));
 });
+
 
 app.get("/tasks/:tag", (req, res) => {
   const tag = req.params["tag"];
