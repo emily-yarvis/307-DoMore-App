@@ -4,6 +4,14 @@ import PropTypes from "prop-types";
 import NewTask from "./NewTask";
 import SelectedTask from "./SelectedTask";
 
+function ListNameHeader(props) {
+  return (
+    <div className="flex justify-center text-2xl font-bold rounded-mb">
+      {props.listName || "List Name"}
+    </div>
+  );
+}
+
 function TaskViewHeader() {
   return (
     <thead>
@@ -27,7 +35,8 @@ function TaskViewBody(props) {
         <td>
           <button
             className="py-2 px-4 bg-blue-500 text-white font-semibold rounded-md mb-4"
-            onClick={() => props.removeCharacter(index)}>
+            onClick={() => props.removeCharacter(index)}
+          >
             Delete
           </button>
         </td>
@@ -42,7 +51,7 @@ TaskViewBody.propTypes = {
     PropTypes.shape({
       taskName: PropTypes.string.isRequired,
       dueDate: PropTypes.string.isRequired,
-    })
+    }),
   ).isRequired,
   removeCharacter: PropTypes.func.isRequired,
   handleSelectTask: PropTypes.func.isRequired,
@@ -65,37 +74,41 @@ function TaskView(props) {
     setSelectedTask(task);
   };
 
-
   return (
     <div className="flex space-x-4">
-      <div className="w-2/3 bg-gray-200 rounded-md mb-4 py-2 px-2">
-        <table>
-          <TaskViewHeader />
-          <TaskViewBody
-            listData={taskData}
-            removeCharacter={props.removeCharacter}
-            handleSelectTask={handleSelectTask}
-          />
-        </table>
+      <div className="w-2/3">
+        <div className=" bg-gray-200 rounded-md mb-4 py-2 px-2">
+          <ListNameHeader />
+        </div>
+        <div className=" bg-gray-200 rounded-md mb-4 py-2 px-2">
+          <table>
+            <TaskViewHeader />
+            <TaskViewBody
+              listData={taskData}
+              removeCharacter={props.removeCharacter}
+              handleSelectTask={handleSelectTask}
+            />
+          </table>
 
-        <button
-          className="py-2 px-4 bg-blue-500 text-white font-semibold rounded-md mt-4"
-          onClick={openModal}
-        >
-          Add a Task
-        </button>
+          <button
+            className="py-2 px-4 bg-blue-500 text-white font-semibold rounded-md mt-4"
+            onClick={openModal}
+          >
+            Add a Task
+          </button>
 
-        {showModal && (
-          <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
-            <NewTask handleSubmit={addNewTask} />
-            <button
-              onClick={closeModal}
-              className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl font-bold"
-            >
-              &#10005;
-            </button>
-          </div>
-        )}
+          {showModal && (
+            <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+              <NewTask handleSubmit={addNewTask} />
+              <button
+                onClick={closeModal}
+                className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl font-bold"
+              >
+                &#10005;
+              </button>
+            </div>
+          )}
+        </div>
       </div>
 
       {selectedTask && (
@@ -110,6 +123,5 @@ function TaskView(props) {
     </div>
   );
 }
-
 
 export default TaskView;

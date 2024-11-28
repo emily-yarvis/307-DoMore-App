@@ -1,4 +1,4 @@
-// import React, { useState } from "react"; 
+// import React, { useState } from "react";
 import { useState } from "react";
 import PropTypes from "prop-types";
 import NewList from "./NewList";
@@ -16,11 +16,13 @@ function TableHeader() {
 
 function TableBody(props) {
   const rows = props.listData.map((row, index) => (
-    <tr key={index}>
-      <td>{row.listName}</td>
+    <tr className = "flex items-center justify-between" key={index}>
+      <td>
+        <div className = " py-2 px-4 min-w-40 bg-white font-semibold rounded-md">{row.listName}</div>
+      </td>
       <td>
         <button
-          className="py-2 px-4 bg-blue-500 text-white font-semibold rounded-md mb-4"
+          className="py-2 px-4 bg-blue-500 text-white font-semibold rounded-md "
           onClick={() => props.removeCharacter(index)}
         >
           Delete
@@ -35,7 +37,7 @@ TableBody.propTypes = {
   listData: PropTypes.arrayOf(
     PropTypes.shape({
       listName: PropTypes.string.isRequired,
-    })
+    }),
   ).isRequired,
   removeCharacter: PropTypes.func.isRequired,
 };
@@ -55,8 +57,10 @@ function ListView(props) {
   return (
     <div>
       <table>
-        <TableHeader />
-        <TableBody listData={listData} removeCharacter={props.removeCharacter} />
+        <TableBody
+          listData={listData}
+          removeCharacter={props.removeCharacter}
+        />
       </table>
       <button
         className="py-2 px-4 bg-blue-500 text-white font-semibold rounded-md mt-4"
@@ -83,7 +87,7 @@ ListView.propTypes = {
   listData: PropTypes.arrayOf(
     PropTypes.shape({
       listName: PropTypes.string.isRequired,
-    })
+    }),
   ).isRequired,
   removeCharacter: PropTypes.func.isRequired,
 };

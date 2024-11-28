@@ -20,7 +20,7 @@ function CategoryViewBody(props) {
     <tr key={index}>
       <td>
         <div>
-          <div  className="flex gap-4">
+          <div  className="flex gap-4 mt-2">
             <div className=" text-2xl font-bold">{row.categoryName}</div>
             <button
               className=" flex w-8 h-8 bg-red-500 text-white justify-center items-center font-semibold rounded-md "
@@ -29,10 +29,11 @@ function CategoryViewBody(props) {
               x
             </button>
           </div>
-          <div>
+          <div className ="pt-4">
             <ListView
               listData={props.listData}
               removeCharacter={props.removeCharacter}
+              
             />
           </div>
         </div>
