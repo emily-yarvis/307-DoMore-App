@@ -3,6 +3,8 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import NewList from "./NewList";
 
+
+
 function TableHeader() {
   return (
     <thead>
@@ -16,9 +18,11 @@ function TableHeader() {
 
 function TableBody(props) {
   const rows = props.listData.map((row, index) => (
-    <tr className = "flex items-center justify-between" key={index}>
+    <tr className="flex items-center justify-between" key={index}>
       <td>
-        <div className = " py-2 px-4 min-w-40 bg-white font-semibold rounded-md">{row.listName}</div>
+        <div className=" py-2 px-4 min-w-40 bg-white font-semibold rounded-md">
+          {row.listName}
+        </div>
       </td>
       <td>
         <button
@@ -56,6 +60,7 @@ function ListView(props) {
 
   return (
     <div>
+      
       <table>
         <TableBody
           listData={listData}
