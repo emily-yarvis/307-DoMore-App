@@ -4,10 +4,12 @@ import cors from "cors";
 import taskServices from "./services/task-services.js";
 import userServices from "./services/user-services.js";
 import { registerUser, loginUser, authenticateUser } from "./auth.js";
+import multer from "multer";
 
 //Database and API setup
 const app = express();
 const port = 8000;
+const upload = multer({ dest: "uploads/" });
 
 app.use(express.json());
 app.use(cors());
@@ -124,6 +126,15 @@ app.delete("/users", (req, res) => {
     .deleteUser(userToDelete)
     .then((result) => res.status(204).send(result))
     .catch(() => res.status(404).send("Resource not found."));
+});
+
+//File management for ics uploads
+app.post("/upload", upload.single("file"), (req, res) => {
+  if (req.file) {
+    res.status(200).send("File uploaded successfully!");
+  } else {
+    res.status(400).send("No file uploaded.");
+  }
 });
 
 app.listen(process.env.PORT || port, () => {
