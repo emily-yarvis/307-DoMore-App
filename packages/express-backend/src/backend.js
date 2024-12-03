@@ -4,10 +4,12 @@ import cors from "cors";
 import taskServices from "./services/task-services.js";
 import userServices from "./services/user-services.js";
 import { registerUser, loginUser, authenticateUser } from "./auth.js";
+import multer from "multer";
 
 //Database and API setup
 const app = express();
 const port = 8000;
+const upload = multer({ dest: "uploads/" });
 
 app.use(express.json());
 app.use(cors());
@@ -31,18 +33,44 @@ app.get("/tasks", (req, res) => {
     .catch(() => res.status(404).send("Resource not found."));
 });
 
-app.get("/tasks/:tag", (req, res) => {
-  const tag = req.params["tag"];
+app.get("/tasks/:userId", (req, res) => {
+  const userId = req.params["userId"];
 
-  console.log("in here");
-  taskServices
-    .findTasksByTag(tag)
+  userServices
+    .getTasksByUserId(userId)
     .then((taskList) => res.status(200).send(taskList))
     .catch(() => res.status(404).send("Resource not found."));
 });
 
+app.post("/tasks/:userId", (req, res) => {
+  const userId = req.params["userId"];
+  const taskToAdd = req.body;
+
+  taskServices
+    .addTask(taskToAdd)
+    .then((task) => {
+      return userServices
+        .assignTaskToUser(userId, task._id)
+        .then(() => {
+          // Send response after task is assigned to user
+          res.status(201).send("Added task to user");
+        })
+        .catch((error) => {
+          // Log error and send error response for task assignment failure
+          console.log(error);
+          res.status(500).send("Error assigning task to user");
+        });
+    })
+    .catch((error) => {
+      // Log error and send error response for task creation failure
+      console.log(error);
+      res.status(500).send("Error adding task");
+    });
+});
+
 app.post("/tasks", (req, res) => {
   const taskToAdd = req.body;
+
   taskServices
     .addTask(taskToAdd)
     .then(res.status(201).send(taskToAdd))
@@ -53,7 +81,6 @@ app.post("/tasks", (req, res) => {
 
 app.delete("/tasks", (req, res) => {
   const taskToDelete = req.body._id;
-
   taskServices
     .deleteTask(taskToDelete)
     .then((result) => res.status(204).send(result))
@@ -95,11 +122,19 @@ app.post("/login", loginUser);
 
 app.delete("/users", (req, res) => {
   const userToDelete = req.body._id;
-
   userServices
     .deleteUser(userToDelete)
     .then((result) => res.status(204).send(result))
     .catch(() => res.status(404).send("Resource not found."));
+});
+
+//File management for ics uploads
+app.post("/upload", upload.single("file"), (req, res) => {
+  if (req.file) {
+    res.status(200).send("File uploaded successfully!");
+  } else {
+    res.status(400).send("No file uploaded.");
+  }
 });
 
 app.listen(process.env.PORT || port, () => {
