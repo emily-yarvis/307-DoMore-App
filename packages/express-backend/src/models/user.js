@@ -12,7 +12,7 @@ const UserSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-    tasks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Task" }],
+    categories: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
   },
 
   { collection: "users_list" },

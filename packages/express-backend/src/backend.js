@@ -3,13 +3,13 @@ import mongoose from "mongoose";
 import cors from "cors";
 import taskServices from "./services/task-services.js";
 import userServices from "./services/user-services.js";
+import listServices from "./services/list-services.js";
+import categoryServices from "./services/category-services.js";
 import { registerUser, loginUser, authenticateUser } from "./auth.js";
-import multer from "multer";
 
 //Database and API setup
 const app = express();
 const port = 8000;
-const upload = multer({ dest: "uploads/" });
 
 app.use(express.json());
 app.use(cors());
@@ -24,8 +24,9 @@ mongoose
     },
   )
   .catch((error) => console.log(error));
+  
 
-//Home API routes
+//Task API routes
 app.get("/tasks", (req, res) => {
   taskServices
     .getTasks()
@@ -87,6 +88,22 @@ app.delete("/tasks", (req, res) => {
     .catch(() => res.status(404).send("Resource not found."));
 });
 
+//List API routes
+app.get("/lists", (req, res) => {
+  listServices
+    .getLists()
+    .then((listList) => res.status(200).send(listList))
+    .catch(() => res.status(404).send("Resource not found."));
+});
+
+//Category API routes
+app.get("/categories", (req, res) => {
+  categoryServices
+    .getCategories()
+    .then((categoryList) => res.status(200).send(categoryList))
+    .catch(() => res.status(404).send("Resource not found."));
+});
+
 //User API routes
 app.get("/users", (req, res) => {
   const username = req.body.username;
@@ -126,15 +143,6 @@ app.delete("/users", (req, res) => {
     .deleteUser(userToDelete)
     .then((result) => res.status(204).send(result))
     .catch(() => res.status(404).send("Resource not found."));
-});
-
-//File management for ics uploads
-app.post("/upload", upload.single("file"), (req, res) => {
-  if (req.file) {
-    res.status(200).send("File uploaded successfully!");
-  } else {
-    res.status(400).send("No file uploaded.");
-  }
 });
 
 app.listen(process.env.PORT || port, () => {
