@@ -8,22 +8,34 @@ import LogIn from "./LogIn";
 import Home from "./Home";
 import NewTask from "./NewTask";
 import NewList from "./NewList";
-
+import CategoryView from "./CategoryView";
 
 // Commented out as they are unused
 // const [characters, setCharacters] = useState([]);
 
 function App() {
-  const API_PREFIX = "domoreapp-e5ecc0h3d6dzh3hz.westus-01.azurewebsites.net"
+  const API_PREFIX = "domoreapp-e5ecc0h3d6dzh3hz.westus-01.azurewebsites.net";
   const INVALID_TOKEN = "INVALID_TOKEN";
   const [token, setToken] = useState(INVALID_TOKEN);
-  const [message, setMessage] = useState("");
-  const [characters, setCharacters] = useState([]);
+  //const [message, setMessage] = useState("");
+  const [categories, setCategories] = useState([]);
+  const [lists, setLists] = useState([]);
 
-  function fetchUsers() {
-    const promise = fetch("https://domoreapp-e5ecc0h3d6dzh3hz.westus-01.azurewebsites.net/users");
-    return promise;
-  }
+  function removeOneCharacter(index) {
+    console.log(lists[index]);
+      const updated = lists.filter((list, i) => {
+        return i !== index;
+      });
+      deleteUser(lists[index])
+      .then(setLists(updated));
+      
+    }
+  //function fetchUsers() {
+  //  const promise = fetch(
+  //    "https://domoreapp-e5ecc0h3d6dzh3hz.westus-01.azurewebsites.net/users",
+  //  );
+  //  return promise;
+  //}
 
   useEffect(() => {
     fetchUsers()
@@ -44,26 +56,22 @@ function App() {
     const promise = fetch(`${API_PREFIX}/login`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(creds)
+      body: JSON.stringify(creds),
     })
       .then((response) => {
         if (response.status === 200) {
-          response
-            .json()
-            .then((payload) => setToken(payload.token));
+          response.json().then((payload) => setToken(payload.token));
           setMessage(`Login successful; auth token saved`);
         } else {
-          setMessage(
-            `Login Error ${response.status}: ${response.data}`
-          );
+          setMessage(`Login Error ${response.status}: ${response.data}`);
         }
       })
       .catch((error) => {
         setMessage(`Login Error: ${error}`);
       });
-  
+
     return promise;
   }
 
@@ -71,28 +79,24 @@ function App() {
     const promise = fetch(`${API_PREFIX}/signup`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(creds)
+      body: JSON.stringify(creds),
     })
       .then((response) => {
         if (response.status === 201) {
-          response
-            .json()
-            .then((payload) => setToken(payload.token));
+          response.json().then((payload) => setToken(payload.token));
           setMessage(
-            `Signup successful for user: ${creds.username}; auth token saved`
+            `Signup successful for user: ${creds.username}; auth token saved`,
           );
         } else {
-          setMessage(
-            `Signup Error ${response.status}: ${response.data}`
-          );
+          setMessage(`Signup Error ${response.status}: ${response.data}`);
         }
       })
       .catch((error) => {
         setMessage(`Signup Error: ${error}`);
       });
-  
+
     return promise;
   }
 
@@ -102,51 +106,72 @@ function App() {
     } else {
       return {
         ...otherHeaders,
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       };
     }
   }
 
   function fetchUsers() {
     const promise = fetch(`${API_PREFIX}/users`, {
-      headers: addAuthHeader()
+      headers: addAuthHeader(),
     });
-  
+
     return promise;
   }
 
-
   return (
     <Router>
-      <div className="container">
-        <nav className="my-4">
+      <div className = "">
+        {/* Navigation bar */}
+        <nav className="flex items-center justify-start py-4 px-4  bg-gray-200 border-b border-gray-300">
+          {/* Profile (non-link item) */}
+          <div className="flex gap-2 items-center bg-white py-2 px-4 border border-blue-500 text-blue-500 font-semibold rounded-md mr-4">
+            <div>
+              <img
+                src="https://via.placeholder.com/150"
+                alt="Profile"
+                className="w-4 h-4 rounded-full border-2  border-gray-300 shadow-md"
+              />
+            </div>
+            <div>Profile</div>
+          </div>
+
+          {/* Links */}
           <Link
             to="/"
-            className="w-full py-2 px-2 border border-blue-500 text-blue-500 font-semibold rounded-md mr-2"
+            className="py-2 px-4 border bg-white border-blue-500 text-blue-500 font-semibold rounded-md mr-4"
           >
             Home
           </Link>
           <Link
             to="/signup"
-            className="w-full py-2 px-2 border border-blue-500 text-blue-500 font-semibold rounded-md mr-2"
+            className="py-2 px-4 border bg-white border-blue-500 text-blue-500 font-semibold rounded-md mr-4"
           >
             Sign Up
           </Link>
           <Link
             to="/login"
-            className="w-full py-2 px-2 border border-blue-500 text-blue-500 font-semibold rounded-md mr-2"
+            className="py-2 px-4 border bg-white border-blue-500 text-blue-500 font-semibold rounded-md mr-4"
           >
             Log In
           </Link>
-          <hr className="border-t border-gray-300 mt-4" />
         </nav>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/signup" element={<SignUp handleSubmit={signupUser}/>} />
-          <Route path="/login" element={<LogIn handleSubmit={loginUser} />} />
-          <Route path="/newTask" element={<NewTask />} />
-          <Route path="/newList" element={<NewList />} />
-        </Routes>
+
+        {/* Content */}
+        <div className="p-4">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route
+              path="/signup"
+              element={<SignUp handleSubmit={signupUser} />}
+            />
+            <Route path="/login" element={<LogIn handleSubmit={loginUser} />} />
+            <Route path="/newTask" element={<NewTask />} />
+            <Route path="/newList" element={<NewList />} />
+            <Route path="/categoryView" element={<CategoryView categoryData={categories} listData={lists} removeCharacter ={removeOneCharacter}/>} />
+
+          </Routes>
+        </div>
       </div>
     </Router>
   );
