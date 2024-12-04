@@ -30,14 +30,6 @@ mongoose
   )
   .catch((error) => console.log(error));
 
-// Serve the React frontend
-const frontendPath = path.join(
-  path.resolve(),
-  "../../react-frontend" // Replace with the correct path
-);
-app.use(express.static(frontendPath));
-
-
 //Task API routes
 app.get("/tasks", (req, res) => {
   taskServices
@@ -187,11 +179,6 @@ app.delete("/users", (req, res) => {
     .deleteUser(userToDelete)
     .then((result) => res.status(204).send(result))
     .catch(() => res.status(404).send("Resource not found."));
-});
-
-app.get("*", (req, res) => {
-  // res.sendFile(path.join(frontendPath, "index.html"));
-  res.send("In catch-all route")
 });
 
 app.listen(process.env.PORT || port, () => {
