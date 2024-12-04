@@ -34,7 +34,7 @@ app.get("/tasks", (req, res) => {
 });
 
 app.get("/tasks/:listId", (req, res) => {
-  const userId = req.params["userId"];
+  const listId = req.params["listId"];
 
   listServices
     .getTasksByListId(listId)
