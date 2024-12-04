@@ -86,6 +86,7 @@ function App() {
   function signupUser(creds) {
     //need to add pop up message for username already taken
     const promise = fetch(`${API_PREFIX}/signup`, {
+      mode: "no-cors", 
       method: "POST",
       headers: {
         "Content-Type": "application/json",
