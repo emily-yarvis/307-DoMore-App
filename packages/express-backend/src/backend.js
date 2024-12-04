@@ -18,6 +18,7 @@ app.use(cors({
 }));
 app.options('*', cors()); // Handle preflight requests
 app.use(express.json());
+
 mongoose.set("debug", true);
 mongoose
   .connect(
