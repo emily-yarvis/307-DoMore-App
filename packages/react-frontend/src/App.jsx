@@ -98,7 +98,7 @@ function App() {
           setMessage(
             `Signup successful for user: ${creds.username}; auth token saved`,
           );
-          fetch(`${API_PREFIX}/users/${creds.username}`)
+          fetch(`${API_PREFIX}/users/${creds.username}`, { mode: "no-cors" })
             .then((res) => res.json())
             .then((json) => setUserId(json[0]._id))
             .catch((error) => {
