@@ -11,9 +11,13 @@ import { registerUser, loginUser, authenticateUser } from "./auth.js";
 const app = express();
 const port = 8000;
 
+app.use(cors({
+  origin: 'https://thankful-stone-03264d61e.5.azurestaticapps.net',
+  methods: ['GET', 'POST', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
+app.options('*', cors()); // Handle preflight requests
 app.use(express.json());
-app.use(cors({ origin: 'https://thankful-stone-03264d61e.5.azurestaticapps.net' }));
-
 mongoose.set("debug", true);
 mongoose
   .connect(
