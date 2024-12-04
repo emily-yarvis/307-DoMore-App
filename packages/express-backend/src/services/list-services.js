@@ -22,10 +22,26 @@ function deleteList(id) {
   return List.findByIdAndDelete(id);
 }
 
+function getTasksByListId(listId) {
+  return List.findById(listId)
+    .populate("tasks") // Populate the tasks field in the List
+    .then((list) => {
+      if (!list) {
+        throw new Error("List not found");
+      }
+      return list.tasks; // Return the populated tasks
+    })
+    .catch((error) => {
+      console.error(error);
+      throw error;
+    });
+}
+
 export default {
   addList,
   getLists,
   findListById,
   findListByName,
   deleteList,
+  getTasksByListId,
 };

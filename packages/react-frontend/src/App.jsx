@@ -15,22 +15,22 @@ import CategoryView from "./CategoryView";
 
 function App() {
   //const API_PREFIX = "https://domoreapp-e5ecc0h3d6dzh3hz.westus-01.azurewebsites.net";\
-  const API_PREFIX = "Http://localhost:8000/";
+  const API_PREFIX = "Http://localhost:8000";
   const INVALID_TOKEN = "INVALID_TOKEN";
   const [token, setToken] = useState(INVALID_TOKEN);
-  //const [message, setMessage] = useState("");
+  const [message, setMessage] = useState("");
   const [categories, setCategories] = useState([]);
   const [lists, setLists] = useState([]);
+  const [userId, setUserId] = useState("");
+  const [users, setUsers] = useState([]);
 
   function removeOneCharacter(index) {
     console.log(lists[index]);
-      const updated = lists.filter((list, i) => {
-        return i !== index;
-      });
-      deleteUser(lists[index])
-      .then(setLists(updated));
-      
-    }
+    const updated = lists.filter((list, i) => {
+      return i !== index;
+    });
+    deleteUser(lists[index]).then(setLists(updated));
+  }
   //function fetchUsers() {
   //  const promise = fetch(
   //    "https://domoreapp-e5ecc0h3d6dzh3hz.westus-01.azurewebsites.net/users",
@@ -43,9 +43,9 @@ function App() {
       .then((res) => (res.status === 200 ? res.json() : undefined))
       .then((json) => {
         if (json) {
-          setCharacters(json["users_list"]);
+          setUsers(json["users_list"]);
         } else {
-          setCharacters(null);
+          setUsers(null);
         }
       })
       .catch((error) => {
@@ -65,6 +65,12 @@ function App() {
         if (response.status === 200) {
           response.json().then((payload) => setToken(payload.token));
           setMessage(`Login successful; auth token saved`);
+          fetch(`${API_PREFIX}/users/${creds.username}`)
+            .then((res) => res.json())
+            .then((json) => setUserId(json[0]._id))
+            .catch((error) => {
+              console.log(error);
+            });
         } else {
           setMessage(`Login Error ${response.status}: ${response.data}`);
         }
@@ -77,6 +83,7 @@ function App() {
   }
 
   function signupUser(creds) {
+    //need to add pop up message for username already taken
     const promise = fetch(`${API_PREFIX}/signup`, {
       method: "POST",
       headers: {
@@ -90,6 +97,12 @@ function App() {
           setMessage(
             `Signup successful for user: ${creds.username}; auth token saved`,
           );
+          fetch(`${API_PREFIX}/users/${creds.username}`)
+          .then((res) => res.json())
+          .then((json) => setUserId(json[0]._id))
+          .catch((error) => {
+            console.log(error);
+          });
         } else {
           setMessage(`Signup Error ${response.status}: ${response.data}`);
         }
@@ -122,7 +135,7 @@ function App() {
 
   return (
     <Router>
-      <div className = "">
+      <div className="">
         {/* Navigation bar */}
         <nav className="flex items-center justify-start py-4 px-4  bg-gray-200 border-b border-gray-300">
           {/* Profile (non-link item) */}
@@ -169,8 +182,16 @@ function App() {
             <Route path="/login" element={<LogIn handleSubmit={loginUser} />} />
             <Route path="/newTask" element={<NewTask />} />
             <Route path="/newList" element={<NewList />} />
-            <Route path="/categoryView" element={<CategoryView categoryData={categories} listData={lists} removeCharacter ={removeOneCharacter}/>} />
-
+            <Route
+              path="/categoryView"
+              element={
+                <CategoryView
+                  categoryData={categories}
+                  listData={lists}
+                  removeCharacter={removeOneCharacter}
+                />
+              }
+            />
           </Routes>
         </div>
       </div>

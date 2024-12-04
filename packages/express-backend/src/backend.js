@@ -24,7 +24,6 @@ mongoose
     },
   )
   .catch((error) => console.log(error));
-  
 
 //Task API routes
 app.get("/tasks", (req, res) => {
@@ -34,11 +33,11 @@ app.get("/tasks", (req, res) => {
     .catch(() => res.status(404).send("Resource not found."));
 });
 
-app.get("/tasks/:userId", (req, res) => {
+app.get("/tasks/:listId", (req, res) => {
   const userId = req.params["userId"];
 
-  userServices
-    .getTasksByUserId(userId)
+  listServices
+    .getTasksByListId(listId)
     .then((taskList) => res.status(200).send(taskList))
     .catch(() => res.status(404).send("Resource not found."));
 });
@@ -96,6 +95,15 @@ app.get("/lists", (req, res) => {
     .catch(() => res.status(404).send("Resource not found."));
 });
 
+app.get("/lists/:categoryId", (req, res) => {
+  const userId = req.params["userId"];
+
+  categoryServices
+    .getListsByCategoryId(categoryId)
+    .then((listList) => res.status(200).send(listList))
+    .catch(() => res.status(404).send("Resource not found."));
+});
+
 //Category API routes
 app.get("/categories", (req, res) => {
   categoryServices
@@ -104,24 +112,30 @@ app.get("/categories", (req, res) => {
     .catch(() => res.status(404).send("Resource not found."));
 });
 
+app.get("/categories/:userId", (req, res) => {
+  const userId = req.params["userId"];
+
+  userServices
+    .getCategoriesByUserId(userId)
+    .then((categoryList) => res.status(200).send(categoryList))
+    .catch(() => res.status(404).send("Resource not found."));
+});
+
 //User API routes
 app.get("/users", (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
+  userServices
+    .getUsers()
+    .then((users) => res.status(200).send(users))
+    .catch(() => res.status(404).send("Resource not found."));
+});
 
-  if (username == undefined && password == undefined) {
-    userServices
-      .getUsers()
-      .then((users) => res.status(200).send(users))
-      .catch(() => res.status(404).send("Resource not found."));
-  } else if (username != undefined && password != undefined) {
-    userServices
-      .findUserByUsernameAndPassword(username, password)
-      .then((user) => res.status(200).send(user))
-      .catch(() => res.status(404).send("Resource not found."));
-  } else {
-    res.status(404).send("Resource not found.");
-  }
+app.get("/users/:username", (req, res) => {
+  const username = req.params["username"];
+
+  userServices
+    .findUserByUsername(username)
+    .then((user) => res.status(200).send(user))
+    .catch(() => res.status(404).send("Resource not found."));
 });
 
 app.post("/users", authenticateUser, (req, res) => {

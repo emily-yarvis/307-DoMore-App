@@ -14,22 +14,22 @@ function addUser(user) {
   return promise;
 }
 
-function findUserByUsernameAndPassword(username, password) {
-  return User.find({ username: username, password: password });
+function findUserByUsername(username) {
+  return User.find({ username: username });
 }
 
 function deleteUser(id) {
   return User.findByIdAndDelete(id);
 }
 
-function getTasksByUserId(id) {
+function getCategoriesByUserId(id) {
   return User.findById(id)
-    .populate("tasks")
+    .populate("categories")
     .then((user) => {
       if (!user) {
         throw new Error("User not found");
       }
-      return user.tasks;
+      return user.categories;
     });
 }
 
@@ -47,8 +47,10 @@ export default {
   addUser,
   getUsers,
   findUserById,
-  findUserByUsernameAndPassword,
+  findUserByUsername,
   deleteUser,
-  getTasksByUserId,
   assignTaskToUser,
+  getCategoriesByUserId,
 };
+
+
