@@ -129,6 +129,7 @@ function App() {
   function fetchUsers() {
     const promise = fetch(`${API_PREFIX}/users`, {
       headers: addAuthHeader(),
+      mode: "no-cors"
     });
 
     return promise;
