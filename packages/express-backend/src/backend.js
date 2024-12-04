@@ -44,7 +44,7 @@ app.get("/tasks/:listId", (req, res) => {
 
 app.post("/tasks/:listId", (req, res) => {
   const listId = req.params["listId"];
-  const taskToAdd = req.body
+  const taskToAdd = req.body;
 
   taskServices
     .addTask(taskToAdd)
@@ -87,7 +87,7 @@ app.get("/lists/:categoryId", (req, res) => {
 
 app.post("/lists/:categoryId", (req, res) => {
   const categoryId = req.params["categoryId"];
-  const listToAdd = req.body
+  const listToAdd = req.body;
 
   listServices
     .addList(listToAdd)

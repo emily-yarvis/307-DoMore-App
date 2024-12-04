@@ -44,9 +44,12 @@ export function registerUser(req, res) {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              "Authorization": `Bearer ${token}`,
+              Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify({username: creds[creds.length - 1]["username"], password: creds[creds.length - 1]["hashedPassword"]}),
+            body: JSON.stringify({
+              username: creds[creds.length - 1]["username"],
+              password: creds[creds.length - 1]["hashedPassword"],
+            }),
           });
         });
       });

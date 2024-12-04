@@ -58,5 +58,5 @@ export default {
   findListByName,
   deleteList,
   getTasksByListId,
-  addTaskToList
+  addTaskToList,
 };
