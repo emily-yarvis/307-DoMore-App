@@ -14,7 +14,8 @@ import CategoryView from "./CategoryView";
 // const [characters, setCharacters] = useState([]);
 
 function App() {
-  const API_PREFIX = "https://domoreapp-e5ecc0h3d6dzh3hz.westus-01.azurewebsites.net";
+  const API_PREFIX =
+    "https://domoreapp-e5ecc0h3d6dzh3hz.westus-01.azurewebsites.net";
   //const API_PREFIX = "Http://localhost:8000";
   const INVALID_TOKEN = "INVALID_TOKEN";
   const [token, setToken] = useState(INVALID_TOKEN);
@@ -65,7 +66,7 @@ function App() {
         if (response.status === 200) {
           response.json().then((payload) => setToken(payload.token));
           setMessage(`Login successful; auth token saved`);
-          fetch(`${API_PREFIX}/users/${creds.username}`)
+          fetch(`${API_PREFIX}/users/${creds.username}`, { mode: "no-cors" })
             .then((res) => res.json())
             .then((json) => setUserId(json[0]._id))
             .catch((error) => {
@@ -98,11 +99,11 @@ function App() {
             `Signup successful for user: ${creds.username}; auth token saved`,
           );
           fetch(`${API_PREFIX}/users/${creds.username}`)
-          .then((res) => res.json())
-          .then((json) => setUserId(json[0]._id))
-          .catch((error) => {
-            console.log(error);
-          });
+            .then((res) => res.json())
+            .then((json) => setUserId(json[0]._id))
+            .catch((error) => {
+              console.log(error);
+            });
         } else {
           setMessage(`Signup Error ${response.status}: ${response.data}`);
         }
