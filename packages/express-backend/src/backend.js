@@ -12,7 +12,7 @@ const app = express();
 const port = 8000;
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: 'https://thankful-stone-03264d61e.5.azurestaticapps.net' }));
 
 mongoose.set("debug", true);
 mongoose
