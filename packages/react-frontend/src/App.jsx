@@ -66,7 +66,7 @@ function App() {
         if (response.status === 200) {
           response.json().then((payload) => setToken(payload.token));
           setMessage(`Login successful; auth token saved`);
-          fetch(`${API_PREFIX}/users/${creds.username}`, { mode: "no-cors" })
+          fetch(`${API_PREFIX}/users/${creds.username}`)
             .then((res) => res.json())
             .then((json) => setUserId(json[0]._id))
             .catch((error) => {
@@ -86,7 +86,6 @@ function App() {
   function signupUser(creds) {
     //need to add pop up message for username already taken
     const promise = fetch(`${API_PREFIX}/signup`, {
-      mode: "no-cors", 
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -99,7 +98,7 @@ function App() {
           setMessage(
             `Signup successful for user: ${creds.username}; auth token saved`,
           );
-          fetch(`${API_PREFIX}/users/${creds.username}`, { mode: "no-cors" })
+          fetch(`${API_PREFIX}/users/${creds.username}`)
             .then((res) => res.json())
             .then((json) => setUserId(json[0]._id))
             .catch((error) => {
@@ -130,7 +129,6 @@ function App() {
   function fetchUsers() {
     const promise = fetch(`${API_PREFIX}/users`, {
       headers: addAuthHeader(),
-      mode: "no-cors"
     });
 
     return promise;

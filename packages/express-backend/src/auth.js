@@ -44,7 +44,7 @@ export function registerUser(req, res) {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              mode: 'no-cors',
+              
               Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify({
