@@ -42,40 +42,21 @@ app.get("/tasks/:listId", (req, res) => {
     .catch(() => res.status(404).send("Resource not found."));
 });
 
-app.post("/tasks/:userId", (req, res) => {
-  const userId = req.params["userId"];
-  const taskToAdd = req.body;
+app.post("/tasks/:listId", (req, res) => {
+  const listId = req.params["listId"];
+  const taskToAdd = req.body
 
   taskServices
     .addTask(taskToAdd)
     .then((task) => {
-      return userServices
-        .assignTaskToUser(userId, task._id)
-        .then(() => {
-          // Send response after task is assigned to user
-          res.status(201).send("Added task to user");
-        })
-        .catch((error) => {
-          // Log error and send error response for task assignment failure
-          console.log(error);
-          res.status(500).send("Error assigning task to user");
-        });
+      return listServices.addTaskToList(listId, task._id);
+    })
+    .then(() => {
+      res.status(201).send({ message: "Task successfully added to list!" });
     })
     .catch((error) => {
-      // Log error and send error response for task creation failure
-      console.log(error);
-      res.status(500).send("Error adding task");
-    });
-});
-
-app.post("/tasks", (req, res) => {
-  const taskToAdd = req.body;
-
-  taskServices
-    .addTask(taskToAdd)
-    .then(res.status(201).send(taskToAdd))
-    .catch((error) => {
-      console.log(error);
+      console.error("Error adding task to list:", error.message);
+      res.status(500).send({ error: "Failed to add task to list" });
     });
 });
 
@@ -96,12 +77,30 @@ app.get("/lists", (req, res) => {
 });
 
 app.get("/lists/:categoryId", (req, res) => {
-  const userId = req.params["userId"];
+  const categoryId = req.params["categoryId"];
 
   categoryServices
     .getListsByCategoryId(categoryId)
     .then((listList) => res.status(200).send(listList))
     .catch(() => res.status(404).send("Resource not found."));
+});
+
+app.post("/lists/:categoryId", (req, res) => {
+  const categoryId = req.params["categoryId"];
+  const listToAdd = req.body
+
+  listServices
+    .addList(listToAdd)
+    .then((list) => {
+      return categoryServices.addListToCategory(categoryId, list._id);
+    })
+    .then(() => {
+      res.status(201).send({ message: "List successfully added to category!" });
+    })
+    .catch((error) => {
+      console.error("Error adding list to category:", error.message);
+      res.status(500).send({ error: "Failed to add list to category" });
+    });
 });
 
 //Category API routes
@@ -119,6 +118,24 @@ app.get("/categories/:userId", (req, res) => {
     .getCategoriesByUserId(userId)
     .then((categoryList) => res.status(200).send(categoryList))
     .catch(() => res.status(404).send("Resource not found."));
+});
+
+app.post("/categories/:userId", (req, res) => {
+  const userId = req.params["userId"];
+  const categoryToAdd = req.body;
+
+  categoryServices
+    .addCategory(categoryToAdd)
+    .then((category) => {
+      return userServices.addCategoryToUser(userId, category._id);
+    })
+    .then(() => {
+      res.status(201).send({ message: "Category successfully added to user!" });
+    })
+    .catch((error) => {
+      console.error("Error adding category to user:", error.message);
+      res.status(500).send({ error: "Failed to add category to user" });
+    });
 });
 
 //User API routes

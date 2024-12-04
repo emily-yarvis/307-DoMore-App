@@ -37,6 +37,20 @@ function getTasksByListId(listId) {
     });
 }
 
+function addTaskToList(listId, taskId) {
+  return List.findById(listId)
+    .then((list) => {
+      if (!list) {
+        throw new Error("List not found");
+      }
+      list.tasks.push(taskId);
+      return list.save();
+    })
+    .catch((error) => {
+      console.log("Error adding task to list:", error);
+    });
+}
+
 export default {
   addList,
   getLists,
@@ -44,4 +58,5 @@ export default {
   findListByName,
   deleteList,
   getTasksByListId,
+  addTaskToList
 };

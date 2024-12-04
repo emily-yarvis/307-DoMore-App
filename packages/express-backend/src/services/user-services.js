@@ -33,14 +33,18 @@ function getCategoriesByUserId(id) {
     });
 }
 
-function assignTaskToUser(userId, taskId) {
-  return User.findByIdAndUpdate(
-    userId,
-    {
-      $push: { tasks: taskId }, // Add the task reference (taskId) to the tasks array
-    },
-    { new: true }, // Return the updated user document
-  );
+function addCategoryToUser(userId, categoryId) {
+  return User.findById(userId)
+    .then((user) => {
+      if (!user) {
+        throw new Error("User not found");
+      }
+      user.categories.push(categoryId);
+      return user.save();
+    })
+    .catch((error) => {
+      console.log("Error adding category to user:", error);
+    });
 }
 
 export default {
@@ -49,7 +53,7 @@ export default {
   findUserById,
   findUserByUsername,
   deleteUser,
-  assignTaskToUser,
+  addCategoryToUser,
   getCategoriesByUserId,
 };
 

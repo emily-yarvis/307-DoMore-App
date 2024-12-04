@@ -24,16 +24,30 @@ function deleteCategory(id) {
 
 function getListsByCategoryId(categoryId) {
   return Category.findById(categoryId)
-    .populate("lists") // Populate the lists field in the Category
+    .populate("lists")
     .then((category) => {
       if (!category) {
         throw new Error("Category not found");
       }
-      return category.lists; // Return the populated lists
+      return category.lists;
     })
     .catch((error) => {
       console.error(error);
       throw error;
+    });
+}
+
+function addListToCategory(categoryId, listId) {
+  return Category.findById(categoryId)
+    .then((category) => {
+      if (!category) {
+        throw new Error("Category not found");
+      }
+      category.lists.push(listId);
+      return category.save();
+    })
+    .catch((error) => {
+      console.log("Error adding task to category:", error);
     });
 }
 
@@ -44,4 +58,5 @@ export default {
   findCategoryByName,
   deleteCategory,
   getListsByCategoryId,
+  addListToCategory
 };
