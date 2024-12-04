@@ -190,7 +190,8 @@ app.delete("/users", (req, res) => {
 });
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(frontendPath, "index.html"));
+  // res.sendFile(path.join(frontendPath, "index.html"));
+  res.send("In catch-all route")
 });
 
 app.listen(process.env.PORT || port, () => {
