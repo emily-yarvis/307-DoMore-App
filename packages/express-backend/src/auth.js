@@ -81,7 +81,6 @@ export function loginUser(req, res) {
   const retrievedUser = creds.find((c) => c.username === username);
 
   if (!retrievedUser) {
-    // invalid username
     res.status(401).send("Unauthorized");
   } else {
     bcrypt
@@ -89,10 +88,10 @@ export function loginUser(req, res) {
       .then((matched) => {
         if (matched) {
           generateAccessToken(username).then((token) => {
-            res.status(200).send({ token: token });
+            // Include userId in the response
+            res.status(200).send({ token: token, userId: retrievedUser._id });
           });
         } else {
-          // invalid password
           res.status(401).send("Unauthorized");
         }
       })

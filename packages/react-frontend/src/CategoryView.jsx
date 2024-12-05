@@ -1,11 +1,9 @@
-// import React, { useState } from "react";
 import { useState } from "react";
 import PropTypes from "prop-types";
 import NewCategory from "./NewCategory";
 import ListView from "./ListView";
 
-
-function MyListsHeader(props) {
+function MyListsHeader() {
   return (
     <div className="flex justify-center text-2xl font-bold rounded-mb">
       My Lists
@@ -19,9 +17,9 @@ function CategoryViewBody(props) {
       <td>
         <div>
           <div className="flex gap-4 mt-2">
-            <div className=" text-2xl font-bold">{row.categoryName}</div>
+            <div className="text-2xl font-bold">{row.categoryName}</div>
             <button
-              className=" flex w-8 h-8 bg-red-500 text-white justify-center items-center font-semibold rounded-md "
+              className="flex w-8 h-8 bg-red-500 text-white justify-center items-center font-semibold rounded-md"
               onClick={() => props.removeCharacter(index)}
             >
               x
@@ -44,39 +42,51 @@ CategoryViewBody.propTypes = {
   categoryData: PropTypes.arrayOf(
     PropTypes.shape({
       categoryName: PropTypes.string.isRequired,
-    }),
+    })
   ).isRequired,
   removeCharacter: PropTypes.func.isRequired,
 };
 
-
-
 function CategoryView(props) {
-  console.log("MEOW",props.categoryData)
+  console.log("MEOW", props.categoryData);
   const [showModal, setShowModal] = useState(false);
-  //const [categoryData, setCategoryData] = useState(props.categoryData || []);
   const [listData, setListData] = useState(props.listData || []);
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
 
-  function addNewCategory(category) {
-    setCategoryData([...props.categoryData, category]);
-    closeModal();
+  async function addNewCategory(category) {
+    try {
+      const userId = props.userId;
+
+      const response = await fetch(`http://localhost:8000/categories/${userId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(category),
+      });
+
+      if (response.ok) {
+        const newCategory = await response.json();
+        props.setCategoryData([...props.categoryData, newCategory]); // Update categories
+        closeModal();
+      } else {
+        console.error("Failed to add category:", await response.text());
+      }
+    } catch (error) {
+      console.error("Error adding category:", error);
+    }
   }
 
-  
-
-  
-
   return (
-    <div >
-       <div className=" bg-gray-200 rounded-md mb-4 py-2 px-2">
-          <MyListsHeader />
-        </div>
-      <div className=" bg-gray-200 rounded-md mb-4 py-2 px-2">
+    <div>
+      <div className="bg-gray-200 rounded-md mb-4 py-2 px-2">
+        <MyListsHeader />
+      </div>
+      <div className="bg-gray-200 rounded-md mb-4 py-2 px-2">
         <table>
           <CategoryViewBody
-           categoryData={props.categoryData}
+            categoryData={props.categoryData}
             listData={listData}
             removeCharacter={props.removeCharacter}
           />
@@ -108,9 +118,11 @@ CategoryView.propTypes = {
   categoryData: PropTypes.arrayOf(
     PropTypes.shape({
       categoryName: PropTypes.string.isRequired,
-    }),
+    })
   ).isRequired,
   removeCharacter: PropTypes.func.isRequired,
+  userId: PropTypes.string.isRequired, // Ensure this prop is passed
+  setCategoryData: PropTypes.func.isRequired, // Callback to update categories
 };
 
 export default CategoryView;

@@ -1,54 +1,59 @@
-// import React, { useState } from "react";
 import { useState } from "react";
 import TaskView from "./TaskView";
 import ListView from "./ListView";
 import CategoryView from "./CategoryView";
-// import SelectedTask from "./SelectedTask";
 
-function Home(props) {
-  //const [lists, setLists] = useState([]);
-  //const [tasks, setTasks] = useState([]);
-  const [categories, setCategories] = useState([]);
-  // const [selectedTask, setSelectedTask] = useState(null);
+function Home({ categoryData, listData, taskData, fetchLists, fetchTasks }) {
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedList, setSelectedList] = useState(null);
 
-  function removeOneCharacter(index) {
-    console.log(lists[index]);
-    const updated = lists.filter((list, i) => {
-      return i !== index;
-    });
-    deleteUser(lists[index]).then(setLists(updated));
+  function handleCategoryClick(categoryId) {
+    setSelectedCategory(categoryId);
+    fetchLists(categoryId);
   }
 
-  // function updateList(list) {
-  //   setLists([...lists, list]);
-  // }
-
-  // function updateTasks(task) {
-  //   setTasks([...tasks, task]);
-  // }
-
-  // function updateCategories(task) {
-  //   setCategories([...categories, category]);
-  // }
+  function handleListClick(listId) {
+    setSelectedList(listId);
+    fetchTasks(listId);
+  }
 
   return (
-    <div className="flex space-x-4 p-4">
+    <div className="flex p-4 space-x-4">
       <div className="w-1/3">
-        <div >
-          <CategoryView
-            categoryData={props.categoryData}
-            listData={props.listData}
-            removeCharacter={removeOneCharacter}
-          />
-        </div>
+        <h2>Categories</h2>
+        <ul>
+          {categoryData.map((category) => (
+            <li
+              key={category._id}
+              onClick={() => handleCategoryClick(category._id)}
+              className="cursor-pointer"
+            >
+              {category.name}
+            </li>
+          ))}
+        </ul>
       </div>
-      <div className="w-px bg-gray-300" />
-      <div className="w-2/3">
-        <TaskView taskData={[
-  { taskName: "Task 1", dueDate: "2024-12-10" },
-  { taskName: "Task 2", dueDate: "2024-12-12" },
-  { taskName: "Task 3", dueDate: "2024-12-15" }
-]} removeCharacter={removeOneCharacter} />
+      <div className="w-1/3">
+        <h2>Lists</h2>
+        <ul>
+          {listData.map((list) => (
+            <li
+              key={list._id}
+              onClick={() => handleListClick(list._id)}
+              className="cursor-pointer"
+            >
+              {list.name}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="w-1/3">
+        <h2>Tasks</h2>
+        <ul>
+          {taskData.map((task) => (
+            <li key={task._id}>{task.name}</li>
+          ))}
+        </ul>
       </div>
     </div>
   );

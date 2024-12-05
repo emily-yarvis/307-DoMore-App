@@ -1,33 +1,41 @@
 import { useState } from "react";
 
 const LogIn = (props) => {
-  const [formData, setFormData] = useState({ email: '', password: '' });
-  const [showPassword, setShowPassword] = useState(false);
   const [creds, setCreds] = useState({
     username: "",
     pwd: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
 
   function handleChange(event) {
     const { name, value } = event.target;
-    switch (name) {
-      case "username":
-        setCreds({ ...creds, username: value });
-        console.log(creds)
-        break;
-      case "password":
-        setCreds({ ...creds, pwd: value });
-        console.log(creds)
-        break;
-    }
+    setCreds((prevCreds) => ({ ...prevCreds, [name]: value }));
   }
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Log-In data:", creds);
-  };
 
-  function submitForm() {
-    props.handleSubmit(creds);
+  function submitForm(e) {
+    e.preventDefault();
+
+    fetch("http://localhost:8000/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(creds),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.token && data.userId) {
+          // Save token and userId in localStorage
+          localStorage.setItem("authToken", data.token);
+          localStorage.setItem("userId", data.userId);
+
+          console.log("Login Successful, userId:", data.userId);
+
+          // Pass the userId back to the parent component
+          props.handleSubmit(data.userId);
+        } else {
+          console.error("Login failed:", data);
+        }
+      })
+      .catch((error) => console.error("Error logging in:", error));
   }
 
   return (
@@ -35,27 +43,26 @@ const LogIn = (props) => {
       <div className="w-full max-w-sm p-8 bg-gray-100 rounded-lg shadow-lg">
         <h2 className="text-2xl font-semibold text-center mb-2">Log In</h2>
         <p className="text-center text-sm mb-6">
-          don’t have an account?{" "}
+          Don’t have an account?{" "}
           <a href="/signup" className="underline text-blue-500">
-            sign up
+            Sign up
           </a>
         </p>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={submitForm}>
           <div className="mb-4">
             <input
               type="text"
               name="username"
-              id="username"
               value={creds.username}
               onChange={handleChange}
               className="w-full p-3 bg-gray-200 text-gray-800 rounded-md placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Email"
+              placeholder="Username"
             />
           </div>
           <div className="mb-4 relative">
             <input
               type={showPassword ? "text" : "password"}
-              name="password"
+              name="pwd"
               value={creds.pwd}
               onChange={handleChange}
               className="w-full p-3 bg-gray-200 text-gray-800 rounded-md placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -65,23 +72,15 @@ const LogIn = (props) => {
               onClick={() => setShowPassword(!showPassword)}
               className="absolute inset-y-0 right-3 flex items-center text-sm text-blue-500 cursor-pointer"
             >
-              {showPassword ? "hide" : "show"}
+              {showPassword ? "Hide" : "Show"}
             </span>
-          </div>
-          <div className="text-right mb-4">
-            <a href="#" className="text-xs text-blue-500 underline">
-              forgot password?
-            </a>
           </div>
           <button
             type="submit"
-            className="w-full py-2 bg-blue-500 text-white font-semibold rounded-md mb-4"
-            onClick={submitForm}
-
+            className="w-full py-2 bg-blue-500 text-white font-semibold rounded-md"
           >
-            log in
+            Log In
           </button>
-          
         </form>
       </div>
     </div>
