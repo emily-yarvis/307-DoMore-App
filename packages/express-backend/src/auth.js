@@ -37,7 +37,6 @@ export function registerUser(req, res) {
       .then((hashedPassword) => {
         generateAccessToken(username).then((token) => {
           console.log("Token:", token);
-          res.status(201).send({ token: token });
           creds.push({ username, hashedPassword });
           console.log(creds[creds.length - 1]);
           fetch("http://localhost:8000/users", {
@@ -51,7 +50,7 @@ export function registerUser(req, res) {
               username: creds[creds.length - 1]["username"],
               password: creds[creds.length - 1]["hashedPassword"],
             }),
-          });
+          }).then(res.status(201).send({ token: token }));
         });
       });
   }

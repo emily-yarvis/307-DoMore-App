@@ -15,7 +15,7 @@ import CategoryView from "./CategoryView";
 
 function App() {
   const API_PREFIX =
-    "https://localhost:8000";
+    "http://localhost:8000";
   //const API_PREFIX = "Http://localhost:8000";
   const INVALID_TOKEN = "INVALID_TOKEN";
   const [token, setToken] = useState(INVALID_TOKEN);
@@ -100,7 +100,9 @@ function App() {
           );
           fetch(`${API_PREFIX}/users/${creds.username}`)
             .then((res) => res.json())
-            .then((json) => setUserId(json[0]._id))
+            .then((json) =>{console.log("HELLO", json);
+               setUserId(json[0]._id);
+              })
             .catch((error) => {
               console.log(error);
             });
