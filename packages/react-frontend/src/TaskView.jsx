@@ -25,10 +25,10 @@ function TaskViewHeader() {
 }
 
 function TaskViewBody(props) {
-  if (props.characterData === null) {
+  if (props.taskData === null) {
     return <caption>Data Unavailable</caption>;
   } else {
-    const rows = props.listData.map((row, index) => (
+    const rows = props.taskData.map((row, index) => (
       <tr key={index} onClick={() => props.handleSelectTask(row)}>
         <td>{row.taskName}</td>
         <td>{row.dueDate}</td>
@@ -59,14 +59,14 @@ TaskViewBody.propTypes = {
 
 function TaskView(props) {
   const [showModal, setShowModal] = useState(false);
-  const [taskData, setTaskData] = useState(props.taskData || []);
+  //const [taskData, setTaskData] = useState(props.taskData || []);
   const [selectedTask, setSelectedTask] = useState(null);
 
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
 
   function addNewTask(task) {
-    setTaskData([...taskData, task]);
+    setTaskData([...props.taskData, task]);
     closeModal();
   }
 
@@ -84,7 +84,7 @@ function TaskView(props) {
           <table>
             <TaskViewHeader />
             <TaskViewBody
-              listData={taskData}
+              taskData={props.taskData}
               removeCharacter={props.removeCharacter}
               handleSelectTask={handleSelectTask}
             />

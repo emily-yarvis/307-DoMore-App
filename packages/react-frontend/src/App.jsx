@@ -22,6 +22,7 @@ function App() {
   const [message, setMessage] = useState("");
   const [categories, setCategories] = useState([]);
   const [lists, setLists] = useState([]);
+  const [tasks, setTasks] = useState([]);
   const [userId, setUserId] = useState("");
   const [users, setUsers] = useState([]);
 
@@ -52,6 +53,8 @@ function App() {
 
       // Set the formatted categories to state
       setCategories(formattedCategories);
+
+      fetchLists(arr[0]._id);
     })
     .catch((error) => {
       console.log(error);
@@ -60,26 +63,55 @@ function App() {
   return promise;
 }
 
-function fetchCategories(currentUserId) {
-  const promise = fetch(`${API_PREFIX}/categories/${currentUserId}`)
+function fetchLists(categoryId){
+  console.log("fetching lists");
+  const promise = fetch(`${API_PREFIX}/lists/${categoryId}`)
     .then((res) => res.json())
     .then((arr) => {
       // Map the categories to the required format
-      const formattedCategories = arr.map((entry) => ({
-        categoryName: entry.name, // Assuming `name` is the property that holds the category name
+      const formattedLists = arr.map((entry) => ({
+        listName: entry.name, // Assuming `name` is the property that holds the category name
       }));
 
-      console.log("Fetched and formatted categories:", formattedCategories);
+      console.log("Fetched and formatted categories:", formattedLists);
 
-      // Set the formatted categories to state
-      setCategories(formattedCategories);
+      // Set the formatted lists to state
+      setLists(formattedLists);
+      fetchTasks(arr[0]._id);
+
+
     })
     .catch((error) => {
       console.log(error);
     });
-
-  return promise;
 }
+
+function fetchTasks(listId){
+  console.log("fetching tasks");
+  const promise = fetch(`${API_PREFIX}/tasks/${listId}`)
+    .then((res) => res.json())
+    .then((arr) => {
+      // Map the categories to the required format
+      const formattedTasks = arr.map((entry) => ({
+        taskName: entry.name, // Assuming `name` is the property that holds the category name
+      }));
+
+      console.log("Fetched and formatted categories:", formattedLists);
+
+      // Set the formatted lists to state
+      setTasks(formattedTasks);
+     
+
+
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+
+
+
       
 
 
@@ -234,6 +266,7 @@ function fetchCategories(currentUserId) {
             <Route path="/" element={<Home
             categoryData={categories}
             listData={lists}
+            taskData={tasks}
             removeCharacter={removeOneCharacter}
             userId = {userId}
             />} />

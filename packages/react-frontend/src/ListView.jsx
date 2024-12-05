@@ -48,13 +48,12 @@ TableBody.propTypes = {
 
 function ListView(props) {
   const [showModal, setShowModal] = useState(false);
-  const [listData, setListData] = useState(props.listData || []);
 
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
 
   function addNewList(list) {
-    setListData([...listData, list]);
+    setListData([...props.listData, list]);
     closeModal();
   }
 
@@ -63,7 +62,7 @@ function ListView(props) {
       
       <table>
         <TableBody
-          listData={listData}
+          listData={props.listData}
           removeCharacter={props.removeCharacter}
         />
       </table>

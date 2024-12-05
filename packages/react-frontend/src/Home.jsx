@@ -6,8 +6,8 @@ import CategoryView from "./CategoryView";
 // import SelectedTask from "./SelectedTask";
 
 function Home(props) {
-  const [lists, setLists] = useState([]);
-  const [tasks, setTasks] = useState([]);
+  //const [lists, setLists] = useState([]);
+  //const [tasks, setTasks] = useState([]);
   const [categories, setCategories] = useState([]);
   // const [selectedTask, setSelectedTask] = useState(null);
 
@@ -37,14 +37,18 @@ function Home(props) {
         <div >
           <CategoryView
             categoryData={props.categoryData}
-            listData={lists}
+            listData={props.listData}
             removeCharacter={removeOneCharacter}
           />
         </div>
       </div>
       <div className="w-px bg-gray-300" />
       <div className="w-2/3">
-        <TaskView taskData={tasks} removeCharacter={removeOneCharacter} />
+        <TaskView taskData={[
+  { taskName: "Task 1", dueDate: "2024-12-10" },
+  { taskName: "Task 2", dueDate: "2024-12-12" },
+  { taskName: "Task 3", dueDate: "2024-12-15" }
+]} removeCharacter={removeOneCharacter} />
       </div>
     </div>
   );
