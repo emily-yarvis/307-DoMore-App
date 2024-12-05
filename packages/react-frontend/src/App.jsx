@@ -15,7 +15,7 @@ import CategoryView from "./CategoryView";
 
 function App() {
   const API_PREFIX =
-    "https://domoreapp-e5ecc0h3d6dzh3hz.westus-01.azurewebsites.net";
+    "https://localhost:8000";
   //const API_PREFIX = "Http://localhost:8000";
   const INVALID_TOKEN = "INVALID_TOKEN";
   const [token, setToken] = useState(INVALID_TOKEN);
