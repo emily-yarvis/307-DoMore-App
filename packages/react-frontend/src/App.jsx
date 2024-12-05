@@ -39,7 +39,52 @@ function App() {
   //  return promise;
   //}
 
+  function fetchCategories(currentUserId) {
+  const promise = fetch(`${API_PREFIX}/categories/${currentUserId}`)
+    .then((res) => res.json())
+    .then((arr) => {
+      // Map the categories to the required format
+      const formattedCategories = arr.map((entry) => ({
+        categoryName: entry.name, // Assuming `name` is the property that holds the category name
+      }));
+
+      console.log("Fetched and formatted categories:", formattedCategories);
+
+      // Set the formatted categories to state
+      setCategories(formattedCategories);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+  return promise;
+}
+
+function fetchCategories(currentUserId) {
+  const promise = fetch(`${API_PREFIX}/categories/${currentUserId}`)
+    .then((res) => res.json())
+    .then((arr) => {
+      // Map the categories to the required format
+      const formattedCategories = arr.map((entry) => ({
+        categoryName: entry.name, // Assuming `name` is the property that holds the category name
+      }));
+
+      console.log("Fetched and formatted categories:", formattedCategories);
+
+      // Set the formatted categories to state
+      setCategories(formattedCategories);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+  return promise;
+}
+      
+
+
   useEffect(() => {
+    // Fetch users
     fetchUsers()
       .then((res) => (res.status === 200 ? res.json() : undefined))
       .then((json) => {
@@ -52,7 +97,16 @@ function App() {
       .catch((error) => {
         console.log(error);
       });
-  });
+  
+    // Fetch categories if userId is set
+    console.log("userId changed:", userId);
+    setCategories([])
+    fetchCategories(userId)
+    
+    
+
+  }, [userId]); // Add userId as a dependency
+  
 
   function loginUser(creds) {
     const promise = fetch(`${API_PREFIX}/login`, {
@@ -79,7 +133,6 @@ function App() {
       .catch((error) => {
         setMessage(`Login Error: ${error}`);
       });
-
     return promise;
   }
 
@@ -100,9 +153,7 @@ function App() {
           );
           fetch(`${API_PREFIX}/users/${creds.username}`)
             .then((res) => res.json())
-            .then((json) =>{console.log("HELLO", json);
-               setUserId(json[0]._id);
-              })
+            .then((json) => setUserId(json[0]._id))
             .catch((error) => {
               console.log(error);
             });
@@ -135,6 +186,9 @@ function App() {
 
     return promise;
   }
+
+  
+
 
   return (
     <Router>
@@ -177,7 +231,12 @@ function App() {
         {/* Content */}
         <div className="p-4">
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home
+            categoryData={categories}
+            listData={lists}
+            removeCharacter={removeOneCharacter}
+            userId = {userId}
+            />} />
             <Route
               path="/signup"
               element={<SignUp handleSubmit={signupUser} />}
@@ -185,16 +244,7 @@ function App() {
             <Route path="/login" element={<LogIn handleSubmit={loginUser} />} />
             <Route path="/newTask" element={<NewTask />} />
             <Route path="/newList" element={<NewList />} />
-            <Route
-              path="/categoryView"
-              element={
-                <CategoryView
-                  categoryData={categories}
-                  listData={lists}
-                  removeCharacter={removeOneCharacter}
-                />
-              }
-            />
+           
           </Routes>
         </div>
       </div>

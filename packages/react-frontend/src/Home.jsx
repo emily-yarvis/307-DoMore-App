@@ -5,7 +5,7 @@ import ListView from "./ListView";
 import CategoryView from "./CategoryView";
 // import SelectedTask from "./SelectedTask";
 
-function Home() {
+function Home(props) {
   const [lists, setLists] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -36,7 +36,7 @@ function Home() {
       <div className="w-1/3">
         <div >
           <CategoryView
-            categoryData={categories}
+            categoryData={props.categoryData}
             listData={lists}
             removeCharacter={removeOneCharacter}
           />

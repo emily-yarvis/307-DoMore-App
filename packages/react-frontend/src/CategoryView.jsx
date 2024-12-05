@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import NewCategory from "./NewCategory";
 import ListView from "./ListView";
 
+
 function MyListsHeader(props) {
   return (
     <div className="flex justify-center text-2xl font-bold rounded-mb">
@@ -48,18 +49,24 @@ CategoryViewBody.propTypes = {
   removeCharacter: PropTypes.func.isRequired,
 };
 
-function CategoryView(props) {
-  const [showModal, setShowModal] = useState(false);
-  const [categoryData, setCategoryData] = useState(props.categoryData || []);
-  const [listData, setListData] = useState(props.listData || []);
 
+
+function CategoryView(props) {
+  console.log("MEOW",props.categoryData)
+  const [showModal, setShowModal] = useState(false);
+  //const [categoryData, setCategoryData] = useState(props.categoryData || []);
+  const [listData, setListData] = useState(props.listData || []);
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
 
   function addNewCategory(category) {
-    setCategoryData([...categoryData, category]);
+    setCategoryData([...props.categoryData, category]);
     closeModal();
   }
+
+  
+
+  
 
   return (
     <div >
@@ -69,7 +76,7 @@ function CategoryView(props) {
       <div className=" bg-gray-200 rounded-md mb-4 py-2 px-2">
         <table>
           <CategoryViewBody
-            categoryData={categoryData}
+           categoryData={props.categoryData}
             listData={listData}
             removeCharacter={props.removeCharacter}
           />
