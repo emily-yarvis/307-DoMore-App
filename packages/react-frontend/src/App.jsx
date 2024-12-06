@@ -211,6 +211,7 @@ function fetchData(username) {
       return response.json(); // Parse JSON response
     })
     .then((result) => {
+      console.log(result);
       setUserData(result); // Update userData state
     })
     .catch((err) => {
