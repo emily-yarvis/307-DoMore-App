@@ -65,7 +65,7 @@ function TaskView(props) {
   const closeModal = () => setShowModal(false);
 
   function addNewTask(task) {
-    addNewTask(task,props.currentList);
+    props.addNewTask(task,props.currentList);
     closeModal();
   }
 

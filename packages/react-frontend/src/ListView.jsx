@@ -53,7 +53,7 @@ function ListView(props) {
   const closeModal = () => setShowModal(false);
 
   function addNewList(list) {
-    addNewList(list,props.currentCategory)
+    props.addNewList(list,props.currentCategory)
     closeModal();
   }
 
