@@ -78,7 +78,8 @@ function addNewCategory(category,userId) {
     },
     body: JSON.stringify({
       name: category.categoryName}),
-  }).then(fetchCategories(userId))
+  }).then(setCategories([...categories,category]))
+  .then(fetchCategories(userId))
 
   
 }
@@ -151,7 +152,7 @@ function fetchTasks(listId){
     
     
 
-  }, [userId, categories]); // Add userId as a dependency
+  }, [userId]); // Add userId as a dependency
   
 
   function loginUser(creds) {
