@@ -59,7 +59,7 @@ function CategoryView(props) {
   const closeModal = () => setShowModal(false);
 
   function addNewCategory(category) {
-
+    console.log("BITCH",props.userId)
     fetch(`https://domoreapp-e5ecc0h3d6dzh3hz.westus-01.azurewebsites.net/categories/${props.userId}`, {
       method: "POST",
       headers: {
