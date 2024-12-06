@@ -97,7 +97,7 @@ function addNewCategory(category, userId) {
 function addNewList(list, categoryId) {
   console.log("Adding list for category:", categoryId);
 
-  fetch(`${API_PREFIX}/lists/${categoryId}`, {
+  fetch(`${API_PREFIX}/lists/${currentCategory}`, {
     method: "POST",
     headers: addAuthHeader({
       "Content-Type": "application/json",
@@ -110,7 +110,7 @@ function addNewList(list, categoryId) {
       if (response.ok) {
         console.log("Category added successfully");
         // Wait for the response to confirm success, then fetch updated categories
-        return fetchLists(categoryId);
+        return fetchLists(currentCategory);
       } else {
         throw new Error(`Failed to add category: ${response.status}`);
       }
