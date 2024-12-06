@@ -7,7 +7,7 @@ import SelectedTask from "./SelectedTask";
 function ListNameHeader(props) {
   return (
     <div className="flex justify-center text-2xl font-bold rounded-mb">
-      {props.listName || "List Name"}
+      {props.currentList || "List Name"}
     </div>
   );
 }

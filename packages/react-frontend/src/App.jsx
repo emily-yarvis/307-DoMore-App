@@ -136,7 +136,7 @@ function addNewTask(task, listId) {
       if (response.ok) {
         console.log("Category added successfully");
         // Wait for the response to confirm success, then fetch updated categories
-        return fetchLists(listId);
+        return fetchTasks(listId);
       } else {
         throw new Error(`Failed to add category: ${response.status}`);
       }
