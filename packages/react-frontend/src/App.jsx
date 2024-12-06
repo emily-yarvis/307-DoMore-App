@@ -152,7 +152,7 @@ function fetchTasks(listId){
     
     
 
-  }, [userId]); // Add userId as a dependency
+  }, [userId, categories]); // Add userId as a dependency
   
 
   function loginUser(creds) {
