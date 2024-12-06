@@ -70,30 +70,35 @@ function App() {
   return promise;
 }
 
-function addNewCategory(category, userId) {
-  console.log("Adding category for user:", userId);
+function addNewCategory(category) {
+  console.log("Adding category for user:", category.name);
+  const categoryName = category.name;
+  setUserData((userData) => ({ 
+    ...userData, 
+    categoryName: [], 
+  }));
 
-  fetch(`${API_PREFIX}/categories/${userId}`, {
-    method: "POST",
-    headers: addAuthHeader({
-      "Content-Type": "application/json",
-    }),
-    body: JSON.stringify({
-      name: category.categoryName,
-    }),
-  })
-    .then((response) => {
-      if (response.ok) {
-        console.log("Category added successfully");
-        // Wait for the response to confirm success, then fetch updated categories
-        return fetchCategories(userId);
-      } else {
-        throw new Error(`Failed to add category: ${response.status}`);
-      }
-    })
-    .catch((error) => {
-      console.error("Error adding category:", error);
-    });
+  // fetch(`${API_PREFIX}/categories/${userId}`, {
+  //   method: "POST",
+  //   headers: addAuthHeader({
+  //     "Content-Type": "application/json",
+  //   }),
+  //   body: JSON.stringify({
+  //     name: category.categoryName,
+  //   }),
+  // })
+  //   .then((response) => {
+  //     if (response.ok) {
+  //       console.log("Category added successfully");
+  //       // Wait for the response to confirm success, then fetch updated categories
+  //       return fetchCategories(userId);
+  //     } else {
+  //       throw new Error(`Failed to add category: ${response.status}`);
+  //     }
+  //   })
+  //   .catch((error) => {
+  //     console.error("Error adding category:", error);
+  //   });
 }
 
 function addNewList(list, categoryId) {
@@ -370,16 +375,17 @@ function fetchData(username) {
         <div className="p-4">
           <Routes>
             <Route path="/Home" element={<Home
-            categoryData={categories}
-            listData={lists}
+            // categoryData={categories}
+            // listData={lists}
             taskData={tasks}
-            removeCharacter={removeOneCharacter}
-            userId = {userId}
+            // removeCharacter={removeOneCharacter}
+            // userId = {userId}
             addNewCategory = {addNewCategory}
-            addNewList = {addNewList}
-            currentCategpry = {currentCategory}
+            // addNewList = {addNewList}
+            // currentCategpry = {currentCategory}
             addNewTask = {addNewTask}
             currentList = {currentList}
+            userData = {userData}
             />} />
             <Route
               path="/"

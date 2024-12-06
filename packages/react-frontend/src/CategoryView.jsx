@@ -14,7 +14,7 @@ function MyListsHeader(props) {
 }
 
 function CategoryViewBody(props) {
-  const rows = props.categoryData.map((row, index) => (
+  const rows = props.userData.map((row, index) => (
     <tr key={index}>
       <td>
         <div>
@@ -29,10 +29,10 @@ function CategoryViewBody(props) {
           </div>
           <div className="pt-4">
             <ListView
-              listData={props.listData}
-              removeCharacter={props.removeCharacter}
-              addNewList = {props.addNewList}
-              currentCategory = {props.currentCategory}
+              listData={props.userData[row]["lists"]}
+              // removeCharacter={props.removeCharacter}
+              // addNewList = {props.addNewList}
+              // currentCategory = {props.currentCategory}
             />
           </div>
         </div>
@@ -61,7 +61,7 @@ function CategoryView(props) {
   const closeModal = () => setShowModal(false);
 
   function addNewCategory(category){
-    props.addNewCategory(category,props.userId);
+    props.addNewCategory(category);
     closeModal();
   }
 
@@ -77,11 +77,12 @@ function CategoryView(props) {
       <div className=" bg-gray-200 rounded-md mb-4 py-2 px-2">
         <table>
           <CategoryViewBody
-           categoryData={props.categoryData}
-            listData={props.listData}
-            removeCharacter={props.removeCharacter}
-            addNewList = {props.addNewList}
-            currentCategory = {props.currentCategory}
+          //  categoryData={props.categoryData}
+          //   listData={props.listData}
+          //   removeCharacter={props.removeCharacter}
+          //   addNewList = {props.addNewList}
+          //   currentCategory = {props.currentCategory}
+          userData = {props.userData}
           />
         </table>
 

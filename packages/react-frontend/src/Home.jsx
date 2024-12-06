@@ -19,13 +19,14 @@ function Home(props) {
       <div className="w-1/3">
         <div >
           <CategoryView
-            categoryData={props.categoryData}
-            listData={props.listData}
-            removeCharacter={removeOneCharacter}
-            userId={props.userId}
+            // categoryData={props.categoryData}
+            // listData={props.listData}
+            // removeCharacter={removeOneCharacter}
+            // userId={props.userId}
             addNewCategory = {props.addNewCategory}
-            addNewList = {props.addNewList}
-            currentCategory = {props.currentCategory}
+            // addNewList = {props.addNewList}
+            // currentCategory = {props.currentCategory}
+            userData = {props.userData}
           />
         </div>
       </div>

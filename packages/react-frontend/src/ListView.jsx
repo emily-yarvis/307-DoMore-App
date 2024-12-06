@@ -21,7 +21,7 @@ function TableBody(props) {
     <tr className="flex items-center justify-between" key={index}>
       <td>
         <div className=" py-2 px-4 min-w-40 bg-white font-semibold rounded-md">
-          {row.listName}
+          {props.listData[row]["name"]}
         </div>
       </td>
       <td>
