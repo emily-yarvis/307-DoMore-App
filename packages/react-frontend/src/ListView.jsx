@@ -17,11 +17,12 @@ function TableHeader() {
 }
 
 function TableBody(props) {
-  const rows = Object.keys(props.listData).map((row, index) => (
+  const list = props.listData || {}
+  const rows = Object.keys(list).map((row, index) => (
     <tr className="flex items-center justify-between" key={index}>
       <td>
         <div className=" py-2 px-4 min-w-40 bg-white font-semibold rounded-md">
-          {props.listData[row]["name"]}
+          {list[row]["name"]}
         </div>
       </td>
       <td>
