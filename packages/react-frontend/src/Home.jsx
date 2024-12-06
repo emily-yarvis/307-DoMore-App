@@ -44,11 +44,7 @@ function Home(props) {
       </div>
       <div className="w-px bg-gray-300" />
       <div className="w-2/3">
-        <TaskView taskData={[
-  { taskName: "Task 1", dueDate: "2024-12-10" },
-  { taskName: "Task 2", dueDate: "2024-12-12" },
-  { taskName: "Task 3", dueDate: "2024-12-15" }
-]} removeCharacter={removeOneCharacter} />
+        <TaskView taskData={props.taskData} removeCharacter={removeOneCharacter} />
       </div>
     </div>
   );
