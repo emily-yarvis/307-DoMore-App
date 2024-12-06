@@ -169,61 +169,51 @@ app.get("/users", (req, res) => {
 });
 
 app.get("/users/:username", (req, res) => {
-  const username = req.params["username"];
-  const data = {};
+  const username = req.params.username;
 
   userServices
     .findUserByUsername(username)
-    .then((user) => {
-      if (!user) {
-        throw new Error("User not found");
-      }
-      console.log("User ID:", user._id);
-
-      // Return the categories associated with the user
-      return userServices.getCategoriesByUserId(user._id);
-    })
+    .then((user) => userServices.getCategoriesByUserId(user._id))
     .then((categories) => {
       const categoryPromises = categories.map((category) => {
         const categoryName = category.name;
-        const categoryDict = { categoryName, lists: [] };
 
         return categoryServices
           .getListsByCategoryId(category._id)
           .then((lists) => {
+            const listsData = {};
             const listPromises = lists.map((list) => {
               const listName = list.name;
-              const listDict = { listName, tasks: [] };
 
               return listServices
                 .getTasksByListId(list._id)
                 .then((tasks) => {
-                  listDict.tasks = tasks;
-                  categoryDict.lists.push(listDict);
+                  listsData[listName] = tasks;
                 });
             });
 
-            // Wait for all listPromises to resolve
-            return Promise.all(listPromises).then(() => {
-              if (!data[categoryName]) {
-                data[categoryName] = [];
-              }
-              data[categoryName].push(categoryDict);
-            });
+            return Promise.all(listPromises).then(() => ({
+              [categoryName]: listsData,
+            }));
           });
       });
 
-      // Wait for all categoryPromises to resolve
-      return Promise.all(categoryPromises);
+      return Promise.all(categoryPromises).then((result) => {
+        const transformedData = result.reduce((acc, curr) => {
+          return { ...acc, ...curr };
+        }, {});
+        return transformedData;
+      });
     })
-    .then(() => {
-      res.status(200).send(data);
+    .then((transformedData) => {
+      res.status(200).send(transformedData);
     })
     .catch((error) => {
-      console.error("Error fetching user data:", error.message);
-      res.status(500).send({ error: error.message || "Internal Server Error" });
+      console.error("Error fetching user data:", error);
+      res.status(500).send({ error: "Internal Server Error" });
     });
 });
+
 
 
 app.post("/users", authenticateUser, (req, res) => {
