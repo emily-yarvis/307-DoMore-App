@@ -68,21 +68,32 @@ function App() {
   return promise;
 }
 
-function addNewCategory(category,userId) {
-  console.log("BITCH",userId)
-  fetch(`https://domoreapp-e5ecc0h3d6dzh3hz.westus-01.azurewebsites.net/categories/${userId}`, {
+function addNewCategory(category, userId) {
+  console.log("Adding category for user:", userId);
+
+  fetch(`${API_PREFIX}/categories/${userId}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      
     },
     body: JSON.stringify({
-      name: category.categoryName}),
-  }).then(setCategories([...categories,category]))
-  .then(fetchCategories(userId))
-
-  
+      name: category.categoryName,
+    }),
+  })
+    .then((response) => {
+      if (response.ok) {
+        console.log("Category added successfully");
+        // Wait for the response to confirm success, then fetch updated categories
+        return fetchCategories(userId);
+      } else {
+        throw new Error(`Failed to add category: ${response.status}`);
+      }
+    })
+    .catch((error) => {
+      console.error("Error adding category:", error);
+    });
 }
+
 
 function fetchLists(categoryId){
   console.log("fetching lists");
