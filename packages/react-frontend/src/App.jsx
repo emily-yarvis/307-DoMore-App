@@ -69,9 +69,9 @@ function App() {
   return promise;
 }
 
-function addNewCategory(category) {
-  console.log("BITCH",currentUserId)
-  fetch(`https://domoreapp-e5ecc0h3d6dzh3hz.westus-01.azurewebsites.net/categories/${currentUserId}`, {
+function addNewCategory(category,userId) {
+  console.log("BITCH",userId)
+  fetch(`https://domoreapp-e5ecc0h3d6dzh3hz.westus-01.azurewebsites.net/categories/${userId}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -80,7 +80,7 @@ function addNewCategory(category) {
     body: JSON.stringify({
       name: category.categoryName}),
   })
-  fetchCategories(currentUserId)
+  fetchCategories(userId)
 
   
 }

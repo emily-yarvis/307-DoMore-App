@@ -58,8 +58,8 @@ function CategoryView(props) {
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
 
-  function addNewCategory(){
-    props.addNewCategory();
+  function addNewCategory(category){
+    props.addNewCategory(category,props.userId);
     closeModal();
   }
 
