@@ -20,7 +20,7 @@ function CategoryViewBody(props) {
       <td>
         <div>
           <div className="flex gap-4 mt-2">
-            <div className=" text-2xl font-bold">{props.userData[row]}</div>
+            <div className=" text-2xl font-bold">{row}</div>
             <button
               className=" flex w-8 h-8 bg-red-500 text-white justify-center items-center font-semibold rounded-md "
               onClick={() => props.removeCharacter(index)}
