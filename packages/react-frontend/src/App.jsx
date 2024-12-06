@@ -79,8 +79,7 @@ function addNewCategory(category,userId) {
     },
     body: JSON.stringify({
       name: category.categoryName}),
-  })
-  fetchCategories(userId)
+  }).then(fetchCategories(userId))
 
   
 }
