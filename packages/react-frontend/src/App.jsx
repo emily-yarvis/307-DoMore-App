@@ -58,7 +58,7 @@ function App() {
 
       // Set the formatted categories to state
       setCategories(formattedCategories);
-
+      setCurrentCategory(arr[0]._id)
       fetchLists(arr[0]._id);
     })
     .catch((error) => {
@@ -85,6 +85,32 @@ function addNewCategory(category, userId) {
         console.log("Category added successfully");
         // Wait for the response to confirm success, then fetch updated categories
         return fetchCategories(userId);
+      } else {
+        throw new Error(`Failed to add category: ${response.status}`);
+      }
+    })
+    .catch((error) => {
+      console.error("Error adding category:", error);
+    });
+}
+
+function addNewList(list, categoryId) {
+  console.log("Adding list for category:", categoryId);
+
+  fetch(`${API_PREFIX}/lists/${categoryId}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name: list.listName,
+    }),
+  })
+    .then((response) => {
+      if (response.ok) {
+        console.log("Category added successfully");
+        // Wait for the response to confirm success, then fetch updated categories
+        return fetchLists(categoryId);
       } else {
         throw new Error(`Failed to add category: ${response.status}`);
       }
@@ -297,6 +323,8 @@ function fetchTasks(listId){
             removeCharacter={removeOneCharacter}
             userId = {userId}
             addNewCategory = {addNewCategory}
+            addNewList = {addNewList}
+            currentCategpry = {currentCategory}
             />} />
             <Route
               path="/"

@@ -31,6 +31,8 @@ function CategoryViewBody(props) {
             <ListView
               listData={props.listData}
               removeCharacter={props.removeCharacter}
+              addNewList = {props.addNewList}
+              currentCategory = {props.currentCategory}
             />
           </div>
         </div>
@@ -78,6 +80,8 @@ function CategoryView(props) {
            categoryData={props.categoryData}
             listData={listData}
             removeCharacter={props.removeCharacter}
+            addNewList = {props.addNewList}
+            currentCategory = {props.currentCategory}
           />
         </table>
 
