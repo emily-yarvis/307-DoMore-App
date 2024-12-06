@@ -293,7 +293,9 @@ function fetchTasks(listId){
 
   function fetchUsers() {
     const promise = fetch(`${API_PREFIX}/users`, {
-      headers: addAuthHeader(),
+      headers: addAuthHeader({
+        "Content-Type": "application/json", 
+      }),
     });
 
     return promise;
