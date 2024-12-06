@@ -1,16 +1,11 @@
-// import React, { useState } from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import TaskView from "./TaskView";
 import ListView from "./ListView";
 import CategoryView from "./CategoryView";
-// import SelectedTask from "./SelectedTask";
 
 function Home(props) {
-  //const [lists, setLists] = useState([]);
-  //const [tasks, setTasks] = useState([]);
-  const [categories, setCategories] = useState([]);
-  // const [selectedTask, setSelectedTask] = useState(null);
 
+  console.log("In home ID:",props.userId)
   function removeOneCharacter(index) {
     console.log(lists[index]);
     const updated = lists.filter((list, i) => {
@@ -18,18 +13,6 @@ function Home(props) {
     });
     deleteUser(lists[index]).then(setLists(updated));
   }
-
-  // function updateList(list) {
-  //   setLists([...lists, list]);
-  // }
-
-  // function updateTasks(task) {
-  //   setTasks([...tasks, task]);
-  // }
-
-  // function updateCategories(task) {
-  //   setCategories([...categories, category]);
-  // }
 
   return (
     <div className="flex space-x-4 p-4">
@@ -39,6 +22,7 @@ function Home(props) {
             categoryData={props.categoryData}
             listData={props.listData}
             removeCharacter={removeOneCharacter}
+            userId={props.userId}
           />
         </div>
       </div>
