@@ -47,7 +47,7 @@ function App() {
   //}
 
   function fetchCategories(currentUserId) {
-  const promise = fetch(`${API_PREFIX}/categories/${currentUserId}`)
+  const promise = fetch(`${API_PREFIX}/categories/${currentUserId}`, {headers: addAuthHeader()})
     .then((res) => res.json())
     .then((arr) => {
       // Map the categories to the required format
@@ -73,9 +73,9 @@ function addNewCategory(category, userId) {
 
   fetch(`${API_PREFIX}/categories/${userId}`, {
     method: "POST",
-    headers: {
+    headers: addAuthHeader({
       "Content-Type": "application/json",
-    },
+    }),
     body: JSON.stringify({
       name: category.categoryName,
     }),
@@ -99,9 +99,9 @@ function addNewList(list, categoryId) {
 
   fetch(`${API_PREFIX}/lists/${categoryId}`, {
     method: "POST",
-    headers: {
+    headers: addAuthHeader({
       "Content-Type": "application/json",
-    },
+    }),
     body: JSON.stringify({
       name: list.listName,
     }),
@@ -125,9 +125,9 @@ function addNewTask(task, listId) {
 
   fetch(`${API_PREFIX}/tasks/${listId}`, {
     method: "POST",
-    headers: {
+    headers: addAuthHeader({
       "Content-Type": "application/json",
-    },
+    }),
     body: JSON.stringify({
       name: task.taskName,
     }),
@@ -149,7 +149,7 @@ function addNewTask(task, listId) {
 
 function fetchLists(categoryId){
   console.log("fetching lists");
-  const promise = fetch(`${API_PREFIX}/lists/${categoryId}`)
+  const promise = fetch(`${API_PREFIX}/lists/${categoryId}`, {headers: addAuthHeader()})
     .then((res) => res.json())
     .then((arr) => {
       // Map the categories to the required format
@@ -173,7 +173,7 @@ function fetchLists(categoryId){
 
 function fetchTasks(listId){
   console.log("fetching tasks");
-  const promise = fetch(`${API_PREFIX}/tasks/${listId}`)
+  const promise = fetch(`${API_PREFIX}/tasks/${listId}`, {headers: addAuthHeader()})
     .then((res) => res.json())
     .then((arr) => {
       // Map the categories to the required format
@@ -222,9 +222,9 @@ function fetchTasks(listId){
   function loginUser(creds) {
     const promise = fetch(`${API_PREFIX}/login`, {
       method: "POST",
-      headers: {
+      headers: addAuthHeader({
         "Content-Type": "application/json",
-      },
+      }),
       body: JSON.stringify(creds),
     })
       .then((response) => {
@@ -252,9 +252,9 @@ function fetchTasks(listId){
     //need to add pop up message for username already taken
     const promise = fetch(`${API_PREFIX}/signup`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: addAuthHeader({
+        "Content-Type": "application/json", 
+      }),
       body: JSON.stringify(creds),
     })
       .then((response) => {
