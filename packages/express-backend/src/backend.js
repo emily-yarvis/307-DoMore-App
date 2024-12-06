@@ -170,11 +170,51 @@ app.get("/users", (req, res) => {
 
 app.get("/users/:username", (req, res) => {
   const username = req.params["username"];
+  const data = {};
 
   userServices
     .findUserByUsername(username)
-    .then((user) => res.status(200).send(user))
-    .catch(() => res.status(404).send("Resource not found."));
+    .then((user) => userServices.getCategoriesByUserId(user._id))
+    .then((categories) => {
+      const categoryPromises = categories.map((category) => {
+        const categoryName = category.name;
+        const categoryDict = { categoryName, lists: [] };
+
+        return categoryServices
+          .getListsByCategoryId(category._id)
+          .then((lists) => {
+            const listPromises = lists.map((list) => {
+              const listName = list.name;
+              const listDict = { listName, tasks: [] };
+
+              return listServices
+                .getTasksByListId(list._id)
+                .then((tasks) => {
+                  listDict.tasks = tasks;
+                  categoryDict.lists.push(listDict);
+                });
+            });
+
+            // Wait for all listPromises to resolve
+            return Promise.all(listPromises).then(() => {
+              if (!data[categoryName]) {
+                data[categoryName] = [];
+              }
+              data[categoryName].push(categoryDict);
+            });
+          });
+      });
+
+      // Wait for all categoryPromises to resolve
+      return Promise.all(categoryPromises);
+    })
+    .then(() => {
+      res.status(200).send(data);
+    })
+    .catch((error) => {
+      console.error("Error fetching user data:", error);
+      res.status(500).send({ error: "Internal Server Error" });
+    });
 });
 
 app.post("/users", authenticateUser, (req, res) => {
