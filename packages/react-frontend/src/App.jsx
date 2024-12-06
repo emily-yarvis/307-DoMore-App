@@ -31,6 +31,8 @@ function App() {
   const [showModal, setShowModal] = useState(false);
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
+  const [userData, setUserData] = useState({});
+  const [username, setUsername] = useState("");
 
   function removeOneCharacter(index) {
     console.log(lists[index]);
@@ -200,31 +202,49 @@ function fetchTasks(listId){
     });
 }
 
+function fetchData(username) {
+  fetch(`${API_PREFIX}/users/${username}`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status} ${response.statusText}`);
+      }
+      return response.json(); // Parse JSON response
+    })
+    .then((result) => {
+      setUserData(result); // Update userData state
+    })
+    .catch((err) => {
+      console.error("Error fetching user data:", err);
+    });
+}
+
 
   useEffect(() => {
     // Fetch users
-    fetchUsers()
-      .then((res) => (res.status === 200 ? res.json() : undefined))
-      .then((json) => {
-        if (json) {
-          setUsers(json["users_list"]);
-        } else {
-          setUsers(null);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // fetchUsers()
+    //   .then((res) => (res.status === 200 ? res.json() : undefined))
+    //   .then((json) => {
+    //     if (json) {
+    //       setUsers(json["users_list"]);
+    //     } else {
+    //       setUsers(null);
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   
     // Fetch categories if userId is set
     console.log("userId changed:", userId);
-    fetchCategories(userId)
-    fetchLists(currentCategory)
-    fetchTasks(currentList)
-    
+    // fetchCategories(userId)
+    // fetchLists(currentCategory)
+    // fetchTasks(currentList)
+    fetchData(username)
     
 
-  }, [userId]); // Add userId as a dependency
+    
+
+  }, [username]); // Add userId as a dependency
   
 
   function loginUser(creds) {
@@ -240,12 +260,7 @@ function fetchTasks(listId){
           response.json().then((payload) => setToken(payload.token));
           setMessage(`Login successful; auth token saved`);
           console.log("fetching user id in login")
-          fetch(`${API_PREFIX}/users/${creds.username}`)
-            .then((res) => res.json())
-            .then((json) => setUserId(json[0]._id))
-            .catch((error) => {
-              console.log(error);
-            });
+          setUsername(creds.username);
         } else {
           setMessage(`Login Error ${response.status}: ${response.data}`);
         }

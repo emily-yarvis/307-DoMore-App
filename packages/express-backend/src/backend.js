@@ -174,7 +174,15 @@ app.get("/users/:username", (req, res) => {
 
   userServices
     .findUserByUsername(username)
-    .then((user) => userServices.getCategoriesByUserId(user._id))
+    .then((user) => {
+      if (!user) {
+        throw new Error("User not found");
+      }
+      console.log("User ID:", user._id);
+
+      // Return the categories associated with the user
+      return userServices.getCategoriesByUserId(user._id);
+    })
     .then((categories) => {
       const categoryPromises = categories.map((category) => {
         const categoryName = category.name;
@@ -212,10 +220,11 @@ app.get("/users/:username", (req, res) => {
       res.status(200).send(data);
     })
     .catch((error) => {
-      console.error("Error fetching user data:", error);
-      res.status(500).send({ error: "Internal Server Error" });
+      console.error("Error fetching user data:", error.message);
+      res.status(500).send({ error: error.message || "Internal Server Error" });
     });
 });
+
 
 app.post("/users", authenticateUser, (req, res) => {
   const userToAdd = req.body;
