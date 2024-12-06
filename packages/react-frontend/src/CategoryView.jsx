@@ -14,6 +14,7 @@ function MyListsHeader(props) {
 }
 
 function CategoryViewBody(props) {
+  console.log(props.userData);
   const rows = props.userData.map((row, index) => (
     <tr key={index}>
       <td>
