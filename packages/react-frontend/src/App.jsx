@@ -132,6 +132,9 @@ function addNewTask(task, listId) {
     }),
     body: JSON.stringify({
       name: task.taskName,
+      dueData: task.dueDate,
+      priority: 1,
+      description: task.description
     }),
   })
     .then((response) => {
