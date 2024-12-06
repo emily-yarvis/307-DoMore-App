@@ -15,12 +15,12 @@ function MyListsHeader(props) {
 
 function CategoryViewBody(props) {
   console.log(props.userData);
-  const rows = props.userData.map((row, index) => (
+  const rows = Object.keys(props.userData).map((row, index) => (
     <tr key={index}>
       <td>
         <div>
           <div className="flex gap-4 mt-2">
-            <div className=" text-2xl font-bold">{row.categoryName}</div>
+            <div className=" text-2xl font-bold">{row}</div>
             <button
               className=" flex w-8 h-8 bg-red-500 text-white justify-center items-center font-semibold rounded-md "
               onClick={() => props.removeCharacter(index)}
@@ -55,7 +55,7 @@ CategoryViewBody.propTypes = {
 
 
 function CategoryView(props) {
-  console.log("MEOW",props.categoryData)
+  // console.log("MEOW",props.categoryData)
   const [showModal, setShowModal] = useState(false);
   const [listData, setListData] = useState(props.listData || []);
   const openModal = () => setShowModal(true);
