@@ -123,9 +123,9 @@ function addNewList(list, categoryId) {
 }
 
 function addNewTask(task, listId) {
-  console.log("Adding list for category:", listId);
+  console.log("Adding task for list:", currentList);
 
-  fetch(`${API_PREFIX}/tasks/${listId}`, {
+  fetch(`${API_PREFIX}/tasks/${currentList}`, {
     method: "POST",
     headers: addAuthHeader({
       "Content-Type": "application/json",
@@ -136,15 +136,15 @@ function addNewTask(task, listId) {
   })
     .then((response) => {
       if (response.ok) {
-        console.log("Category added successfully");
+        console.log("task added successfully");
         // Wait for the response to confirm success, then fetch updated categories
-        return fetchTasks(listId);
+        return fetchTasks(currentList);
       } else {
-        throw new Error(`Failed to add category: ${response.status}`);
+        throw new Error(`Failed to add task: ${response.status}`);
       }
     })
     .catch((error) => {
-      console.error("Error adding category:", error);
+      console.error("Error adding task:", error);
     });
 }
 
@@ -180,7 +180,8 @@ function fetchTasks(listId){
     .then((arr) => {
       // Map the categories to the required format
       const formattedTasks = arr.map((entry) => ({
-        taskName: entry.name, // Assuming `name` is the property that holds the category name
+        taskName: entry.name,
+        dueDate: entry.dueDate // Assuming `name` is the property that holds the category name
       }));
 
       console.log("Fetched and formatted categories:", formattedLists);
