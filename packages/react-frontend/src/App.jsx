@@ -78,6 +78,8 @@ function addNewCategory(category) {
     categoryName: [], 
   }));
 
+  console.log(userData);
+
   // fetch(`${API_PREFIX}/categories/${userId}`, {
   //   method: "POST",
   //   headers: addAuthHeader({
