@@ -32,14 +32,14 @@ mongoose
   .catch((error) => console.log(error));
 
 //Task API routes
-app.get("/tasks", (req, res) => {
+app.get("/tasks", authenticateUser, (req, res) => {
   taskServices
     .getTasks()
     .then((taskList) => res.status(200).send(taskList))
     .catch(() => res.status(404).send("Resource not found."));
 });
 
-app.get("/tasks/:listId", (req, res) => {
+app.get("/tasks/:listId", authenticateUser, (req, res) => {
   const listId = req.params["listId"];
 
   listServices
@@ -48,7 +48,7 @@ app.get("/tasks/:listId", (req, res) => {
     .catch(() => res.status(404).send("Resource not found."));
 });
 
-app.post("/tasks/:listId", (req, res) => {
+app.post("/tasks/:listId", authenticateUser, (req, res) => {
   const listId = req.params["listId"];
   const taskToAdd = req.body;
 
@@ -66,7 +66,7 @@ app.post("/tasks/:listId", (req, res) => {
     });
 });
 
-app.delete("/tasks/:taskId", (req, res) => {
+app.delete("/tasks/:taskId", authenticateUser, (req, res) => {
   const taskToDelete = req.params["taskId"];
   taskServices
     .deleteTask(taskToDelete)
@@ -75,14 +75,14 @@ app.delete("/tasks/:taskId", (req, res) => {
 });
 
 //List API routes
-app.get("/lists", (req, res) => {
+app.get("/lists", authenticateUser, (req, res) => {
   listServices
     .getLists()
     .then((listList) => res.status(200).send(listList))
     .catch(() => res.status(404).send("Resource not found."));
 });
 
-app.get("/lists/:categoryId", (req, res) => {
+app.get("/lists/:categoryId", authenticateUser, (req, res) => {
   const categoryId = req.params["categoryId"];
 
   categoryServices
@@ -91,7 +91,7 @@ app.get("/lists/:categoryId", (req, res) => {
     .catch(() => res.status(404).send("Resource not found."));
 });
 
-app.post("/lists/:categoryId", (req, res) => {
+app.post("/lists/:categoryId", authenticateUser, (req, res) => {
   const categoryId = req.params["categoryId"];
   const listToAdd = req.body;
 
@@ -109,7 +109,7 @@ app.post("/lists/:categoryId", (req, res) => {
     });
 });
 
-app.delete("/lists/:listId", (req, res) => {
+app.delete("/lists/:listId", authenticateUser, (req, res) => {
   const listToDelete = req.params["listId"];
   listServices
     .deleteUser(listToDelete)
@@ -118,14 +118,14 @@ app.delete("/lists/:listId", (req, res) => {
 });
 
 //Category API routes
-app.get("/categories", (req, res) => {
+app.get("/categories", authenticateUser, (req, res) => {
   categoryServices
     .getCategories()
     .then((categoryList) => res.status(200).send(categoryList))
     .catch(() => res.status(404).send("Resource not found."));
 });
 
-app.get("/categories/:userId", (req, res) => {
+app.get("/categories/:userId", authenticateUser, (req, res) => {
   const userId = req.params["userId"];
 
   userServices
@@ -134,7 +134,7 @@ app.get("/categories/:userId", (req, res) => {
     .catch(() => res.status(404).send("Resource not found."));
 });
 
-app.post("/categories/:userId", (req, res) => {
+app.post("/categories/:userId", authenticateUser, (req, res) => {
   const userId = req.params["userId"];
   const categoryToAdd = req.body;
 
@@ -152,7 +152,7 @@ app.post("/categories/:userId", (req, res) => {
     });
 });
 
-app.delete("/categories/:categoryId", (req, res) => {
+app.delete("/categories/:categoryId", authenticateUser, (req, res) => {
   const categoryToDelete = req.params["categoryId"];
   categoryServices
     .deleteUser(categoryToDelete)
