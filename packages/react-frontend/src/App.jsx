@@ -70,15 +70,13 @@ function App() {
   return promise;
 }
 
-function addNewCategory(category) {
-  console.log("Adding category for user:", category.name);
-  const categoryName = category.name;
-  setUserData((userData) => ({ 
-    ...userData, 
-    categoryName: [], 
-  }));
-
-  console.log(userData);
+setUserData((prevUserData) => {
+  // Create a new category structure with an empty object for lists
+  return {
+    ...prevUserData, // Keep all existing categories
+    [categoryName]: {}, // Add the new category as a key with an empty object as value
+  };
+});
 
   // fetch(`${API_PREFIX}/categories/${userId}`, {
   //   method: "POST",
@@ -101,7 +99,7 @@ function addNewCategory(category) {
   //   .catch((error) => {
   //     console.error("Error adding category:", error);
   //   });
-}
+
 
 function addNewList(list, categoryId) {
   console.log("Adding list for category:", categoryId);
