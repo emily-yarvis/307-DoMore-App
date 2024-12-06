@@ -59,7 +59,6 @@ TaskViewBody.propTypes = {
 
 function TaskView(props) {
   const [showModal, setShowModal] = useState(false);
-  //const [taskData, setTaskData] = useState(props.taskData || []);
   const [selectedTask, setSelectedTask] = useState(null);
 
   const openModal = () => setShowModal(true);

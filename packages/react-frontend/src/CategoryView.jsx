@@ -54,13 +54,22 @@ CategoryViewBody.propTypes = {
 function CategoryView(props) {
   console.log("MEOW",props.categoryData)
   const [showModal, setShowModal] = useState(false);
-  //const [categoryData, setCategoryData] = useState(props.categoryData || []);
   const [listData, setListData] = useState(props.listData || []);
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
 
   function addNewCategory(category) {
-    setCategoryData([...props.categoryData, category]);
+
+    fetch("https://domoreapp-e5ecc0h3d6dzh3hz.westus-01.azurewebsites.net/categories", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        
+      },
+      body: JSON.stringify({
+        name: category.categoryName}),
+    })
+
     closeModal();
   }
 

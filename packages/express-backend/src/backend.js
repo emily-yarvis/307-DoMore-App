@@ -66,8 +66,8 @@ app.post("/tasks/:listId", (req, res) => {
     });
 });
 
-app.delete("/tasks", (req, res) => {
-  const taskToDelete = req.body._id;
+app.delete("/tasks/:taskId", (req, res) => {
+  const taskToDelete = req.params["taskId"];
   taskServices
     .deleteTask(taskToDelete)
     .then((result) => res.status(204).send(result))
@@ -109,6 +109,14 @@ app.post("/lists/:categoryId", (req, res) => {
     });
 });
 
+app.delete("/lists/:listId", (req, res) => {
+  const listToDelete = req.params["listId"];
+  listServices
+    .deleteUser(listToDelete)
+    .then((result) => res.status(204).send(result))
+    .catch(() => res.status(404).send("Resource not found."));
+});
+
 //Category API routes
 app.get("/categories", (req, res) => {
   categoryServices
@@ -144,6 +152,14 @@ app.post("/categories/:userId", (req, res) => {
     });
 });
 
+app.delete("/categories/:categoryId", (req, res) => {
+  const categoryToDelete = req.params["categoryId"];
+  categoryServices
+    .deleteUser(categoryToDelete)
+    .then((result) => res.status(204).send(result))
+    .catch(() => res.status(404).send("Resource not found."));
+});
+
 //User API routes
 app.get("/users", (req, res) => {
   userServices
@@ -174,8 +190,8 @@ app.post("/users", authenticateUser, (req, res) => {
 app.post("/signup", registerUser);
 app.post("/login", loginUser);
 
-app.delete("/users", (req, res) => {
-  const userToDelete = req.body._id;
+app.delete("/users/:userId", (req, res) => {
+  const userToDelete = req.params["userId"];
   userServices
     .deleteUser(userToDelete)
     .then((result) => res.status(204).send(result))

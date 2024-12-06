@@ -24,6 +24,9 @@ function App() {
   const [lists, setLists] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [userId, setUserId] = useState("");
+  const [currentTask, setCurrentTask] = useState("");
+  const [currentCategory, setCurrentCategory] = useState("");
+  const [currentList, setCurrentList] = useState("");
   const [users, setUsers] = useState([]);
 
   function removeOneCharacter(index) {
