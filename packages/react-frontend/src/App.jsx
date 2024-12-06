@@ -113,11 +113,6 @@ function fetchTasks(listId){
 }
 
 
-
-
-      
-
-
   useEffect(() => {
     // Fetch users
     fetchUsers()
@@ -155,6 +150,7 @@ function fetchTasks(listId){
         if (response.status === 200) {
           response.json().then((payload) => setToken(payload.token));
           setMessage(`Login successful; auth token saved`);
+          console.log("fetching user id in login")
           fetch(`${API_PREFIX}/users/${creds.username}`)
             .then((res) => res.json())
             .then((json) => setUserId(json[0]._id))
@@ -244,13 +240,13 @@ function fetchTasks(listId){
 
           {/* Links */}
           <Link
-            to="/"
+            to="/Home"
             className="py-2 px-4 border bg-white border-blue-500 text-blue-500 font-semibold rounded-md mr-4"
           >
             Home
           </Link>
           <Link
-            to="/signup"
+            to="/"
             className="py-2 px-4 border bg-white border-blue-500 text-blue-500 font-semibold rounded-md mr-4"
           >
             Sign Up
@@ -266,7 +262,7 @@ function fetchTasks(listId){
         {/* Content */}
         <div className="p-4">
           <Routes>
-            <Route path="/" element={<Home
+            <Route path="/Home" element={<Home
             categoryData={categories}
             listData={lists}
             taskData={tasks}
@@ -274,7 +270,7 @@ function fetchTasks(listId){
             userId = {userId}
             />} />
             <Route
-              path="/signup"
+              path="/"
               element={<SignUp handleSubmit={signupUser} />}
             />
             <Route path="/login" element={<LogIn handleSubmit={loginUser} />} />
