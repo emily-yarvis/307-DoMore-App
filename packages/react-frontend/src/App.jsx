@@ -215,6 +215,8 @@ function fetchTasks(listId){
     // Fetch categories if userId is set
     console.log("userId changed:", userId);
     fetchCategories(userId)
+    fetchLists(currentCategory)
+    fetchTasks(currentList)
     
     
 
