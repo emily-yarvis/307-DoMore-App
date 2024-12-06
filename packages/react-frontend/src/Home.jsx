@@ -23,6 +23,7 @@ function Home(props) {
             listData={props.listData}
             removeCharacter={removeOneCharacter}
             userId={props.userId}
+            addNewCategory = {props.addNewCategory}
           />
         </div>
       </div>

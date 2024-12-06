@@ -28,6 +28,9 @@ function App() {
   const [currentCategory, setCurrentCategory] = useState("");
   const [currentList, setCurrentList] = useState("");
   const [users, setUsers] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const openModal = () => setShowModal(true);
+  const closeModal = () => setShowModal(false);
 
   function removeOneCharacter(index) {
     console.log(lists[index]);
@@ -64,6 +67,22 @@ function App() {
     });
 
   return promise;
+}
+
+function addNewCategory(category) {
+  console.log("BITCH",currentUserId)
+  fetch(`https://domoreapp-e5ecc0h3d6dzh3hz.westus-01.azurewebsites.net/categories/${currentUserId}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      
+    },
+    body: JSON.stringify({
+      name: category.categoryName}),
+  })
+  fetchCategories(currentUserId)
+
+  closeModal();
 }
 
 function fetchLists(categoryId){
@@ -268,14 +287,14 @@ function fetchTasks(listId){
             taskData={tasks}
             removeCharacter={removeOneCharacter}
             userId = {userId}
+            addNewCategory = {addNewCategory}
             />} />
             <Route
               path="/"
               element={<SignUp handleSubmit={signupUser} />}
             />
             <Route path="/login" element={<LogIn handleSubmit={loginUser} />} />
-            <Route path="/newTask" element={<NewTask />} />
-            <Route path="/newList" element={<NewList />} />
+            
            
           </Routes>
         </div>

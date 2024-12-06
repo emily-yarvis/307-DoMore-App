@@ -58,20 +58,7 @@ function CategoryView(props) {
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
 
-  function addNewCategory(category) {
-    console.log("BITCH",props.userId)
-    fetch(`https://domoreapp-e5ecc0h3d6dzh3hz.westus-01.azurewebsites.net/categories/${props.userId}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        
-      },
-      body: JSON.stringify({
-        name: category.categoryName}),
-    })
-
-    closeModal();
-  }
+  
 
   
 
@@ -99,7 +86,7 @@ function CategoryView(props) {
         </button>
         {showModal && (
           <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
-            <NewCategory handleSubmit={addNewCategory} />
+            <NewCategory handleSubmit={props.addNewCategory} />
             <button
               onClick={closeModal}
               className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl font-bold"
