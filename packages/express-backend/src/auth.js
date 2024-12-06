@@ -25,6 +25,7 @@ function generateAccessToken(username) {
 
 export function registerUser(req, res) {
   const { username, pwd } = req.body; // from form
+  console.log("in register user")
 
   if (!username || !pwd) {
     res.status(400).send("Bad request: Invalid input data.");
@@ -54,6 +55,8 @@ export function registerUser(req, res) {
         });
       });
   }
+
+  console.log("exiting register user")
 }
 
 export function authenticateUser(req, res, next) {
