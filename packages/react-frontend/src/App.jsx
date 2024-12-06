@@ -82,7 +82,7 @@ function addNewCategory(category) {
   })
   fetchCategories(currentUserId)
 
-  closeModal();
+  
 }
 
 function fetchLists(categoryId){

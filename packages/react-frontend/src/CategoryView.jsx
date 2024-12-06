@@ -58,7 +58,10 @@ function CategoryView(props) {
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
 
-  
+  function addNewCategory(){
+    props.addNewCategory();
+    closeModal();
+  }
 
   
 
@@ -86,7 +89,7 @@ function CategoryView(props) {
         </button>
         {showModal && (
           <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
-            <NewCategory handleSubmit={props.addNewCategory} />
+            <NewCategory handleSubmit={addNewCategory} />
             <button
               onClick={closeModal}
               className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl font-bold"
