@@ -70,13 +70,18 @@ function App() {
   return promise;
 }
 
-setUserData((prevUserData) => {
-  // Create a new category structure with an empty object for lists
-  return {
-    ...prevUserData, // Keep all existing categories
-    [categoryName]: {}, // Add the new category as a key with an empty object as value
-  };
-});
+function addNewCategory(category) {
+  console.log("Adding category for user:", category.name);
+  const categoryName = category.name;
+  setUserData((prevUserData) => {
+    // Create a new category with an empty structure for lists
+    return {
+      ...prevUserData, // Keep all existing categories
+      [categoryName]: {}, // Create the new category
+    };
+  });
+
+  console.log(userData);
 
   // fetch(`${API_PREFIX}/categories/${userId}`, {
   //   method: "POST",
@@ -99,7 +104,7 @@ setUserData((prevUserData) => {
   //   .catch((error) => {
   //     console.error("Error adding category:", error);
   //   });
-
+}
 
 function addNewList(list, categoryId) {
   console.log("Adding list for category:", categoryId);
