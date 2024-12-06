@@ -53,8 +53,7 @@ function App() {
       // Map the categories to the required format
       const formattedCategories = arr.map((entry) => ({
         categoryName: entry.name, // Assuming `name` is the property that holds the category name
-      }));
-
+      }))
       console.log("Fetched and formatted categories:", formattedCategories);
 
       // Set the formatted categories to state
