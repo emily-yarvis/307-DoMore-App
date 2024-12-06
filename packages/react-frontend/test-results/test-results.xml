@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="3" failures="0" errors="0" time="1.073">
+  <testsuite name="NewTask Component" errors="0" failures="0" skipped="0" timestamp="2024-12-04T05:40:25" time="0.739" tests="3">
+    <testcase classname="NewTask Component renders all form inputs and submit button" name="NewTask Component renders all form inputs and submit button" time="0.048">
+    </testcase>
+    <testcase classname="NewTask Component updates state on input change" name="NewTask Component updates state on input change" time="0.012">
+    </testcase>
+    <testcase classname="NewTask Component calls handleSubmit with correct data on submit" name="NewTask Component calls handleSubmit with correct data on submit" time="0.014">
+    </testcase>
+  </testsuite>
+</testsuites>
