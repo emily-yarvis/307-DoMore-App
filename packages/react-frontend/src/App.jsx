@@ -96,6 +96,8 @@ function addNewCategory(category, userId) {
 
 function addNewList(list, categoryId) {
   console.log("Adding list for category:", categoryId);
+  console.log("Adding list for category:", currentCategory);
+
 
   fetch(`${API_PREFIX}/lists/${currentCategory}`, {
     method: "POST",

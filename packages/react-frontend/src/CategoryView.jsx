@@ -78,7 +78,7 @@ function CategoryView(props) {
         <table>
           <CategoryViewBody
            categoryData={props.categoryData}
-            listData={listData}
+            listData={props.listData}
             removeCharacter={props.removeCharacter}
             addNewList = {props.addNewList}
             currentCategory = {props.currentCategory}
