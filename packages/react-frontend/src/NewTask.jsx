@@ -1,7 +1,7 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-const NewTask = (props) => {
+const NewTask = ({ handleSubmit }) => {
   const [task, setTask] = useState({
     taskName: "",
     dueDate: "",
@@ -17,8 +17,8 @@ const NewTask = (props) => {
   }
 
   function submitForm() {
-    if (props.handleSubmit) {
-      props.handleSubmit(task);
+    if (handleSubmit) {
+      handleSubmit(task);
     }
     setTask({ taskName: "", dueDate: "", description: "" });
   }
@@ -30,8 +30,14 @@ const NewTask = (props) => {
 
         <form>
           <div className="mb-4">
-            <h3 className="text-lg font-medium text-left mb-2">Task Name</h3>
+            <label
+              htmlFor="taskName"
+              className="text-lg font-medium text-left mb-2 block"
+            >
+              Task Name
+            </label>
             <input
+              id="taskName"
               type="text"
               name="taskName"
               value={task.taskName}
@@ -41,8 +47,14 @@ const NewTask = (props) => {
             />
           </div>
           <div className="mb-4">
-            <h3 className="text-lg font-medium text-left mb-2">Due Date</h3>
+            <label
+              htmlFor="dueDate"
+              className="text-lg font-medium text-left mb-2 block"
+            >
+              Due Date
+            </label>
             <input
+              id="dueDate"
               type="date"
               name="dueDate"
               value={task.dueDate}
@@ -51,8 +63,14 @@ const NewTask = (props) => {
             />
           </div>
           <div className="mb-4">
-            <h3 className="text-lg font-medium text-left mb-2">Description</h3>
+            <label
+              htmlFor="description"
+              className="text-lg font-medium text-left mb-2 block"
+            >
+              Description
+            </label>
             <textarea
+              id="description"
               name="description"
               value={task.description}
               onChange={handleChange}
