@@ -40,7 +40,7 @@ export function registerUser(req, res) {
           console.log("Token:", token);
           creds.push({ username, hashedPassword });
           console.log(creds[creds.length - 1]);
-          fetch("https://domoreapp-e5ecc0h3d6dzh3hz.westus-01.azurewebsites.net/users", {
+          fetch("https://localhost:8000/users", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
