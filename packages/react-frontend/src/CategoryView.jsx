@@ -60,7 +60,7 @@ function CategoryView(props) {
 
   function addNewCategory(category) {
 
-    fetch("https://domoreapp-e5ecc0h3d6dzh3hz.westus-01.azurewebsites.net/categories", {
+    fetch(`https://domoreapp-e5ecc0h3d6dzh3hz.westus-01.azurewebsites.net/categories/${props.userId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
