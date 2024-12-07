@@ -39,7 +39,7 @@ app.get("/tasks", (req, res) => {
     .catch(() => res.status(404).send("Resource not found."));
 });
 
-app.get("/tasks/:listId", (req, res) => {
+app.get("/tasks/:listId", authenticateUser, (req, res) => {
   const listId = req.params["listId"];
 
   listServices
@@ -48,7 +48,7 @@ app.get("/tasks/:listId", (req, res) => {
     .catch(() => res.status(404).send("Resource not found."));
 });
 
-app.post("/tasks/:listName", (req, res) => {
+app.post("/tasks/:listName", authenticateUser, (req, res) => {
   const listName = req.params["listName"];
   const taskToAdd = req.body;
 
@@ -82,7 +82,7 @@ app.get("/lists", (req, res) => {
     .catch(() => res.status(404).send("Resource not found."));
 });
 
-app.get("/lists/:categoryId", (req, res) => {
+app.get("/lists/:categoryId", authenticateUser, (req, res) => {
   const categoryId = req.params["categoryId"];
 
   categoryServices
@@ -91,7 +91,7 @@ app.get("/lists/:categoryId", (req, res) => {
     .catch(() => res.status(404).send("Resource not found."));
 });
 
-app.post("/lists/:categoryName", (req, res) => {
+app.post("/lists/:categoryName", authenticateUser, (req, res) => {
   const categoryName = req.params["categoryName"];
   const listToAdd = req.body;
 
@@ -125,7 +125,7 @@ app.get("/categories", (req, res) => {
     .catch(() => res.status(404).send("Resource not found."));
 });
 
-app.get("/categories/:userId", (req, res) => {
+app.get("/categories/:userId", authenticateUser, (req, res) => {
   const userId = req.params["userId"];
 
   userServices
@@ -134,7 +134,7 @@ app.get("/categories/:userId", (req, res) => {
     .catch(() => res.status(404).send("Resource not found."));
 });
 
-app.post("/categories/:userName", (req, res) => {
+app.post("/categories/:userName", authenticateUser, (req, res) => {
   const userName = req.params["userName"];
   const categoryToAdd = req.body;
 
@@ -162,7 +162,7 @@ app.delete("/categories/:categoryId", (req, res) => {
 
 //User API routes
 
-app.get("/users/:username", (req, res) => {
+app.get("/users/:username", authenticateUser, (req, res) => {
   const username = req.params.username;
 
   userServices
