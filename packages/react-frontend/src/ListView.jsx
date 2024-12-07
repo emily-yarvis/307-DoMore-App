@@ -15,21 +15,19 @@ function TableHeader() {
     </thead>
   );
 }
+
 function TableBody(props) {
-  const list = props.listData || {};
+  const list = props.listData || {}
   const rows = Object.keys(list).map((row, index) => (
     <tr className="flex items-center justify-between" key={index}>
       <td>
-        <div
-          className="py-2 px-4 min-w-40 bg-white font-semibold rounded-md cursor-pointer"
-          onClick={() => props.onSelectList(row)} // Notify parent of list selection
-        >
-          {row}
+        <div className=" py-2 px-4 min-w-40 bg-white font-semibold rounded-md">
+          {list[row]}
         </div>
       </td>
       <td>
         <button
-          className="py-2 px-4 bg-blue-500 text-white font-semibold rounded-md"
+          className="py-2 px-4 bg-blue-500 text-white font-semibold rounded-md "
           onClick={() => props.removeCharacter(index)}
         >
           Delete
@@ -41,8 +39,11 @@ function TableBody(props) {
 }
 
 TableBody.propTypes = {
-  listData: PropTypes.object.isRequired,
-  onSelectList: PropTypes.func.isRequired,
+  listData: PropTypes.arrayOf(
+    PropTypes.shape({
+      listName: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
   removeCharacter: PropTypes.func.isRequired,
 };
 
@@ -53,17 +54,17 @@ function ListView(props) {
   const closeModal = () => setShowModal(false);
 
   function addNewList(list) {
-    props.addNewList(list, props.currentCategory);
+    props.addNewList(list,props.currentCategory)
     closeModal();
   }
 
   return (
     <div>
+      
       <table>
         <TableBody
           listData={props.listData}
           removeCharacter={props.removeCharacter}
-          onSelectList={props.onSelectList} // Pass down the selection handler
         />
       </table>
       <button
@@ -88,8 +89,11 @@ function ListView(props) {
 }
 
 ListView.propTypes = {
-  listData: PropTypes.object.isRequired,
-  onSelectList: PropTypes.func.isRequired,
+  listData: PropTypes.arrayOf(
+    PropTypes.shape({
+      listName: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
   removeCharacter: PropTypes.func.isRequired,
 };
 
