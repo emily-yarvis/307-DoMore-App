@@ -161,12 +161,6 @@ app.delete("/categories/:categoryId", (req, res) => {
 });
 
 //User API routes
-app.get("/users", authenticateUser, (req, res) => {
-  userServices
-    .getUsers()
-    .then((users) => res.status(200).send(users))
-    .catch(() => res.status(404).send("Resource not found."));
-});
 
 app.get("/users/:username", authenticateUser, (req, res) => {
   const username = req.params.username;
