@@ -13,12 +13,18 @@ function App() {
   const [token, setToken] = useState(INVALID_TOKEN);
   const [lists, setLists] = useState([]);
   const [tasks, setTasks] = useState([]);
-  const [message,setMessage] = useState("");
   const [currentCategory, setCurrentCategory] = useState("");
   const [currentList, setCurrentList] = useState("");
-  
+  const [message, setMessage] = useState("");
+  const [categories, setCategories] = useState([]);
   const [userData, setUserData] = useState({});
   const [username, setUsername] = useState("");
+  const [userId, setUserId] = useState("");
+  const [currentTask, setCurrentTask] = useState("");
+  const [users, setUsers] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const openModal = () => setShowModal(true);
+  const closeModal = () => setShowModal(false);
 
   
 

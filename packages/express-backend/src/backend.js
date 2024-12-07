@@ -161,7 +161,7 @@ app.delete("/categories/:categoryId", (req, res) => {
 });
 
 //User API routes
-app.get("/users", (req, res) => {
+app.get("/users", authenticateUser, (req, res) => {
   userServices
     .getUsers()
     .then((users) => res.status(200).send(users))
