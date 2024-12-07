@@ -68,7 +68,8 @@ function App() {
     });
 
   return promise;
-}
+  }
+
 
 function addNewCategory(category) {
   console.log("Adding category for user:", category);
@@ -108,7 +109,7 @@ function addNewCategory(category) {
   //   .catch((error) => {
   //     console.error("Error adding category:", error);
   //   });
-}
+
 
 function addNewList(list, categoryName) {
   console.log("Adding list for category:", categoryName);
@@ -420,5 +421,7 @@ function fetchData(username) {
       </div>
     </Router>
   );
+}
+            
 
 export default App;
