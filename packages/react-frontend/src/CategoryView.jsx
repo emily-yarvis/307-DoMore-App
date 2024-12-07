@@ -30,10 +30,10 @@ function CategoryViewBody(props) {
           </div>
           <div className="pt-4">
             <ListView
-              listData={props.userData[row]["lists"]}
+              listData={props.userData[row]}
               // removeCharacter={props.removeCharacter}
               // addNewList = {props.addNewList}
-              // currentCategory = {props.currentCategory}
+              currentCategory = {row}
             />
           </div>
         </div>

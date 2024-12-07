@@ -85,6 +85,7 @@ function addNewCategory(category) {
   
 
   console.log(userData);
+}
 
   // fetch(`${API_PREFIX}/categories/${userId}`, {
   //   method: "POST",
@@ -109,33 +110,47 @@ function addNewCategory(category) {
   //   });
 }
 
-function addNewList(list, categoryId) {
-  console.log("Adding list for category:", categoryId);
-  console.log("Adding list for category:", currentCategory);
+function addNewList(list, categoryName) {
+  console.log("Adding list for category:", categoryName);
 
-
-  fetch(`${API_PREFIX}/lists/${currentCategory}`, {
-    method: "POST",
-    headers: addAuthHeader({
-      "Content-Type": "application/json",
-    }),
-    body: JSON.stringify({
-      name: list.listName,
-    }),
-  })
-    .then((response) => {
-      if (response.ok) {
-        console.log("Category added successfully");
-        // Wait for the response to confirm success, then fetch updated categories
-        return fetchLists(currentCategory);
-      } else {
-        throw new Error(`Failed to add category: ${response.status}`);
+  const listName = list.listName;
+  setUserData((prevData) => {
+    // Directly add the new list to the lists array of the specified category
+    const updatedData = {
+      ...prevData,
+      [categoryName]: {
+        ...prevData[categoryName], // Keep the existing data for the category (e.g., lists)
+        listName: []
       }
-    })
-    .catch((error) => {
-      console.error("Error adding category:", error);
-    });
-}
+    };
+
+    return updatedData;
+  });
+  
+
+
+  // fetch(`${API_PREFIX}/lists/${currentCategory}`, {
+  //   method: "POST",
+  //   headers: addAuthHeader({
+  //     "Content-Type": "application/json",
+  //   }),
+  //   body: JSON.stringify({
+  //     name: list.listName,
+  //   }),
+  // })
+  //   .then((response) => {
+  //     if (response.ok) {
+  //       console.log("Category added successfully");
+  //       // Wait for the response to confirm success, then fetch updated categories
+  //       return fetchLists(currentCategory);
+  //     } else {
+  //       throw new Error(`Failed to add category: ${response.status}`);
+  //     }
+  //   })
+  //   .catch((error) => {
+  //     console.error("Error adding category:", error);
+  //   });
+
 
 function addNewTask(task, listId) {
   console.log("Adding task for list:", currentList);
