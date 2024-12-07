@@ -79,3 +79,5 @@ CategoryView.propTypes = {
   addNewList: PropTypes.func.isRequired,
   onSelectList: PropTypes.func.isRequired,
 };
+
+export default CategoryView;
