@@ -158,18 +158,17 @@ function addNewTask(task, listName, categoryName) {
   console.log("Adding task for list:", currentList);
 
   setUserData((prevData) => {
-    // Directly add the new list to the lists array of the specified category
     const updatedData = {
       ...prevData,
       [categoryName]: {
-        ...prevData[categoryName], // Keep the existing data for the category (e.g., lists)
+        ...prevData[categoryName], // Keep existing data for the category
         [listName]: [
-          ...prevData[categoryName][listName], 
-          [task]
+          ...(prevData[categoryName][listName] || []), // Use existing tasks or initialize as an empty array
+          task // Add the new task
         ]
       }
     };
-
+  
     return updatedData;
   });
 
