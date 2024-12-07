@@ -108,7 +108,7 @@ function addNewList(list, categoryName) {
   });
 
 
-  fetch(`${API_PREFIX}/lists/${currentCategory}`, {
+  fetch(`${API_PREFIX}/lists/${categoryName}`, {
     method: "POST",
     headers: addAuthHeader({
       "Content-Type": "application/json",
@@ -148,7 +148,7 @@ function addNewTask(task, listName, categoryName) {
     return updatedData;
   });
 
-  fetch(`${API_PREFIX}/tasks/${currentList}`, {
+  fetch(`${API_PREFIX}/tasks/${listName}`, {
     method: "POST",
     headers: addAuthHeader({
       "Content-Type": "application/json",
