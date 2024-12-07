@@ -72,11 +72,11 @@ function App() {
 
 function addNewCategory(category) {
   console.log("Adding category for user:", category);
-  const categoryName = category.name;
+  const categoryName = category.categoryName;
   setUserData((prevData) => {
     const updatedData = {
       ...prevData, 
-      [category]: {}, // Initialize category with an empty lists array
+      [categoryName]: {}, // Initialize category with an empty lists array
     };
     console.log("Updated userData:", updatedData);
     return updatedData;
