@@ -251,7 +251,7 @@ function fetchData(username) {
 
     
 
-  }, []); // Add userId as a dependency
+  }, [username]); // Add userId as a dependency
   
 
   function loginUser(creds) {
