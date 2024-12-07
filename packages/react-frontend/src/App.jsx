@@ -126,6 +126,7 @@ function addNewList(list, categoryName) {
 
     return updatedData;
   });
+}
   
 
 
@@ -419,6 +420,5 @@ function fetchData(username) {
       </div>
     </Router>
   );
-}
 
 export default App;
