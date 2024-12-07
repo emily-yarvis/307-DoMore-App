@@ -73,10 +73,10 @@ function App() {
 function addNewCategory(category) {
   console.log("Adding category for user:", category.name);
   const categoryName = category.name;
-  setUserData((prevUserData) => {
+  setUserData((userData) => {
     // Create a new category with an empty structure for lists
     return {
-      ...prevUserData, // Keep all existing categories
+      ...userData, // Keep all existing categories
       [categoryName]: {}, // Create the new category
     };
   });
