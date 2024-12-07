@@ -24,8 +24,8 @@ function TaskViewHeader() {
 }
 
 function TaskViewBody(props) {
-  if (props.taskData === null) {
-    return <caption>Data Unavailable</caption>;
+  if (props.currentList === "") {
+    return <caption>Please Select a List Before Adding Tasks</caption>;
   } else {
     const rows = props.taskData.map((row, index) => (
       <tr key={index} onClick={() => props.handleSelectTask(row)}>

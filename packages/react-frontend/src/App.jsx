@@ -190,6 +190,7 @@ function fetchData(username) {
       setUserData(result); // Update userData state
     })
     .catch((err) => {
+      setUserData({})
       console.error("Error fetching user data:", err);
     });
 }
