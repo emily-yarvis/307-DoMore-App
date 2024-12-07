@@ -73,7 +73,14 @@ function App() {
 function addNewCategory(category) {
   console.log("Adding category for user:", category);
   const categoryName = category.name;
-  setUserData((prevData) => ({...prevData, [category]: {},}))
+  setUserData((prevData) => {
+    const updatedData = {
+      ...prevData, 
+      [category]: {}, // Initialize category with an empty lists array
+    };
+    console.log("Updated userData:", updatedData);
+    return updatedData;
+  });
   // Create a new category with an empty structure for lists
   
 
@@ -248,9 +255,6 @@ function fetchData(username) {
     // fetchTasks(currentList)
     fetchData(username)
     
-
-    
-
   }, [username]); // Add userId as a dependency
   
 
