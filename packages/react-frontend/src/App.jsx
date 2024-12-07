@@ -13,7 +13,7 @@ function App() {
   const [token, setToken] = useState(INVALID_TOKEN);
   const [lists, setLists] = useState([]);
   const [tasks, setTasks] = useState([]);
-  
+  const [message,setMessage] = useState("");
   const [currentCategory, setCurrentCategory] = useState("");
   const [currentList, setCurrentList] = useState("");
   
@@ -166,6 +166,9 @@ function addNewTask(task, listName, categoryName) {
       console.error("Error adding task:", error);
     });
 }
+
+
+
 
 
 function fetchData(username) {
