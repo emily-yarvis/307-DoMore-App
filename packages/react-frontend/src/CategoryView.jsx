@@ -34,6 +34,8 @@ function CategoryViewBody(props) {
               // removeCharacter={props.removeCharacter}
               addNewList = {props.addNewList}
               currentCategory = {row}
+              onSelectList={props.onSelectList} // Pass selection handler
+
             />
           </div>
         </div>
@@ -49,6 +51,8 @@ CategoryViewBody.propTypes = {
       categoryName: PropTypes.string.isRequired,
     }),
   ).isRequired,
+  onSelectList: PropTypes.func.isRequired,
+
   removeCharacter: PropTypes.func.isRequired,
 };
 
@@ -84,6 +88,8 @@ function CategoryView(props) {
             addNewList = {props.addNewList}
           //   currentCategory = {props.currentCategory}
             userData = {props.userData}
+            onSelectList={props.onSelectList} // Pass selection handler
+
           />
         </table>
 
@@ -115,6 +121,7 @@ CategoryView.propTypes = {
       categoryName: PropTypes.string.isRequired,
     }),
   ).isRequired,
+  onSelectList: PropTypes.func.isRequired,
   removeCharacter: PropTypes.func.isRequired,
 };
 

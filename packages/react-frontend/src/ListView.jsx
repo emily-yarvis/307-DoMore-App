@@ -21,7 +21,10 @@ function TableBody(props) {
   const rows = Object.keys(list).map((row, index) => (
     <tr className="flex items-center justify-between" key={index}>
       <td>
-        <div className=" py-2 px-4 min-w-40 bg-white font-semibold rounded-md">
+        <div 
+          className=" py-2 px-4 min-w-40 bg-white font-semibold rounded-md"
+          onClick={() => props.onSelectList(row)} // Notify parent of list selection
+>
           {row}
         </div>
       </td>
@@ -65,6 +68,8 @@ function ListView(props) {
         <TableBody
           listData={props.listData}
           removeCharacter={props.removeCharacter}
+          onSelectList={props.onSelectList} // Pass down the selection handler
+
         />
       </table>
       <button
@@ -94,6 +99,7 @@ ListView.propTypes = {
       listName: PropTypes.string.isRequired,
     }),
   ).isRequired,
+  onSelectList: PropTypes.func.isRequired,
   removeCharacter: PropTypes.func.isRequired,
 };
 

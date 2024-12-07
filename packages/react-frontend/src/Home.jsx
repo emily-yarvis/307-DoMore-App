@@ -4,6 +4,11 @@ import ListView from "./ListView";
 import CategoryView from "./CategoryView";
 
 function Home(props) {
+  const [currentList, setCurrentList] = useState(null);
+
+  const handleSelectList = (listName) => {
+    setCurrentList(listName);
+  };
 
   console.log("In home ID:",props.userId)
   function removeOneCharacter(index) {
@@ -27,13 +32,14 @@ function Home(props) {
             addNewList = {props.addNewList}
             // currentCategory = {props.currentCategory}
             userData = {props.userData}
+            onSelectList={handleSelectList}
           />
         </div>
       </div>
       <div className="w-px bg-gray-300" />
       <div className="w-2/3">
         <TaskView 
-          taskData={props.taskData} 
+         taskData={props.userData[currentList] || []}
           removeCharacter={removeOneCharacter} 
           addNewTask = {props.addNewTask} 
           currentList = {props.currentList} />
