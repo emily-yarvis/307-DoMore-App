@@ -32,7 +32,7 @@ function CategoryViewBody(props) {
             <ListView
               listData={props.userData[row]}
               // removeCharacter={props.removeCharacter}
-              // addNewList = {props.addNewList}
+              addNewList = {props.addNewList}
               currentCategory = {row}
             />
           </div>

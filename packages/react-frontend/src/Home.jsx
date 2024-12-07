@@ -24,7 +24,7 @@ function Home(props) {
             // removeCharacter={removeOneCharacter}
             // userId={props.userId}
             addNewCategory = {props.addNewCategory}
-            // addNewList = {props.addNewList}
+            addNewList = {props.addNewList}
             // currentCategory = {props.currentCategory}
             userData = {props.userData}
           />

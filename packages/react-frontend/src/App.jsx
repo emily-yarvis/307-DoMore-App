@@ -403,7 +403,7 @@ function fetchData(username) {
             // removeCharacter={removeOneCharacter}
             // userId = {userId}
             addNewCategory = {addNewCategory}
-            // addNewList = {addNewList}
+            addNewList = {addNewList}
             // currentCategpry = {currentCategory}
             addNewTask = {addNewTask}
             currentList = {currentList}
