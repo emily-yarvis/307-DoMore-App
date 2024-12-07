@@ -23,7 +23,7 @@ function TableBody(props) {
       <td>
         <div 
           className=" py-2 px-4 min-w-40 bg-white font-semibold rounded-md"
-          onClick={() => props.onSelectList(row)} // Notify parent of list selection
+          onClick={() => props.onSelectList(row, props.currentCategory)} // Notify parent of list selection
 >
           {row}
         </div>
@@ -68,6 +68,7 @@ function ListView(props) {
         <TableBody
           listData={props.listData}
           removeCharacter={props.removeCharacter}
+          currentCategory={props.currentCategory}
           onSelectList={props.onSelectList} // Pass down the selection handler
 
         />

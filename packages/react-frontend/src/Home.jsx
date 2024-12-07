@@ -4,10 +4,12 @@ import ListView from "./ListView";
 import CategoryView from "./CategoryView";
 
 function Home(props) {
-  const [currentList, setCurrentList] = useState(null);
+  const [currentList, setCurrentList] = useState("");
+  const [currentCategory, setCurrentCategory] = useState("");
 
-  const handleSelectList = (listName) => {
+  const handleSelectList = (listName, categoryName) => {
     setCurrentList(listName);
+    setCurrentCategory(categoryName)
   };
 
   console.log("In home ID:",props.userId)
@@ -17,6 +19,10 @@ function Home(props) {
       return i !== index;
     });
     deleteUser(lists[index]).then(setLists(updated));
+  }
+
+  function addNewTask(task) {
+    props.addNewTask(task, currentList, currentCategory)
   }
 
   return (

@@ -35,7 +35,6 @@ function CategoryViewBody(props) {
               addNewList = {props.addNewList}
               currentCategory = {row}
               onSelectList={props.onSelectList} // Pass selection handler
-
             />
           </div>
         </div>
@@ -89,6 +88,7 @@ function CategoryView(props) {
           //   currentCategory = {props.currentCategory}
             userData = {props.userData}
             onSelectList={props.onSelectList} // Pass selection handler
+            addNewTask = {props.addNewTask} 
 
           />
         </table>

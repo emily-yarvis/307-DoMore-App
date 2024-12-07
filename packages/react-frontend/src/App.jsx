@@ -154,33 +154,49 @@ function addNewList(list, categoryName) {
   //   });
 
 
-function addNewTask(task, listId) {
+function addNewTask(task, listName, categoryName) {
   console.log("Adding task for list:", currentList);
 
-  fetch(`${API_PREFIX}/tasks/${currentList}`, {
-    method: "POST",
-    headers: addAuthHeader({
-      "Content-Type": "application/json",
-    }),
-    body: JSON.stringify({
-      name: task.taskName,
-      dueData: task.dueDate,
-      priority: 1,
-      description: task.description
-    }),
-  })
-    .then((response) => {
-      if (response.ok) {
-        console.log("task added successfully");
-        // Wait for the response to confirm success, then fetch updated categories
-        return fetchTasks(currentList);
-      } else {
-        throw new Error(`Failed to add task: ${response.status}`);
+  setUserData((prevData) => {
+    // Directly add the new list to the lists array of the specified category
+    const updatedData = {
+      ...prevData,
+      [categoryName]: {
+        ...prevData[categoryName], // Keep the existing data for the category (e.g., lists)
+        [listName]: [
+          ...prevData[categoryName][listName], 
+          [task]
+        ]
       }
-    })
-    .catch((error) => {
-      console.error("Error adding task:", error);
-    });
+    };
+
+    return updatedData;
+  });
+
+  // fetch(`${API_PREFIX}/tasks/${currentList}`, {
+  //   method: "POST",
+  //   headers: addAuthHeader({
+  //     "Content-Type": "application/json",
+  //   }),
+  //   body: JSON.stringify({
+  //     name: task.taskName,
+  //     dueData: task.dueDate,
+  //     priority: 1,
+  //     description: task.description
+  //   }),
+  // })
+  //   .then((response) => {
+  //     if (response.ok) {
+  //       console.log("task added successfully");
+  //       // Wait for the response to confirm success, then fetch updated categories
+  //       return fetchTasks(currentList);
+  //     } else {
+  //       throw new Error(`Failed to add task: ${response.status}`);
+  //     }
+  //   })
+  //   .catch((error) => {
+  //     console.error("Error adding task:", error);
+  //   });
 }
 
 
