@@ -40,7 +40,7 @@ function Home(props) {
       <div className="w-px bg-gray-300" />
       <div className="w-2/3">
         <TaskView 
-         taskData={props.userData[currentList] || []}
+         taskData={props.userData[currentCategory][currentList] || []}
           removeCharacter={removeOneCharacter} 
           addNewTask = {addNewTask} 
           currentList = {props.currentList} />
