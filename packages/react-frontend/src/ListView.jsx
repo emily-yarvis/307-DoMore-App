@@ -22,7 +22,7 @@ function TableBody(props) {
     <tr className="flex items-center justify-between" key={index}>
       <td>
         <div className=" py-2 px-4 min-w-40 bg-white font-semibold rounded-md">
-          {list[row]}
+          {row}
         </div>
       </td>
       <td>
