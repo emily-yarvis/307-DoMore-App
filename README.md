@@ -47,7 +47,7 @@ Here are a few prototypes from Figma:
 ![IMG_0507](https://github.com/user-attachments/assets/f9383d1b-fea3-46f0-a40c-85918a1e235f)
 
 ### UML Diagrams ###
-`insert here`
+You can find our UML diagrams [here](UML.md)
 
 ## Contributors: ##
 1. Rishabh Jhamnani
