@@ -37,8 +37,8 @@ function getTasksByListId(listId) {
     });
 }
 
-function addTaskToList(listId, taskId) {
-  return List.findById(listId)
+function addTaskToList(listName, taskId) {
+  return List.find({name:listName})
     .then((list) => {
       if (!list) {
         throw new Error("List not found");

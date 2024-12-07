@@ -58,9 +58,7 @@ CategoryViewBody.propTypes = {
 
 
 function CategoryView(props) {
-  // console.log("MEOW",props.categoryData)
   const [showModal, setShowModal] = useState(false);
-  const [listData, setListData] = useState(props.listData || []);
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
 
@@ -81,11 +79,8 @@ function CategoryView(props) {
       <div className=" bg-gray-200 rounded-md mb-4 py-2 px-2">
         <table>
           <CategoryViewBody
-          //  categoryData={props.categoryData}
-          //   listData={props.listData}
-          //   removeCharacter={props.removeCharacter}
+          
             addNewList = {props.addNewList}
-          //   currentCategory = {props.currentCategory}
             userData = {props.userData}
             onSelectList={props.onSelectList} // Pass selection handler
             addNewTask = {props.addNewTask} 

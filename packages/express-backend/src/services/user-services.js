@@ -33,8 +33,8 @@ function getCategoriesByUserId(id) {
     });
 }
 
-function addCategoryToUser(userId, categoryId) {
-  return User.findById(userId)
+function addCategoryToUser(userName, categoryId) {
+  return User.find({username: userName})
     .then((user) => {
       if (!user) {
         throw new Error("User not found");

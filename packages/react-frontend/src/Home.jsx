@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import TaskView from "./TaskView";
-import ListView from "./ListView";
 import CategoryView from "./CategoryView";
 
 function Home(props) {

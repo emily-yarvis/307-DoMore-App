@@ -37,8 +37,8 @@ function getListsByCategoryId(categoryId) {
     });
 }
 
-function addListToCategory(categoryId, listId) {
-  return Category.findById(categoryId)
+function addListToCategory(categoryName, listId) {
+  return Category.find({name: categoryName})
     .then((category) => {
       if (!category) {
         throw new Error("Category not found");

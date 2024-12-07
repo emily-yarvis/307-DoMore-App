@@ -48,14 +48,14 @@ app.get("/tasks/:listId", (req, res) => {
     .catch(() => res.status(404).send("Resource not found."));
 });
 
-app.post("/tasks/:listId", (req, res) => {
-  const listId = req.params["listId"];
+app.post("/tasks/:listName", authenticateUser, (req, res) => {
+  const listName = req.params["listName"];
   const taskToAdd = req.body;
 
   taskServices
     .addTask(taskToAdd)
     .then((task) => {
-      return listServices.addTaskToList(listId, task._id);
+      return listServices.addTaskToList(listName, task._id);
     })
     .then(() => {
       res.status(201).send({ message: "Task successfully added to list!" });
@@ -91,14 +91,14 @@ app.get("/lists/:categoryId", (req, res) => {
     .catch(() => res.status(404).send("Resource not found."));
 });
 
-app.post("/lists/:categoryId", (req, res) => {
-  const categoryId = req.params["categoryId"];
+app.post("/lists/:categoryName", authenticateUser, (req, res) => {
+  const categoryName = req.params["categoryName"];
   const listToAdd = req.body;
 
   listServices
     .addList(listToAdd)
     .then((list) => {
-      return categoryServices.addListToCategory(categoryId, list._id);
+      return categoryServices.addListToCategory(categoryName, list._id);
     })
     .then(() => {
       res.status(201).send({ message: "List successfully added to category!" });
@@ -134,14 +134,14 @@ app.get("/categories/:userId", (req, res) => {
     .catch(() => res.status(404).send("Resource not found."));
 });
 
-app.post("/categories/:userId", (req, res) => {
-  const userId = req.params["userId"];
+app.post("/categories/:userName", authenticateUser, (req, res) => {
+  const userName = req.params["userName"];
   const categoryToAdd = req.body;
 
   categoryServices
     .addCategory(categoryToAdd)
     .then((category) => {
-      return userServices.addCategoryToUser(userId, category._id);
+      return userServices.addCategoryToUser(userName, category._id);
     })
     .then(() => {
       res.status(201).send({ message: "Category successfully added to user!" });
@@ -168,7 +168,7 @@ app.get("/users", (req, res) => {
     .catch(() => res.status(404).send("Resource not found."));
 });
 
-app.get("/users/:username", (req, res) => {
+app.get("/users/:username", authenticateUser, (req, res) => {
   const username = req.params.username;
 
   userServices

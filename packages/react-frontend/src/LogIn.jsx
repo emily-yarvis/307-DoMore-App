@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 const LogIn = (props) => {
-  const [formData, setFormData] = useState({ email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
   const [creds, setCreds] = useState({
     username: "",

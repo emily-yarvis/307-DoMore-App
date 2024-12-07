@@ -1,52 +1,26 @@
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 
-// import Table from "./Table";
-// import Form from "./Form";
 import SignUp from "./SignUp";
 import LogIn from "./LogIn";
 import Home from "./Home";
-import NewTask from "./NewTask";
-import NewList from "./NewList";
-import CategoryView from "./CategoryView";
 
-// Commented out as they are unused
-// const [characters, setCharacters] = useState([]);
 
 function App() {
   const API_PREFIX =
     "https://domoreapp-e5ecc0h3d6dzh3hz.westus-01.azurewebsites.net";
-  //const API_PREFIX = "Http://localhost:8000";
   const INVALID_TOKEN = "INVALID_TOKEN";
   const [token, setToken] = useState(INVALID_TOKEN);
-  const [message, setMessage] = useState("");
-  const [categories, setCategories] = useState([]);
   const [lists, setLists] = useState([]);
   const [tasks, setTasks] = useState([]);
-  const [userId, setUserId] = useState("");
-  const [currentTask, setCurrentTask] = useState("");
+  
   const [currentCategory, setCurrentCategory] = useState("");
   const [currentList, setCurrentList] = useState("");
-  const [users, setUsers] = useState([]);
-  const [showModal, setShowModal] = useState(false);
-  const openModal = () => setShowModal(true);
-  const closeModal = () => setShowModal(false);
+  
   const [userData, setUserData] = useState({});
   const [username, setUsername] = useState("");
 
-  function removeOneCharacter(index) {
-    console.log(lists[index]);
-    const updated = lists.filter((list, i) => {
-      return i !== index;
-    });
-    deleteUser(lists[index]).then(setLists(updated));
-  }
-  //function fetchUsers() {
-  //  const promise = fetch(
-  //    "https://domoreapp-e5ecc0h3d6dzh3hz.westus-01.azurewebsites.net/users",
-  //  );
-  //  return promise;
-  //}
+  
 
   function fetchCategories(currentUserId) {
   const promise = fetch(`${API_PREFIX}/categories/${currentUserId}`, {headers: addAuthHeader()})
@@ -86,30 +60,29 @@ function addNewCategory(category) {
   
 
   console.log(userData);
+
+
+  fetch(`${API_PREFIX}/categories/${username}`, {
+    method: "POST",
+    headers: addAuthHeader({
+      "Content-Type": "application/json",
+    }),
+    body: JSON.stringify({
+      name: category.categoryName,
+    }),
+  })
+    .then((response) => {
+      if (response.ok) {
+        console.log("Category added successfully");
+        // Wait for the response to confirm success, then fetch updated categories
+      } else {
+        throw new Error(`Failed to add category: ${response.status}`);
+      }
+    })
+    .catch((error) => {
+      console.error("Error adding category:", error);
+    });
 }
-
-  // fetch(`${API_PREFIX}/categories/${userId}`, {
-  //   method: "POST",
-  //   headers: addAuthHeader({
-  //     "Content-Type": "application/json",
-  //   }),
-  //   body: JSON.stringify({
-  //     name: category.categoryName,
-  //   }),
-  // })
-  //   .then((response) => {
-  //     if (response.ok) {
-  //       console.log("Category added successfully");
-  //       // Wait for the response to confirm success, then fetch updated categories
-  //       return fetchCategories(userId);
-  //     } else {
-  //       throw new Error(`Failed to add category: ${response.status}`);
-  //     }
-  //   })
-  //   .catch((error) => {
-  //     console.error("Error adding category:", error);
-  //   });
-
 
 function addNewList(list, categoryName) {
   console.log("Adding list for category:", categoryName);
@@ -127,35 +100,32 @@ function addNewList(list, categoryName) {
 
     return updatedData;
   });
+
+
+  fetch(`${API_PREFIX}/lists/${currentCategory}`, {
+    method: "POST",
+    headers: addAuthHeader({
+      "Content-Type": "application/json",
+    }),
+    body: JSON.stringify({
+      name: list.listName,
+    }),
+  })
+    .then((response) => {
+      if (response.ok) {
+        console.log("Category added successfully");
+        // Wait for the response to confirm success, then fetch updated categories
+      } else {
+        throw new Error(`Failed to add category: ${response.status}`);
+      }
+    })
+    .catch((error) => {
+      console.error("Error adding category:", error);
+    });
 }
-  
-
-
-  // fetch(`${API_PREFIX}/lists/${currentCategory}`, {
-  //   method: "POST",
-  //   headers: addAuthHeader({
-  //     "Content-Type": "application/json",
-  //   }),
-  //   body: JSON.stringify({
-  //     name: list.listName,
-  //   }),
-  // })
-  //   .then((response) => {
-  //     if (response.ok) {
-  //       console.log("Category added successfully");
-  //       // Wait for the response to confirm success, then fetch updated categories
-  //       return fetchLists(currentCategory);
-  //     } else {
-  //       throw new Error(`Failed to add category: ${response.status}`);
-  //     }
-  //   })
-  //   .catch((error) => {
-  //     console.error("Error adding category:", error);
-  //   });
-
 
 function addNewTask(task, listName, categoryName) {
-  console.log("Adding task for list:", currentList);
+  console.log("Adding task for list:", listName);
 
   setUserData((prevData) => {
     const updatedData = {
@@ -172,83 +142,34 @@ function addNewTask(task, listName, categoryName) {
     return updatedData;
   });
 
-  // fetch(`${API_PREFIX}/tasks/${currentList}`, {
-  //   method: "POST",
-  //   headers: addAuthHeader({
-  //     "Content-Type": "application/json",
-  //   }),
-  //   body: JSON.stringify({
-  //     name: task.taskName,
-  //     dueData: task.dueDate,
-  //     priority: 1,
-  //     description: task.description
-  //   }),
-  // })
-  //   .then((response) => {
-  //     if (response.ok) {
-  //       console.log("task added successfully");
-  //       // Wait for the response to confirm success, then fetch updated categories
-  //       return fetchTasks(currentList);
-  //     } else {
-  //       throw new Error(`Failed to add task: ${response.status}`);
-  //     }
-  //   })
-  //   .catch((error) => {
-  //     console.error("Error adding task:", error);
-  //   });
-}
-
-
-function fetchLists(categoryId){
-  console.log("fetching lists");
-  const promise = fetch(`${API_PREFIX}/lists/${categoryId}`, {headers: addAuthHeader()})
-    .then((res) => res.json())
-    .then((arr) => {
-      // Map the categories to the required format
-      const formattedLists = arr.map((entry) => ({
-        listName: entry.name, // Assuming `name` is the property that holds the category name
-      }));
-
-      console.log("Fetched and formatted categories:", formattedLists);
-
-      // Set the formatted lists to state
-      setLists(formattedLists);
-      setCurrentList(arr[0]._id);
-      fetchTasks(arr[0]._id);
-
-
+  fetch(`${API_PREFIX}/tasks/${currentList}`, {
+    method: "POST",
+    headers: addAuthHeader({
+      "Content-Type": "application/json",
+    }),
+    body: JSON.stringify({
+      name: task.taskName,
+      dueDate: task.dueDate,
+      priority: 1,
+      description: task.description
+    }),
+  })
+    .then((response) => {
+      if (response.ok) {
+        console.log("task added successfully");
+        // Wait for the response to confirm success, then fetch updated categories
+      } else {
+        throw new Error(`Failed to add task: ${response.status}`);
+      }
     })
     .catch((error) => {
-      console.log(error);
+      console.error("Error adding task:", error);
     });
 }
 
-function fetchTasks(listId){
-  console.log("fetching tasks");
-  const promise = fetch(`${API_PREFIX}/tasks/${listId}`, {headers: addAuthHeader()})
-    .then((res) => res.json())
-    .then((arr) => {
-      // Map the categories to the required format
-      const formattedTasks = arr.map((entry) => ({
-        taskName: entry.name,
-        dueDate: entry.dueDate // Assuming `name` is the property that holds the category name
-      }));
-
-      console.log("Fetched and formatted categories:", formattedLists);
-
-      // Set the formatted lists to state
-      setTasks(formattedTasks);
-     
-
-
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-}
 
 function fetchData(username) {
-  fetch(`${API_PREFIX}/users/${username}`)
+  fetch(`${API_PREFIX}/users/${username}`, {header: addAuthHeader()})
     .then((response) => {
       if (!response.ok) {
         throw new Error(`Error: ${response.status} ${response.statusText}`);
@@ -266,27 +187,9 @@ function fetchData(username) {
 
 
   useEffect(() => {
-    // Fetch users
-    // fetchUsers()
-    //   .then((res) => (res.status === 200 ? res.json() : undefined))
-    //   .then((json) => {
-    //     if (json) {
-    //       setUsers(json["users_list"]);
-    //     } else {
-    //       setUsers(null);
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
-  
-    // Fetch categories if userId is set
-    // console.log("userId changed:", userId);
-    // fetchCategories(userId)
-    // fetchLists(currentCategory)
-    // fetchTasks(currentList)
-    fetchData(username)
-    
+
+    fetchData(username) 
+
   }, [username]); // Add userId as a dependency
   
 
@@ -356,17 +259,6 @@ function fetchData(username) {
       };
     }
   }
-
-  function fetchUsers() {
-    const promise = fetch(`${API_PREFIX}/users`, {
-      headers: addAuthHeader({
-        "Content-Type": "application/json", 
-      }),
-    });
-
-    return promise;
-  }
-
   
 
 

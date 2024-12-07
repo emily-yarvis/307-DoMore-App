@@ -5,16 +5,6 @@ import NewList from "./NewList";
 
 
 
-function TableHeader() {
-  return (
-    <thead>
-      <tr>
-        <th>List Name</th>
-        <th>Delete</th>
-      </tr>
-    </thead>
-  );
-}
 
 function TableBody(props) {
   const list = props.listData || {}
