@@ -121,7 +121,7 @@ function addNewList(list, categoryName) {
       ...prevData,
       [categoryName]: {
         ...prevData[categoryName], // Keep the existing data for the category (e.g., lists)
-        listName: []
+        [listName]: []
       }
     };
 

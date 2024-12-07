@@ -81,9 +81,9 @@ function CategoryView(props) {
           //  categoryData={props.categoryData}
           //   listData={props.listData}
           //   removeCharacter={props.removeCharacter}
-          //   addNewList = {props.addNewList}
+            addNewList = {props.addNewList}
           //   currentCategory = {props.currentCategory}
-          userData = {props.userData}
+            userData = {props.userData}
           />
         </table>
 
