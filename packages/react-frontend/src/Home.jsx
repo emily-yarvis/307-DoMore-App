@@ -30,13 +30,8 @@ function Home(props) {
       <div className="w-1/3">
         <div >
           <CategoryView
-            // categoryData={props.categoryData}
-            // listData={props.listData}
-            // removeCharacter={removeOneCharacter}
-            // userId={props.userId}
             addNewCategory = {props.addNewCategory}
             addNewList = {props.addNewList}
-            // currentCategory = {props.currentCategory}
             userData = {props.userData}
             onSelectList={handleSelectList}
           />
@@ -47,7 +42,7 @@ function Home(props) {
         <TaskView 
          taskData={props.userData[currentList] || []}
           removeCharacter={removeOneCharacter} 
-          addNewTask = {props.addNewTask} 
+          addNewTask = {addNewTask} 
           currentList = {props.currentList} />
       </div>
     </div>
