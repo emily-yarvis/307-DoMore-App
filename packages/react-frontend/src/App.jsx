@@ -235,12 +235,6 @@ function fetchData(username) {
           setMessage(
             `Signup successful for user: ${creds.username}; auth token saved`,
           );
-          fetch(`${API_PREFIX}/users/${creds.username}`)
-            .then((res) => res.json())
-            .then((json) => setUserId(json[0]._id))
-            .catch((error) => {
-              console.log(error);
-            });
         } else {
           setMessage(`Signup Error ${response.status}: ${response.data}`);
         }
