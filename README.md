@@ -4,6 +4,10 @@
 
 The DoMore app is a to-do app made by students for students. This app aims to provide you with organizational tools that allow you to have all of your tasks in one place. They can have both their daily todos, like chores and shopping, and have all of their assignments or work tasks. Users are able to organize tasks by sections, tags, and due dates. This allows users to organize their tasks as efficiently as possible. 
 
+### Important Notes ###
+
+We were unfortunately unable to restore our delete functionality. All of our other intended functions should work (creating tasks, lists, categories, etc.). Additionally, tags exist in the backend but will not be on the frontend, this is intentional as we did not have enough time to implement the organization that we had planned to use the tags for.
+
 ## Before Contributing: ##
 The code should follow the Prettier JavaScript style conventions. In order to ensure all contributors follow the style guidelines, it is important to follow the steps below before contributing. 
 
